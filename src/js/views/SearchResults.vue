@@ -44,7 +44,7 @@
           <div class="tile is-ancestor">
             <div class="tile is-parent is-vertical">
               <div v-for="r in results" class="tile is-child search-result">
-                <service-summary :title="r.alias" description="Duis in erat eget nisl aliquet sagittis. Cras non quam erat. Proin porttitor, mauris eget finibus semper, tellus turpis fringilla." :tags="r.topics"></service-summary>
+                <service-summary :title="r.alias" :description="r.description" :tags="r.topics"></service-summary>
               </div>
             </div>
           </div>

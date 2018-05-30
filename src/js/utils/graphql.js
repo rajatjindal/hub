@@ -24,22 +24,10 @@ const SERVICE_QUERY = gql`query ServiceByAlias($where: Alias!) {
     alias
     description
     topics
-  }
-}`;
-
-const SEARCH_QUERY = gql`query ServiceByAlias($after: String, $where: ServiceWhereArgs!) {
-  viewer {
-    allServices(first: 10, after: $after, where: $where) {
-      aggregations {
-        count
-      },
-      edges {
-        cursor
-        node {
-          id
-          alias
-          topics
-        }
+    serviceTagsByServiceUuid {
+      nodes {
+        configuration
+        readme
       }
     }
   }
@@ -48,5 +36,4 @@ const SEARCH_QUERY = gql`query ServiceByAlias($after: String, $where: ServiceWhe
 export default {
   INDEX_QUERY,
   SERVICE_QUERY,
-  SEARCH_QUERY,
 };

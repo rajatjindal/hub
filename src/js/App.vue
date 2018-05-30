@@ -21,8 +21,14 @@ export default {
 @import "../../node_modules/bulma/sass/elements/box";
 @import "../../node_modules/bulma/sass/elements/button";
 @import "../../node_modules/bulma/sass/elements/form";
+@import "../../node_modules/bulma/sass/elements/table";
 
 @import "../assets/fonts/1804-GFNGYO";
+
+.table {
+  border-spacing: 0px;
+  border-collapse: collapse;
+}
 
 body {
   background: #111;

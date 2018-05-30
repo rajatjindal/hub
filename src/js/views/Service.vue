@@ -31,14 +31,29 @@
         <div>
           <h4>Commands</h4>
 
-          <code class="code">twitter tweet <span class="tag">Message (string)</span> --reply-to [int]</code>
-          <p>Send a tweet or reply to a tweet</p>
-
-          <code class="code">twitter follow [profile-str]</code>
-          <p>Send a tweet or reply to a tweet</p>
-
-          <code class="code">twitter unfollow [profile-str]</code>
-          <p>Send a tweet or reply to a tweet</p>
+          <div v-for="(command, name, index) in commands" class="command" :key="index">
+            <code class="code">{{service.alias}} {{command.format || name}}</code>
+            <p>{{command.help}}</p>
+            <h5>Arguments</h5>
+            <table class="table is-bordered">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Type</th>
+                  <th>Required</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(arg, name, index) in command.arguments">
+                  <td>{{name}}</td>
+                  <td>{{arg.type}}</td>
+                  <td>{{arg.required || 'false'}} <span v-if="arg.default">(default: {{arg.default}})</span></td>
+                  <td>{{arg.help}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
 
           <div class="expand-box">
             View all commands <span class="icon is-small">
@@ -145,6 +160,14 @@ export default {
       service: {},
     };
   },
+  computed: {
+    commands() {
+      return this.service &&
+        this.service.serviceTagsByServiceUuid &&
+        this.service.serviceTagsByServiceUuid.nodes &&
+        this.service.serviceTagsByServiceUuid.nodes[0].configuration.commands;
+    },
+  },
   components: {
     ServiceSummary,
   },
@@ -194,8 +217,15 @@ h1, h2 {
   }
 }
 
+.command {
+  margin-bottom: 3em;
+}
+
 .code {
+  border-radius: 4px;
   font-size: 1.3em;
+  background-color: #F5F8FA;
+  padding: 14px;
 
   .tag {
     font-size: 1em;
