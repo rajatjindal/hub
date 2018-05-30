@@ -26,6 +26,8 @@ const SERVICE_QUERY = gql`query ServiceByAlias($where: Alias!) {
     topics
     serviceTagsByServiceUuid {
       nodes {
+        tag
+        state
         configuration
         readme
       }

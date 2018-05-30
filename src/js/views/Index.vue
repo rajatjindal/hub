@@ -225,6 +225,8 @@ ul {
 }
 
 .featured-services {
+  height: 150px;
+
   a {
     width: 100%;
   }

@@ -13,6 +13,11 @@
             <li><a href="/">Github</a></li>
             <li><a href="/">Support</a></li>
           </ul>
+
+          <p class="has-text-weight-bold">Versions</p>
+          <ul>
+            <li v-for="tag in tags">{{tag.tag}} - {{tag.state}}</li>
+          </ul>
         </div>
       </div>
       <div class="column is-7">
@@ -34,6 +39,7 @@
           <div v-for="(command, name, index) in commands" class="command" :key="index">
             <code class="code">{{service.alias}} {{command.format || name}}</code>
             <p>{{command.help}}</p>
+
             <h5>Arguments</h5>
             <table class="table is-bordered">
               <thead>
@@ -166,6 +172,11 @@ export default {
         this.service.serviceTagsByServiceUuid &&
         this.service.serviceTagsByServiceUuid.nodes &&
         this.service.serviceTagsByServiceUuid.nodes[0].configuration.commands;
+    },
+    tags() {
+      return this.service &&
+        this.service.serviceTagsByServiceUuid &&
+        this.service.serviceTagsByServiceUuid.nodes;
     },
   },
   components: {
