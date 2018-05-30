@@ -33,7 +33,25 @@ const SERVICE_QUERY = gql`query ServiceByAlias($where: Alias!) {
   }
 }`;
 
+const SEARCH_SERVICE_QUERY = gql`query SearchServices($orderBy: [ServicesOrderBy!], $condition: ServiceCondition!) {
+  allServices(orderBy: $orderBy, condition: $condition) {
+    totalCount
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        alias
+        topics
+        description
+      }
+    }
+  }
+}`;
+
 export default {
   INDEX_QUERY,
   SERVICE_QUERY,
+  SEARCH_SERVICE_QUERY,
 };

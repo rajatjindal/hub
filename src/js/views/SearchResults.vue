@@ -31,10 +31,9 @@
           <div class="level-left"><h2 class="is-marginless">{{totalItems}} service results</h2></div>
           <div class="level-right">
             <div class="select is-small">
-              <select>
-                <option selected>Sort</option>
-                <option>Date</option>
-                <option>Name</option>
+              <select v-model="orderBy">
+                <option selected value="NATURAL">Sort</option>
+                <option value="ALIAS_ASC">Name</option>
               </select>
             </div>
           </div>
@@ -48,7 +47,6 @@
               </div>
             </div>
           </div>
-          <pagination-bar @change="changePage" :total-items="totalItems"></pagination-bar>
         </div>
       </div>
     </div>
@@ -68,29 +66,24 @@ export default {
   props: ['search'],
   apollo: {
     results: {
-      query: queries.SEARCH_QUERY,
+      query: queries.SEARCH_SERVICE_QUERY,
       variables() {
         return {
-          where: {
-            alias: {
-              like: `%${this.search || ''}%`,
-            },
-          },
+          orderBy: [this.orderBy],
+          condition: Object.assign({}, {
+            alias: this.search.length ? this.search : undefined,
+          }),
         };
       },
       update(data) {
-        const allServices = data.viewer.allServices;
-        this.totalItems = allServices.aggregations.count;
-        return allServices.edges.map(e => e.node);
+        this.totalItems = data.allServices.totalCount;
+        return data.allServices.edges.map(e => e.node);
       },
-    },
-  },
-  methods: {
-    changePage() {
     },
   },
   data() {
     return {
+      orderBy: 'NATURAL',
       totalItems: 0,
       results: [],
     };
