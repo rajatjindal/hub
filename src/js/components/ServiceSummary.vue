@@ -55,5 +55,6 @@ p {
   background: white;
   color: #040508;
   opacity: 0.3;
+  margin-bottom: 0.4em;
 }
 </style>

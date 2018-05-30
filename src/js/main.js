@@ -14,7 +14,7 @@ import AppHeader from './components/AppHeader';
 import AppFooter from './components/AppFooter';
 
 const httpLink = new HttpLink({
-  uri: 'https://us-west-2.api.scaphold.io/graphql/fake-asyncy',
+  uri: 'https://api.asyncy.com/graphql',
 });
 
 const apolloClient = new ApolloClient({

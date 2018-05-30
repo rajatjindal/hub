@@ -1,41 +1,29 @@
 import gql from 'graphql-tag';
 
 const INDEX_QUERY = gql`{
-  featuredServices: viewer {
-    allServices(first: 3) {
-      edges {
-        cursor
-        node {
-          alias
-          topics
-        }
-      }
+  featuredServices: allServices(first: 3) {
+    nodes {
+      uuid
+      alias
+      topics
     }
-  }
-  recentServices: viewer {
-    allServices(first: 6) {
-      edges {
-        cursor
-        node {
-          alias
-          topics
-        }
-      }
+  },
+  recentlyAddedServices: allServices(first: 6) {
+    nodes {
+      uuid
+      alias
+      description
+      topics
     }
   }
 }`;
 
-const SERVICE_QUERY = gql`query ServiceByAlias($where: ServiceWhereArgs!) {
-  viewer {
-    allServices(where: $where) {
-      edges {
-        node {
-          id
-          alias
-          topics
-        }
-      }
-    }
+const SERVICE_QUERY = gql`query ServiceByAlias($where: Alias!) {
+  serviceByAlias(alias: $where) {
+    uuid
+    alias
+    description
+    topics
   }
 }`;
 

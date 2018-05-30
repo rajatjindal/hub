@@ -70,12 +70,12 @@
             <div class="tile is-ancestor">
               <div class="tile is-parent is-vertical">
                 <div v-for="r in data.recentServices.slice(0, 3)" class="tile is-child">
-                  <service-summary :title="r.alias" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ultrices turpis vel risus." :tags="r.topics"></service-summary>
+                  <service-summary :title="r.alias" :description="r.description" :tags="r.topics"></service-summary>
                 </div>
               </div>
               <div class="tile is-parent is-vertical">
                 <div v-for="r in data.recentServices.slice(3, 6)" class="tile is-child">
-                  <service-summary :title="r.alias" description="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis ultrices turpis vel risus." :tags="r.topics"></service-summary>
+                  <service-summary :title="r.alias" :description="r.description" :tags="r.topics"></service-summary>
                 </div>
               </div>
             </div>
@@ -131,8 +131,8 @@ export default {
       query: queries.INDEX_QUERY,
       update(data) {
         return {
-          featuredServices: data.featuredServices.allServices.edges.map(e => e.node),
-          recentServices: data.recentServices.allServices.edges.map(e => e.node),
+          featuredServices: data.featuredServices.nodes,
+          recentServices: data.recentlyAddedServices.nodes,
         };
       },
     },

@@ -26,7 +26,7 @@
         </div>
         <div>
           <h4>Overview</h4>
-          <p>Fusce auctor leo sit amet dolor consequat eleifend. Sed posuere libero odio, eget fermentum enim semper eu. Integer mollis odio eget consectetur laoreet. Vivamus ut elit non tellus aliquet egestas. Vivamus consectetur, enim sit amet.</p>
+          <p>{{service.description}}</p>
         </div>
         <div>
           <h4>Commands</h4>
@@ -132,49 +132,17 @@ export default {
       query: queries.SERVICE_QUERY,
       variables() {
         return {
-          where: {
-            alias: {
-              eq: this.alias,
-            },
-          },
+          where: this.alias,
         };
       },
       update(data) {
-        return data && data.viewer.allServices.edges && data.viewer.allServices.edges[0].node;
+        return data.serviceByAlias;
       },
     },
   },
   data() {
     return {
       service: {},
-      results: [
-        {
-          title: 'Title',
-          description: 'Proin maximus ut lectus vel pellentesque. Morbi magna metus, eleifend quis nulla id, pretium sollicitudin velit. Vivamus eget venenatis neque. Morbi vel felis consequat, mollis ipsum ac, dignissim arcu. Sed rhoncus diam sed mi sodales.',
-          tags: ['Label'],
-        },
-        {
-          title: 'Title',
-          description: 'Proin maximus ut lectus vel pellentesque. Morbi magna metus, eleifend quis nulla id, pretium sollicitudin velit. Vivamus eget venenatis neque. Morbi vel felis consequat, mollis ipsum ac, dignissim arcu. Sed rhoncus diam sed mi sodales.',
-          tags: ['Label', 'Label2'],
-        },
-        {
-          title: 'Title',
-          description: 'Proin maximus ut lectus vel pellentesque. Morbi magna metus, eleifend quis nulla id, pretium sollicitudin velit. Vivamus eget venenatis neque. Morbi vel felis consequat, mollis ipsum ac, dignissim arcu. Sed rhoncus diam sed mi sodales.',
-        },
-        {
-          title: 'Title',
-          description: 'Proin maximus ut lectus vel pellentesque. Morbi magna metus, eleifend quis nulla id, pretium sollicitudin velit. Vivamus eget venenatis neque. Morbi vel felis consequat, mollis ipsum ac, dignissim arcu. Sed rhoncus diam sed mi sodales.',
-        },
-        {
-          title: 'Title',
-          description: 'Proin maximus ut lectus vel pellentesque. Morbi magna metus, eleifend quis nulla id, pretium sollicitudin velit. Vivamus eget venenatis neque. Morbi vel felis consequat, mollis ipsum ac, dignissim arcu. Sed rhoncus diam sed mi sodales.',
-        },
-        {
-          title: 'Title',
-          description: 'Proin maximus ut lectus vel pellentesque. Morbi magna metus, eleifend quis nulla id, pretium sollicitudin velit. Vivamus eget venenatis neque. Morbi vel felis consequat, mollis ipsum ac, dignissim arcu. Sed rhoncus diam sed mi sodales.',
-        },
-      ],
     };
   },
   components: {
@@ -222,6 +190,7 @@ h1, h2 {
 
   .tag {
     font-size: 0.9em;
+    margin-bottom: 0.4em;
   }
 }
 
