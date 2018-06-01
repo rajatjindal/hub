@@ -20,6 +20,14 @@ const webpackConfig = {
         ],
       },
       {
+        test: /\.styl$/i,
+        use: [
+          MiniCssExtractPlugin.loader,
+          'css-loader',
+          'stylus-loader',
+        ],
+      },
+      {
         test: /\.css$/i,
         use: [
           MiniCssExtractPlugin.loader,

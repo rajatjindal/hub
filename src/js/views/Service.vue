@@ -4,40 +4,46 @@
     <div class="columns">
       <div class="column is-one-fifth sidebar">
         <div>
-          <p class="has-text-weight-bold">Topics</p>
-          <div class="no-topics" v-if="!service.topics">No topics</div>
-          <div v-for="t in service.topics"><span class="tag">{{t}}</span></div>
+          <button class="button is-primary">+ Add to story</button>
 
-          <p class="has-text-weight-bold">Developer Links</p>
           <ul>
-            <li><a href="/">Github</a></li>
-            <li><a href="/">Support</a></li>
+            <li><a href="/">Try a demo →</a></li>
+            <li><a href="/">View on Github →</a></li>
           </ul>
 
-          <p class="has-text-weight-bold">Versions</p>
-          <ul>
-            <li v-for="tag in tags">{{tag.tag}} - {{tag.state}}</li>
-          </ul>
-        </div>
-      </div>
-      <div class="column is-7">
-        <div class="level name-container is-mobile">
-          <div class="level-left">
-            <h1>{{service.alias}}</h1><i class="fas fa-check checkmark" aria-hidden="true"></i>
+          <div class="sidebar-info">
+            <p class="sidebar-header has-text-weight-bold">Topics</p>
+            <div class="no-topics" v-if="!service.topics">No topics</div>
+            <div v-for="t in service.topics"><span class="tag">{{t}}</span></div>
+
+            <p class="sidebar-header has-text-weight-bold">Versions</p>
+            <ul>
+              <li v-for="tag in tags">{{tag.tag}} - {{tag.state}}</li>
+            </ul>
+
+            <p class="sidebar-header has-text-weight-bold">Quick Links</p>
+            <ul>
+              <li><a href="/">Github</a></li>
+              <li><a href="/">Support</a></li>
+            </ul>
           </div>
         </div>
-        <div class="level-left">
-          <button class="button is-primary">Add to your story</button><span class="margin-left-3">or <a href="/">try a demo</a></span>
+      </div>
+      <div class="column is-7 body">
+        <div class="level name-container is-mobile">
+          <div class="level-left">
+            <h1>{{service.alias}}</h1><i class="fas fa-check-circle checkmark" aria-hidden="true"></i>
+          </div>
         </div>
-        <div>
-          <h4>Overview</h4>
-          <p>{{service.description}}</p>
+        <div class="body-section" v-if="service.description">
+          <h4>Description</h4>
+          <p>{{service.description | emoji}}</p>
         </div>
-        <div>
+        <div class="body-section">
           <h4>Commands</h4>
 
           <div v-for="(command, name, index) in commands" class="command" :key="index">
-            <code class="code">{{service.alias}} {{command.format || name}}</code>
+            <code class="code">{{service.alias}} {{name}}</code>
             <p>{{command.help}}</p>
 
             <h5>Arguments</h5>
@@ -61,12 +67,19 @@
             </table>
           </div>
 
-          <div class="expand-box">
-            View all commands <span class="icon is-small">
-              <i class="fas fa-angle-down" aria-hidden="true"></i>
-            </span>
+          <p class="view-all-commands">
+            View all commands
+          </p>
+
+          <div class="card">
+            <div class="card-content">
+              <span v-html="readme"/>
+            </div>
           </div>
-          <a href="/">View all documentation here →</a>
+
+          <div class="documentation-link">
+            <a href="/">View all documentation here →</a>
+          </div>
         </div>
       </div>
     </div>
@@ -142,6 +155,8 @@
 </template>
 
 <script>
+import MarkdownIt from 'markdown-it';
+
 import queries from '../utils/graphql';
 import ServiceSummary from '../components/ServiceSummary';
 
@@ -173,6 +188,13 @@ export default {
         this.service.serviceTagsByServiceUuid.nodes &&
         this.service.serviceTagsByServiceUuid.nodes[0].configuration.commands;
     },
+    readme() {
+      const markdown = new MarkdownIt();
+      return this.service &&
+        this.service.serviceTagsByServiceUuid &&
+        this.service.serviceTagsByServiceUuid.nodes &&
+        markdown.render(this.service.serviceTagsByServiceUuid.nodes[0].readme);
+    },
     tags() {
       return this.service &&
         this.service.serviceTagsByServiceUuid &&
@@ -185,112 +207,109 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-h1, h2 {
-  font-weight: normal;
-  margin: 0;
-}
+<style scoped lang="styl">
+h1, h2
+  font-weight normal
+  margin 0
 
-.sidebar ul {
-  line-height: 2em;
-}
+.sidebar
+  margin-top 1em
 
-.no-topics {
-  font-size: 0.9em;
-  color: #ccc;
-}
+  .sidebar-info
+    margin-top 3.7em
 
-.name-container {
-  margin-top: 1em;
-  margin-bottom: 1.5em;
-  line-height: 2.8em;
-}
+    .sidebar-header
+      margin-top 2em
 
-.checkmark {
-  margin-left: 0.8em;
-  font-size: 1em;
-  color: #3E87DA;
-}
+  ul
+    list-style none
+    padding-left 0
+    line-height 2em
 
-.margin-left-3 {
-  margin-left: 0.8em;
-}
+  .tag
+    font-size 0.9em
+    margin-bottom 0.4em
 
-.sidebar {
-  ul {
-    list-style: none;
-    padding-left: 0;
-  }
 
-  .tag {
-    font-size: 0.9em;
-    margin-bottom: 0.4em;
-  }
-}
+  .no-topics
+    font-size 0.9em
+    color #ccc
 
-.command {
-  margin-bottom: 3em;
-}
 
-.code {
-  border-radius: 4px;
-  font-size: 1.3em;
-  background-color: #F5F8FA;
-  padding: 14px;
+.body
+  margin-top 1em
 
-  .tag {
-    font-size: 1em;
-    background: #E181E5;
-  }
-}
+  & > .body-section
+    margin-top 3em
 
-.expand-box {
-  color: #C0C0C0;
-  border: 1px solid #F0F0F0;
-  border-radius: 0 0 4px 4px;
-  text-align: center;
-  padding: 12px;
-  margin-bottom: 2em;
-}
+  & > .body-section ~ .body-section
+    margin-top 4.5em
 
-.columns {
-  max-width: 1100px;
-  margin: 0 auto;
-  text-align: left;
-}
+  .name-container
+    margin-bottom 1.5em
+    line-height 2.8em
 
-.search-result {
-  padding-top: 1.5em;
-  border-top: 1px solid #C7C7C7;
-}
+    .checkmark
+      margin-left 0.8em
+      font-size 2em
+      color #3E87DA
 
-.pricing-bar {
-  background: #F1F1F1;
-  width: 100vw;
-  margin-top: 2em;
+  .margin-left-3
+    margin-left 0.8em
 
-  .pricing-bar-left {
-    padding-left: 0;
-  }
+  .command
+    margin-bottom 3em
 
-  .is-disabled {
-    border: 1px solid #979797;
-    opacity: 0.22;
-  }
+  .code
+    border-radius 4px
+    font-size 1.3em
+    background-color #F5F8FA
+    padding 14px
 
-  .button {
-    padding: 0px 56px;
-  }
-}
+    .tag
+      font-size 1em
+      background #E181E5
 
-.pricing-details {
-  margin-left: 0em;
-  padding-left: 1.3em;
-  list-style: none;
 
-  .fa-check {
-    color: #2FC050;
-    font-size: 0.95em;
-  }
-}
+.view-all-commands
+  color #C0C0C0
+  font-size 0.8em
+
+.columns
+  max-width 1100px
+  margin 0 auto
+  text-align left
+
+.search-result
+  padding-top 1.5em
+  border-top 1px solid #C7C7C7
+
+.documentation-link
+  margin-top 3em
+
+.pricing-bar
+  background #F1F1F1
+  width 100vw
+  margin-top 2em
+
+  .pricing-bar-left
+    padding-left 0
+
+  .is-disabled
+    border 1px solid #979797
+    opacity 0.22
+
+  .button
+    padding 0px 56px
+
+
+.pricing-details
+  margin-left 0em
+  padding-left 1.3em
+  list-style none
+
+  .fa-check
+    color #2FC050
+    font-size 0.95em
+
 </style>

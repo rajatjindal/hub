@@ -14,6 +14,10 @@ const webpackConfig = {
   module: {
     rules: [
       {
+        test: /\.styl$/,
+        use: ['vue-style-loader', 'css-loader', 'stylus-loader'],
+      },
+      {
         test: /\.scss$/,
         use: ['vue-style-loader', 'css-loader', 'sass-loader'],
       },
