@@ -9,7 +9,7 @@
             <li class="li"><a href="https://hub.asyncy.com">Hub</a></li>
             <li class="li"><a href="https://app.asyncy.com">App</a></li>
             <li class="li"><a href="/">Status</a></li>
-            <li class="li"><a href="https://refresh--asyncy-homepage.netlify.com/faq">FAQ</a></li>
+            <li class="li"><a href="https://docs.asyncy.com/faq">FAQ</a></li>
           </ul>
         </div>
         <div class="column">
