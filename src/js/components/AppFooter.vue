@@ -5,7 +5,7 @@
         <div class="column">
           <div>Platform</div>
           <ul class="ul">
-            <li class="li"><a href="https://refresh--asyncy-homepage.netlify.com/platform">Overview</a></li>
+            <li class="li"><a href="https://asyncy.com/platform">Overview</a></li>
             <li class="li"><a href="https://hub.asyncy.com">Hub</a></li>
             <li class="li"><a href="https://app.asyncy.com">App</a></li>
             <li class="li"><a href="/">Status</a></li>
@@ -17,17 +17,17 @@
           <ul class="ul">
             <li class="li"><a href="https://docs.asyncy.com">Documentation</a></li>
             <li class="li"><a href="/">Examples</a></li>
-            <li class="li"><a href="https://refresh--asyncy-homepage.netlify.com/events">Events</a></li>
+            <li class="li"><a href="https://asyncy.com/events">Events</a></li>
             <li class="li"><a href="/">Legal</a></li>
           </ul>
         </div>
         <div class="column">
           <div>Company</div>
           <ul class="ul">
-            <li class="li"><a href="https://refresh--asyncy-homepage.netlify.com/about">About</a></li>
-            <li class="li"><a href="https://blog.asyncy.com">Blog</a></li>
+            <li class="li"><a href="https://asyncy.com/about">About</a></li>
+            <li class="li"><a href="https://medium.com/asyncy">Blog</a></li>
             <li class="li"><a href="https://angel.co/asyncy/jobs">Careers</a></li>
-            <li class="li"><a href="https://refresh--asyncy-homepage.netlify.com/contact">Contact</a></li>
+            <li class="li"><a href="https://asyncy.com/contact">Contact</a></li>
           </ul>
         </div>
         <div class="column">
