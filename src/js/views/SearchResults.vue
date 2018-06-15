@@ -50,7 +50,6 @@
         </div>
       </div>
     </div>
-    <app-footer/>
   </div>
 </template>
 

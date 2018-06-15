@@ -1,6 +1,7 @@
 <template>
   <div class="app">
     <router-view></router-view>
+    <app-footer link-component="url-link"/>
   </div>
 </template>
 
@@ -24,6 +25,8 @@ export default {
 @import "../../node_modules/bulma/sass/elements/form";
 @import "../../node_modules/bulma/sass/elements/table";
 
+@import "../../node_modules/asyncy-ui-components/dist/AppFooter.css";
+
 @import "../assets/fonts/1804-GFNGYO";
 
 .table {
@@ -34,6 +37,12 @@ export default {
 body {
   background: #111;
   margin: 0;
+
+  *, *:before, *:after {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+  }
 }
 
 .app {

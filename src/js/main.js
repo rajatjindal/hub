@@ -11,8 +11,9 @@ import emoji from 'node-emoji';
 import App from './App';
 import router from './router';
 
+import UrlLink from './components/UrlLink';
 import AppHeader from './components/AppHeader';
-import AppFooter from './components/AppFooter';
+import AppFooter from '../../node_modules/asyncy-ui-components/dist/AppFooter';
 
 const httpLink = new HttpLink({
   uri: 'https://api.asyncy.com/graphql',
@@ -32,6 +33,7 @@ const apolloProvider = new VueApollo({
 });
 
 Vue.config.productionTip = false;
+Vue.component('url-link', UrlLink);
 Vue.component('app-header', AppHeader);
 Vue.component('app-footer', AppFooter);
 

@@ -115,7 +115,6 @@
         </section>
       </div>
     </div>
-    <app-footer/>
   </div>
 </template>
 
