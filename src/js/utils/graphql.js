@@ -24,29 +24,27 @@ const SERVICE_QUERY = gql`query ServiceByAlias($where: Alias!) {
     alias
     description
     topics
-    serviceTagsByServiceUuid {
+    serviceTags {
       nodes {
         tag
         state
         configuration
-        readme
       }
     }
   }
 }`;
 
-const SEARCH_SERVICE_QUERY = gql`query SearchServices($orderBy: [ServicesOrderBy!], $condition: ServiceCondition!) {
-  allServices(orderBy: $orderBy, condition: $condition) {
+const SEARCH_SERVICE_QUERY = gql`query SearchServices($searchTerm: String!) {
+  searchServices(searchTerms: $searchTerm, first: 25) {
     totalCount
     pageInfo {
-      hasNextPage
       endCursor
     }
     edges {
       node {
         alias
-        topics
         description
+        topics
       }
     }
   }

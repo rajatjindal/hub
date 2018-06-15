@@ -71,12 +71,6 @@
             View all commands
           </p>
 
-          <div class="card">
-            <div class="card-content">
-              <span v-html="readme"/>
-            </div>
-          </div>
-
           <div class="documentation-link">
             <a href="/">View all documentation here →</a>
           </div>
@@ -154,8 +148,6 @@
 </template>
 
 <script>
-import MarkdownIt from 'markdown-it';
-
 import queries from '../utils/graphql';
 import ServiceSummary from '../components/ServiceSummary';
 
@@ -183,21 +175,14 @@ export default {
   computed: {
     commands() {
       return this.service &&
-        this.service.serviceTagsByServiceUuid &&
-        this.service.serviceTagsByServiceUuid.nodes &&
-        this.service.serviceTagsByServiceUuid.nodes[0].configuration.commands;
-    },
-    readme() {
-      const markdown = new MarkdownIt();
-      return this.service &&
-        this.service.serviceTagsByServiceUuid &&
-        this.service.serviceTagsByServiceUuid.nodes &&
-        markdown.render(this.service.serviceTagsByServiceUuid.nodes[0].readme);
+        this.service.serviceTags &&
+        this.service.serviceTags.nodes &&
+        this.service.serviceTags.nodes[0].configuration.commands;
     },
     tags() {
       return this.service &&
-        this.service.serviceTagsByServiceUuid &&
-        this.service.serviceTagsByServiceUuid.nodes;
+        this.service.serviceTags &&
+        this.service.serviceTags.nodes;
     },
   },
   components: {
@@ -301,14 +286,13 @@ h1, h2
   .button
     padding 0px 56px
 
+  .pricing-details
+    margin-left 0em
+    padding-left 1.3em
+    list-style none
 
-.pricing-details
-  margin-left 0em
-  padding-left 1.3em
-  list-style none
-
-  .fa-check
-    color #2FC050
-    font-size 0.95em
+    .fa-check
+      color #2FC050
+      font-size 0.95em
 
 </style>

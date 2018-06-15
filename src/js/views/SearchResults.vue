@@ -23,8 +23,7 @@
       </div>
       <div class="column is-8 main-container">
         <div class="search-bar-container">
-          <search-bar :value="search"/>
-          <p class="help-text">Try topic:social or topic:machine-learning</p>
+          <search-bar :value="search" ref="searchBar"/>
         </div>
 
         <div class="level is-mobile service-result-title-container">
@@ -44,6 +43,9 @@
             <div class="tile is-parent is-vertical">
               <div v-for="r in results" class="tile is-child search-result">
                 <service-summary :title="r.alias" :description="r.description" :tags="r.topics"></service-summary>
+              </div>
+              <div v-if="results.length === 0">
+                No search results found for "{{search}}".
               </div>
             </div>
           </div>
@@ -68,15 +70,12 @@ export default {
       query: queries.SEARCH_SERVICE_QUERY,
       variables() {
         return {
-          orderBy: [this.orderBy],
-          condition: Object.assign({}, {
-            alias: this.search.length ? this.search : undefined,
-          }),
+          searchTerm: this.search || 'microservice',
         };
       },
       update(data) {
-        this.totalItems = data.allServices.totalCount;
-        return data.allServices.edges.map(e => e.node);
+        this.totalItems = data.searchServices.totalCount;
+        return data.searchServices.edges.map(e => e.node);
       },
     },
   },
@@ -95,49 +94,43 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-h2 {
-  font-weight: normal;
-  font-size: 1.8em;
-  line-height: 1.8em;
-  margin-top: 1em;
-}
+<style scoped lang="styl">
+h2
+  font-weight normal
+  font-size 1.8em
+  line-height 1.8em
+  margin-top 1em
 
-ul {
-  list-style: none;
-  padding-left: 0;
-}
+ul
+  list-style none
+  padding-left 0
 
-.main-container {
-  margin-bottom: 2em;
-}
+.link
+  cursor pointer
 
-.sidebar {
-  ul {
-    line-height: 2em;
-  }
-}
+.main-container
+  margin-bottom 2em
 
-.columns {
-  max-width: 1100px;
-  margin: 0 auto;
-  text-align: left;
-}
+.sidebar
+  ul
+    line-height 2em
 
-.search-bar-container {
-  margin-top: 1.5em;
-}
+.columns
+  max-width 1100px
+  margin 0 auto
+  text-align left
 
-.service-result-title-container {
-  margin-bottom: 0.8em;
-}
+.search-bar-container
+  margin-top 1.5em
+  margin-bottom 2em
 
-.help-text {
-  color: #727272;
-}
+.service-result-title-container
+  margin-bottom 0.8em
 
-.search-result {
-  padding-top: 1.5em;
-  border-top: 1px solid #C7C7C7;
-}
+.help-text
+  color #727272
+
+.search-result
+  padding-top 1.5em
+  border-top 1px solid #C7C7C7
 </style>
