@@ -19,11 +19,7 @@ export default {
   },
   methods: {
     search() {
-      if (this.searchInput.length > 0) {
-        this.$router.push(`/search?q=${this.searchInput}`);
-      } else {
-        this.error = 'Please input something.';
-      }
+      this.$router.push(`/search?q=${this.searchInput}`);
     },
   },
   components: {

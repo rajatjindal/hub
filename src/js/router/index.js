@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Index from '../views/Index';
 import SearchResults from '../views/SearchResults';
 import Service from '../views/Service';
+import Tags from '../views/Tags';
 
 Vue.use(Router);
 
@@ -26,8 +27,22 @@ export default new Router({
       path: '/service/:alias',
       name: 'Service',
       component: Service,
+      meta: {
+        hasSearch: true,
+      },
       props(route) {
         return { alias: route.params.alias };
+      },
+    },
+    {
+      path: '/tags/:topic',
+      name: 'Tags',
+      component: Tags,
+      meta: {
+        hasSearch: true,
+      },
+      props(route) {
+        return { topic: route.params.topic };
       },
     },
   ],

@@ -1,13 +1,29 @@
 <template>
   <div class="app">
+    <app-header link-component="url-link" :show-search="hasSearch" :on-search="onSearch" :links="[
+      { text: 'Explore', to: '/' },
+      { text: 'Platform', to: 'https://www.asyncy.com/platform' },
+      { text: 'Documentation', to: 'https://docs.asyncy.com'},
+      { text: 'Submit a service', to: '/', button: true },
+    ]"></app-header>
     <router-view></router-view>
-    <app-footer link-component="url-link"/>
+    <app-footer/>
   </div>
 </template>
 
 <script>
 export default {
   name: 'app',
+  methods: {
+    onSearch(value) {
+      this.$router.push(`/search?q=${value}`);
+    },
+  },
+  computed: {
+    hasSearch() {
+      return this.$route.meta.hasSearch;
+    },
+  },
 };
 </script>
 
@@ -26,6 +42,7 @@ export default {
 @import "../../node_modules/bulma/sass/elements/table";
 
 @import "../../node_modules/asyncy-ui-components/dist/AppFooter.css";
+@import "../../node_modules/asyncy-ui-components/dist/AppHeader.css";
 
 @import "../assets/fonts/1804-GFNGYO";
 

@@ -1,24 +1,14 @@
 <template>
   <div class="index">
-    <app-header></app-header>
     <div class="columns">
       <div class="column is-one-fifth sidebar">
         <div>
           <p class="has-text-weight-bold">Topics</p>
           <ul>
-            <li>Marketing (42)</li>
-            <li>Stories (19)</li>
-            <li>Apps (16)</li>
-            <li>Other (12)</li>
+            <li v-for="(topic, index) in topics" :key="index">
+              <div><topic-tag>{{topic}}</topic-tag></div>
+            </li>
           </ul>
-
-          <p class="has-text-weight-bold">Languages</p>
-          <ul>
-            <li>Java (42)</li>
-            <li>Javascript (19)</li>
-            <li>PHP (12)</li>
-          </ul>
-
         </div>
       </div>
       <div class="column is-8 main-container">
@@ -85,6 +75,15 @@ export default {
       totalItems: 0,
       results: [],
     };
+  },
+  computed: {
+    topics() {
+      let allTopics = [];
+      this.results.forEach((r) => {
+        allTopics = allTopics.concat(r.topics);
+      });
+      return Array.from(new Set(allTopics));
+    },
   },
   components: {
     PaginationBar,

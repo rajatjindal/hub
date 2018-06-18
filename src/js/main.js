@@ -12,8 +12,9 @@ import App from './App';
 import router from './router';
 
 import UrlLink from './components/UrlLink';
-import AppHeader from './components/AppHeader';
+import TopicTag from './components/TopicTag';
 import AppFooter from '../../node_modules/asyncy-ui-components/dist/AppFooter';
+import AppHeader from '../../node_modules/asyncy-ui-components/dist/AppHeader';
 
 const httpLink = new HttpLink({
   uri: 'https://api.asyncy.com/graphql',
@@ -33,11 +34,19 @@ const apolloProvider = new VueApollo({
 });
 
 Vue.config.productionTip = false;
+Vue.component('topic-tag', TopicTag);
 Vue.component('url-link', UrlLink);
 Vue.component('app-header', AppHeader);
 Vue.component('app-footer', AppFooter);
 
 Vue.filter('emoji', value => emoji.emojify(value, () => '🐙'));
+Vue.filter('capitalize', (value) => {
+  if (value) {
+    const str = value.toString();
+    return str.charAt(0).toUpperCase() + str.slice(1);
+  }
+  return '';
+});
 
 /* eslint-disable no-new */
 new Vue({

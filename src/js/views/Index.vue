@@ -1,6 +1,5 @@
 <template>
   <div class="index">
-    <app-header></app-header>
     <div class="hero">
       <h1>Asyncy Hub</h1>
       <p class="subtitle">Service discovery and marketplace for Asyncy</p>

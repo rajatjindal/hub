@@ -1,6 +1,5 @@
 <template>
   <div class="index">
-    <app-header hasSearchBar="true"></app-header>
     <div class="columns">
       <div class="column is-one-fifth sidebar">
         <div>
@@ -14,7 +13,7 @@
           <div class="sidebar-info">
             <p class="sidebar-header has-text-weight-bold">Topics</p>
             <div class="no-topics" v-if="!service.topics">No topics</div>
-            <div v-for="t in service.topics"><span class="tag">{{t}}</span></div>
+            <div v-for="t in service.topics"><topic-tag>{{t}}</topic-tag></div>
 
             <p class="sidebar-header has-text-weight-bold">Versions</p>
             <ul>
@@ -177,6 +176,7 @@ export default {
       return this.service &&
         this.service.serviceTags &&
         this.service.serviceTags.nodes &&
+        this.service.serviceTags.nodes.length > 0 &&
         this.service.serviceTags.nodes[0].configuration.commands;
     },
     tags() {

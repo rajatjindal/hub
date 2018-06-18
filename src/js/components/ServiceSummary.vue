@@ -7,8 +7,8 @@
       <div class="media-content">
         <h4>{{ title }}</h4>
         <p>{{ description | emoji }}</p>
-        <div v-if="tags" class="tag-container">
-          <div v-for="t in tags" class="tag">{{ t }}</div>
+        <div v-if="tags" class="tags-container">
+          <span class="tag-container" v-for="t in tags" :key="t"><topic-tag>{{ t }}</topic-tag></span>
         </div>
       </div>
     </div>
@@ -43,18 +43,11 @@ p {
   margin: 0;
 }
 
-.tag-container {
+.tags-container {
   margin-top: 1em;
 }
 
-.tag {
-  margin-right: 0.4em;
-  font-size: 0.9em;
-  padding: 2px 14px;
-  border: 1px solid #404248;
-  background: white;
-  color: #040508;
-  opacity: 0.3;
-  margin-bottom: 0.4em;
+.tag-container {
+  margin-right: 0.2em;
 }
 </style>
