@@ -25,37 +25,7 @@
     <div class="columns">
       <div class="column is-one-fifth sidebar">
         <div>
-
-          <p class="has-text-weight-bold">Topics</p>
-          <ul>
-            <li>List 1</li>
-            <li>List 2</li>
-            <li>List 3</li>
-            <li>List 4</li>
-            <li>List 5</li>
-            <li>List 6</li>
-            <li>List 7</li>
-          </ul>
-
-          <p class="has-text-weight-bold">Filters</p>
-          <ul>
-            <li><label class="checkbox">
-              <input type="checkbox">
-              Item 1
-              </label>
-            </li>
-            <li><label class="checkbox">
-              <input type="checkbox">
-              Item 2
-              </label>
-            </li>
-            <li><label class="checkbox">
-              <input type="checkbox">
-              Item 3
-              </label>
-            </li>
-          </ul>
-
+          <topics-list v-model="topics"/>
         </div>
       </div>
       <div class="column">
@@ -174,6 +144,12 @@ export default {
         },
       ],
     };
+  },
+  computed: {
+    topics() {
+      return this.data.featuredServices.map(s => s.topics)
+        .concat(this.data.recentServices.map(s => s.topics));
+    },
   },
   components: {
     ServiceSummary,

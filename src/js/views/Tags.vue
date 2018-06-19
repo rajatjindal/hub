@@ -4,7 +4,7 @@
       <div class="column is-12 body">
         <div class="level name-container is-mobile">
           <div class="level-left">
-            <h2>{{ topic | capitalize }}</h2>
+            <h2>{{ topic | from-topic }}</h2>
           </div>
         </div>
         <div class="results-container">

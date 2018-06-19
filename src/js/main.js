@@ -13,6 +13,7 @@ import router from './router';
 
 import UrlLink from './components/UrlLink';
 import TopicTag from './components/TopicTag';
+import TopicsList from './components/TopicsList';
 import AppFooter from '../../node_modules/asyncy-ui-components/dist/AppFooter';
 import AppHeader from '../../node_modules/asyncy-ui-components/dist/AppHeader';
 import HeroBackground from '../../node_modules/asyncy-ui-components/dist/HeroBackground';
@@ -40,8 +41,14 @@ Vue.component('url-link', UrlLink);
 Vue.component('app-header', AppHeader);
 Vue.component('app-footer', AppFooter);
 Vue.component('hero-background', HeroBackground);
+Vue.component('topics-list', TopicsList);
 
 Vue.filter('emoji', value => emoji.emojify(value, () => '🐙'));
+Vue.filter('from-topic', (value) => {
+  const values = value.split('-');
+  const capitalized = values.map(v => v.charAt(0).toUpperCase() + v.slice(1));
+  return capitalized.join(' ');
+});
 Vue.filter('capitalize', (value) => {
   if (value) {
     const str = value.toString();

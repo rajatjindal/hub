@@ -11,9 +11,7 @@
           </ul>
 
           <div class="sidebar-info">
-            <p class="sidebar-header has-text-weight-bold">Topics</p>
-            <div class="no-topics" v-if="!service.topics">No topics</div>
-            <div v-for="t in service.topics"><topic-tag>{{t}}</topic-tag></div>
+            <topics-list v-model="service.topics"/>
 
             <p class="sidebar-header has-text-weight-bold">Versions</p>
             <ul>

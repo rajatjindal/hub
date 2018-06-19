@@ -2,14 +2,7 @@
   <div class="index">
     <div class="columns">
       <div class="column is-one-fifth sidebar">
-        <div>
-          <p class="has-text-weight-bold">Topics</p>
-          <ul>
-            <li v-for="(topic, index) in topics" :key="index">
-              <div><topic-tag>{{topic}}</topic-tag></div>
-            </li>
-          </ul>
-        </div>
+        <topics-list v-model="topics"/>
       </div>
       <div class="column is-8 main-container">
         <div class="search-bar-container">
@@ -78,11 +71,7 @@ export default {
   },
   computed: {
     topics() {
-      let allTopics = [];
-      this.results.forEach((r) => {
-        allTopics = allTopics.concat(r.topics);
-      });
-      return Array.from(new Set(allTopics));
+      return this.results.map(r => r.topics);
     },
   },
   components: {
@@ -99,10 +88,6 @@ h2
   font-size 1.8em
   line-height 1.8em
   margin-top 1em
-
-ul
-  list-style none
-  padding-left 0
 
 .link
   cursor pointer

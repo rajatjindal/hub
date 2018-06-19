@@ -6,7 +6,7 @@
       </div>
       <div class="media-content">
         <h4>{{ title }}</h4>
-        <p>{{ description | emoji }}</p>
+        <p>{{ (description || title) | emoji }}</p>
         <div v-if="tags" class="tags-container">
           <span class="tag-container" v-for="t in tags" :key="t"><topic-tag>{{ t }}</topic-tag></span>
         </div>
