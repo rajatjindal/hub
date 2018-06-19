@@ -15,6 +15,7 @@ import UrlLink from './components/UrlLink';
 import TopicTag from './components/TopicTag';
 import AppFooter from '../../node_modules/asyncy-ui-components/dist/AppFooter';
 import AppHeader from '../../node_modules/asyncy-ui-components/dist/AppHeader';
+import HeroBackground from '../../node_modules/asyncy-ui-components/dist/HeroBackground';
 
 const httpLink = new HttpLink({
   uri: 'https://api.asyncy.com/graphql',
@@ -38,6 +39,7 @@ Vue.component('topic-tag', TopicTag);
 Vue.component('url-link', UrlLink);
 Vue.component('app-header', AppHeader);
 Vue.component('app-footer', AppFooter);
+Vue.component('hero-background', HeroBackground);
 
 Vue.filter('emoji', value => emoji.emojify(value, () => '🐙'));
 Vue.filter('capitalize', (value) => {

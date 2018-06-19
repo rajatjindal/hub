@@ -1,5 +1,14 @@
 <template>
   <div class="index">
+     <hero-background
+      :left-image="headerLeft"
+      :right-image="headerRight"
+      :scale="0.6"
+      :left-x="-320"
+      :left-y="-80"
+      :right-x="-85"
+      :right-y="-80"
+    />
     <div class="hero">
       <h1>Asyncy Hub</h1>
       <p class="subtitle">Service discovery and marketplace for Asyncy</p>
@@ -122,6 +131,9 @@ import queries from '../utils/graphql';
 import ServiceSummary from '../components/ServiceSummary';
 import SearchBar from '../components/SearchBar';
 
+import headerLeft from '../../../node_modules/asyncy-ui-components/assets/images/home_header_left.svg';
+import headerRight from '../../../node_modules/asyncy-ui-components/assets/images/home_header_right.svg';
+
 export default {
   name: 'index',
   apollo: {
@@ -137,6 +149,8 @@ export default {
   },
   data() {
     return {
+      headerLeft,
+      headerRight,
       data: {
         featuredServices: [],
         recentServices: [],

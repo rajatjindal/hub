@@ -43,6 +43,7 @@ export default {
 
 @import "../../node_modules/asyncy-ui-components/dist/AppFooter.css";
 @import "../../node_modules/asyncy-ui-components/dist/AppHeader.css";
+@import "../../node_modules/asyncy-ui-components/dist/HeroBackground.css";
 
 @import "../assets/fonts/1804-GFNGYO";
 
