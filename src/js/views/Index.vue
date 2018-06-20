@@ -31,7 +31,7 @@
       <div class="column">
         <section class="section">
           <h2>Featured services</h2>
-          <div class="featured-services">
+          <div class="featured-services section-body">
             <div class="tile is-ancestor">
               <div class="tile is-parent" v-for="f in data.featuredServices">
                 <router-link :to="`/service/${f.alias}`">
@@ -44,7 +44,7 @@
 
         <section class="section">
           <h2>Recently added</h2>
-          <div>
+          <div class="section-body">
             <div class="tile is-ancestor">
               <div class="tile is-parent is-vertical">
                 <div v-for="r in data.recentServices.slice(0, 3)" class="tile is-child">
@@ -60,9 +60,9 @@
           </div>
         </section>
 
-        <section class="section">
+<!--         <section class="section">
           <h2>Stories</h2>
-          <div>
+          <div class="section-body">
             <div class="tile is-ancestor">
               <div class="tile is-parent is-vertical">
                 <div v-for="s in stories.slice(0, 2)" class="tile is-child">
@@ -85,7 +85,7 @@
               </div>
             </div>
           </div>
-        </section>
+        </section> -->
 
         <section class="section getting-started">
           <h2>List your service on Asyncy Hub</h2>
@@ -159,10 +159,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-h1, h2 {
-  font-weight: normal;
-}
-
 .subtitle {
   display: block;
   font-size: 1.15em;
@@ -185,12 +181,17 @@ ul {
   margin-bottom: 2em;
   padding-bottom: 2em;
   border-bottom: 1px solid #ccc;
+
+  .section-body {
+    margin-top: 1.4em;
+  }
 }
 
 .hero {
   overflow: auto;
   color: white;
   background: #111;
+  padding-top: 28px;
   padding-bottom: 50px;
 }
 
@@ -202,6 +203,7 @@ ul {
 .columns {
   max-width: 1100px;
   margin: 0 auto;
+  margin-top: 1em;
   text-align: left;
 }
 

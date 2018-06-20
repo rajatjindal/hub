@@ -25,6 +25,7 @@
     "style-loader": "^0.21.0",
     "vue": "^2.5.16",
     "vue-apollo": "^3.0.0-alpha.3",
+    "vue-clipboard2": "^0.2.0",
     "vue-pagination-2": "^1.6.1",
     "vue-router": "^2.7.0",
     "vue-style-loader": "^4.1.0",

@@ -37,7 +37,6 @@ export default {
 @import "../../node_modules/bulma/sass/components/card";
 @import "../../node_modules/bulma/sass/elements/tag";
 @import "../../node_modules/bulma/sass/elements/box";
-@import "../../node_modules/bulma/sass/elements/button";
 @import "../../node_modules/bulma/sass/elements/form";
 @import "../../node_modules/bulma/sass/elements/table";
 
@@ -63,6 +62,16 @@ body {
   }
 }
 
+h1, h2, h3, h4, h5 {
+  font-weight: normal;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+h3, h4, h5 {
+  font-weight: 500;
+}
+
 .app {
   background: white;
   font-family: Graphik Web, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
@@ -72,6 +81,15 @@ body {
   color: black;
   font-size: 1em;
   line-height: 1.6em;
+}
+
+.button {
+  padding: 12px 32px;
+  font-size: 1em;
+  border: none;
+  color: white;
+  background: #16CE72;
+  border-radius: 3px;
 }
 
 a {

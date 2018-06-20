@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p class="has-text-weight-bold">Topics</p>
+    <h4>Topics</h4>
     <ul class="topics-list" v-if="topics.length > 0">
       <li class="topic-item" v-for="topic in topics" :key="topic">
         <div><topic-tag>{{topic}}</topic-tag></div>

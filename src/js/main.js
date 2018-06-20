@@ -6,6 +6,7 @@ import { ApolloClient } from 'apollo-client';
 import { HttpLink } from 'apollo-link-http';
 import { InMemoryCache } from 'apollo-cache-inmemory';
 import VueApollo from 'vue-apollo';
+import VueClipboard from 'vue-clipboard2';
 import emoji from 'node-emoji';
 
 import App from './App';
@@ -29,6 +30,7 @@ const apolloClient = new ApolloClient({
 });
 
 Vue.use(VueApollo);
+Vue.use(VueClipboard);
 Vue.use(pagination);
 
 const apolloProvider = new VueApollo({
