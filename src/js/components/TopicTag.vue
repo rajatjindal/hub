@@ -25,3 +25,10 @@ export default {
   },
 };
 </script>
+
+<style scoped lang="styl">
+.tag
+  transition all 0.3s
+.tag:hover
+  filter brightness(0.95)
+</style>
