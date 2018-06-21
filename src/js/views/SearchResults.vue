@@ -96,6 +96,7 @@ h2
   margin-bottom 2em
 
 .sidebar
+  margin-top 1.6em
   ul
     line-height 2em
 

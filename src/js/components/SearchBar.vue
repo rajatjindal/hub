@@ -37,7 +37,7 @@ export default {
 .input
   font-size 1em
   border-radius 6px
-  border 1px solid transparent
+  border 1px solid #ccc
   padding 15px 20px
   margin-bottom 10px
   background-color rgba(35,35,35,1)
