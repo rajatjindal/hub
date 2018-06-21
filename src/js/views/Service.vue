@@ -7,7 +7,7 @@
 
           <ul class="links">
             <!-- <li><a href="/">Try a demo →</a></li> -->
-            <li><a href="/">View on Github →</a></li>
+            <li><a :href="`https://www.github.com/${service.pullUrl}`">View on Github →</a></li>
           </ul>
 
           <div class="sidebar-info">

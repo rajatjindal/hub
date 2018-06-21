@@ -24,6 +24,7 @@ const SERVICE_QUERY = gql`query ServiceByAlias($where: Alias!) {
     alias
     description
     topics
+    pullUrl
     serviceTags {
       nodes {
         tag
