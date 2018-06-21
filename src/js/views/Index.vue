@@ -33,9 +33,21 @@
           <h2>Featured services</h2>
           <div class="featured-services section-body">
             <div class="tile is-ancestor">
-              <div class="tile is-parent" v-for="f in data.featuredServices">
-                <router-link :to="`/service/${f.alias}`">
-                  <div class="image-placeholder tile is-child"></div>
+              <div class="tile is-parent">
+                <router-link :to="`/service/slack`">
+                  <div class="featured tile is-child slack-service">Slack</div>
+                </router-link>
+              </div>
+
+              <div class="tile is-parent">
+                <router-link :to="`/service/twitter`">
+                  <div class="featured tile is-child twitter-service">Twitter</div>
+                </router-link>
+              </div>
+
+              <div class="tile is-parent">
+                <router-link :to="`/service/twilio`">
+                  <div class="featured tile is-child twilio-service">Twilio</div>
                 </router-link>
               </div>
             </div>
@@ -158,71 +170,74 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-.subtitle {
+<style scoped lang="styl">
+.subtitle
   display: block;
   font-size: 1.15em;
   margin-top: 1.5em;
   margin-bottom: 1.5em;
-}
 
-.help-message {
+.help-message
   font-size: 0.9em;
   color: #ccc;
-}
 
-ul {
+ul
   list-style: none;
   padding-left: 0;
   line-height: 2em;
-}
 
-.section {
+.section
   margin-bottom: 2em;
   padding-bottom: 2em;
   border-bottom: 1px solid #ccc;
 
-  .section-body {
+  .section-body
     margin-top: 1.4em;
-  }
-}
 
-.hero {
+.hero
   overflow: auto;
   color: white;
   background: #111;
   padding-top: 28px;
   padding-bottom: 50px;
-}
 
-.search-bar-container {
-  max-width: 500px;
+.search-bar-container
+  max-width: 580px;
   margin: 0 auto;
-}
 
-.columns {
+.columns
   max-width: 1100px;
   margin: 0 auto;
   margin-top: 1em;
   text-align: left;
-}
 
-.image-placeholder {
-  border: 1px solid #ccc;
-  width: 100%;
-  height: 150px;
-  border-radius: 5px;
-}
+.featured-services
+  height 150px
 
-.featured-services {
-  height: 150px;
+  .featured
+    width 100%
+    height 150px
+    border-radius 5px
+    padding 25px
+    font-size 0.9
+    font-weight 600
+    color white
+    display flex
+    justify-content center
+    align-items center
 
-  a {
-    width: 100%;
-  }
-}
+  .slack-service
+    background-color #573753
 
-.getting-started {
-  text-align: center;
-}
+  .twitter-service
+    background-color #1DA1F2
+
+  .twilio-service
+    background-color #F22F44
+
+  a
+    width 100%
+
+.getting-started
+  text-align center
 </style>

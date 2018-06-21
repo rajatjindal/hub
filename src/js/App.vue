@@ -37,7 +37,6 @@ export default {
 @import "../../node_modules/bulma/sass/components/card";
 @import "../../node_modules/bulma/sass/elements/tag";
 @import "../../node_modules/bulma/sass/elements/box";
-@import "../../node_modules/bulma/sass/elements/form";
 @import "../../node_modules/bulma/sass/elements/table";
 
 @import "../../node_modules/asyncy-ui-components/dist/AppFooter.css";

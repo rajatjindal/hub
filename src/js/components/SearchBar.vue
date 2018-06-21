@@ -1,7 +1,6 @@
 <template>
   <form @submit.prevent="search">
-    <input class="input" type="text" placeholder="Search Hub" v-model="searchInput">
-    <div v-if="error">{{error}}</div>
+    <input class="input search-bar" type="text" placeholder="Search Hub" v-model="searchInput">
   </form>
 </template>
 
@@ -14,7 +13,6 @@ export default {
   data() {
     return {
       searchInput: this.value || '',
-      error: '',
     };
   },
   methods: {
@@ -28,5 +26,31 @@ export default {
 };
 </script>
 
-<style scoped>
+<style scoped lang="styl">
+.input.search-bar
+  width 100%
+  background-color white
+
+.input.search-bar:focus
+  color black
+
+.input
+  font-size 1em
+  border-radius 6px
+  border 1px solid transparent
+  padding 15px 20px
+  margin-bottom 10px
+  background-color rgba(35,35,35,1)
+  color rgba(190,190,190,1)
+  transition all 0.2s ease-in-out
+  outline none
+
+.input:focus
+  border-color #515CF9
+  filter brightness(120%)
+  color white
+
+.input:invalid
+  border-color #F74545
+  color #F74545
 </style>
