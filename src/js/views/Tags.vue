@@ -2,6 +2,8 @@
   <div class="index">
     <div class="columns">
       <div class="column is-12 body">
+        <div class="breadcrumb" v-if="prevPage.name === 'Hub'"><router-link :to="prevPage.path">{{prevPage.name}}</router-link> / {{topic | from-topic}}</div>
+
         <div class="level name-container is-mobile">
           <div class="level-left">
             <h2>{{ topic | from-topic }}</h2>
@@ -19,7 +21,7 @@
                 </div>
               </div>
               <div v-if="results.length === 0">
-                No search results found for "{{search}}".
+                No services found.
               </div>
             </div>
           </div>
@@ -40,6 +42,10 @@ export default {
     return {
       totalItems: 0,
       results: [],
+      prevPage: {
+        name: '',
+        path: '',
+      },
     };
   },
   apollo: {
@@ -56,8 +62,13 @@ export default {
       },
     },
   },
-  computed: {
-
+  beforeRouteEnter: (to, from, next) => {
+    next((vm) => {
+      // eslint-disable-next-line
+      vm.prevPage.name = from.name;
+      // eslint-disable-next-line
+      vm.prevPage.path = from.path;
+    });
   },
   components: {
     ServiceSummary,
@@ -71,6 +82,10 @@ h2
   font-size 1.8em
   margin 0
 
+.breadcrumb
+  color #7E7E7E
+  font-size 0.9em
+  margin-bottom 2.2em
 
 .columns
   max-width 1100px
