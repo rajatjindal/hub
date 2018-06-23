@@ -12,6 +12,7 @@ import emoji from 'node-emoji';
 import App from './App';
 import router from './router';
 
+import TwoColumnSidebar from './layouts/TwoColumnSidebar';
 import UrlLink from './components/UrlLink';
 import TopicTag from './components/TopicTag';
 import TopicsList from './components/TopicsList';
@@ -38,6 +39,7 @@ const apolloProvider = new VueApollo({
 });
 
 Vue.config.productionTip = false;
+Vue.component('two-column-sidebar', TwoColumnSidebar);
 Vue.component('topic-tag', TopicTag);
 Vue.component('url-link', UrlLink);
 Vue.component('app-header', AppHeader);

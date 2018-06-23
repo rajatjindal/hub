@@ -30,6 +30,8 @@ export default {
 .input.search-bar
   width 100%
   background-color white
+  z-index 1
+  position relative
 
 .input.search-bar:focus
   color black

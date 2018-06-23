@@ -1,15 +1,15 @@
 <template>
   <div class="index">
-     <hero-background
-      :left-image="headerLeft"
-      :right-image="headerRight"
-      :scale="0.6"
-      :left-x="-320"
-      :left-y="-80"
-      :right-x="-85"
-      :right-y="-80"
-    />
     <div class="hero">
+       <hero-background
+        :left-image="headerLeft"
+        :right-image="headerRight"
+        :scale="0.6"
+        :left-x="-320"
+        :left-y="-80"
+        :right-x="-85"
+        :right-y="-80"
+      />
       <h1>Asyncy Hub</h1>
       <p class="subtitle">Service discovery and marketplace for Asyncy</p>
       <div class="search-bar-container">
@@ -22,13 +22,9 @@
       <p class="help-message">Try topic:social, topic:machine-learning or stars:>100</p>
     </div>
 
-    <div class="columns">
-      <div class="column is-one-fifth sidebar">
-        <div>
-          <topics-list v-model="topics"/>
-        </div>
-      </div>
-      <div class="column">
+    <two-column-sidebar>
+      <topics-list v-model="topics" slot="sidebar" />
+      <div slot="body">
         <section class="section">
           <h2>Featured services</h2>
           <div class="featured-services section-body">
@@ -72,39 +68,12 @@
           </div>
         </section>
 
-<!--         <section class="section">
-          <h2>Stories</h2>
-          <div class="section-body">
-            <div class="tile is-ancestor">
-              <div class="tile is-parent is-vertical">
-                <div v-for="s in stories.slice(0, 2)" class="tile is-child">
-                  <div>
-                    <div class="image-placeholder"></div>
-                    <h4>{{ s.title }}</h4>
-                    <p>{{ s.description }}</p>
-                  </div>
-                </div>
-              </div>
-              <div class="tile is-vertical is-1"/>
-              <div class="tile is-parent is-vertical">
-                <div v-for="s in stories.slice(2, 4)" class="tile is-child">
-                  <div>
-                    <div class="image-placeholder"></div>
-                    <h4>{{ s.title }}</h4>
-                    <p>{{ s.description }}</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section> -->
-
         <section class="section getting-started">
           <h2>List your service on Asyncy Hub</h2>
           <button class="button is-light">Get Started</button>
         </section>
       </div>
-    </div>
+    </two-column-sidebar>
   </div>
 </template>
 
@@ -137,24 +106,6 @@ export default {
         featuredServices: [],
         recentServices: [],
       },
-      stories: [
-        {
-          title: 'Title',
-          description: 'Duis in erat eget nisl aliquet sagittis. Cras non quam erat. Proin porttitor, mauris eget finibus semper, tellus turpis fringilla.',
-        },
-        {
-          title: 'Title',
-          description: 'Duis in erat eget nisl aliquet sagittis. Cras non quam erat. Proin porttitor, mauris eget finibus semper, tellus turpis fringilla.',
-        },
-        {
-          title: 'Title',
-          description: 'Duis in erat eget nisl aliquet sagittis. Cras non quam erat. Proin porttitor, mauris eget finibus semper, tellus turpis fringilla.',
-        },
-        {
-          title: 'Title',
-          description: 'Duis in erat eget nisl aliquet sagittis. Cras non quam erat. Proin porttitor, mauris eget finibus semper, tellus turpis fringilla.',
-        },
-      ],
     };
   },
   computed: {
@@ -196,14 +147,13 @@ ul
 
 .hero
   overflow: auto;
+  padding: 28px 25px 50px 25px;
   color: white;
   background: #111;
-  padding-top: 28px;
-  padding-bottom: 50px;
 
-.search-bar-container
-  max-width: 580px;
-  margin: 0 auto;
+  .search-bar-container
+    max-width: 580px;
+    margin: 0 auto;
 
 .columns
   max-width: 1100px;
@@ -212,8 +162,6 @@ ul
   text-align: left;
 
 .featured-services
-  height 150px
-
   .featured
     width 100%
     height 150px

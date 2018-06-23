@@ -1,45 +1,42 @@
 <template>
-  <div class="index">
-    <div class="columns">
-      <div class="column is-one-fifth sidebar">
-        <div>
-          <button class="button is-primary">+ Add to story</button>
+  <two-column-sidebar>
+    <div slot="sidebar" class="sidebar">
+      <button class="button is-primary">+ Add to story</button>
 
-          <ul class="links">
-            <!-- <li><a href="/">Try a demo →</a></li> -->
-            <li><a :href="`https://www.github.com/${service.pullUrl}`">View on Github →</a></li>
-          </ul>
+      <ul class="links">
+        <!-- <li><a href="/">Try a demo →</a></li> -->
+        <li><a :href="`https://www.github.com/${service.pullUrl}`">View on Github →</a></li>
+      </ul>
 
-          <div class="sidebar-info">
-            <topics-list v-model="service.topics"/>
+      <div class="sidebar-info">
+        <topics-list v-model="service.topics"/>
 
-            <h4 class="sidebar-header">Versions</h4>
-            <ul class="versions">
-              <li class="version" v-for="tag in tags">{{tag.tag}} - {{tag.state}}</li>
-            </ul>
-          </div>
-        </div>
+        <h4 class="sidebar-header">Versions</h4>
+        <ul class="versions">
+          <li class="version" v-for="tag in tags">{{tag.tag}} - {{tag.state}}</li>
+        </ul>
       </div>
-      <div class="column is-7 body">
-        <div class="name-container">
-          <h1 class="h1">{{service.alias}}</h1>
-        </div>
-        <div class="body-section" v-if="service.description">
-          <h4>Description</h4>
-          <p>{{service.description | emoji}}</p>
-        </div>
-        <div class="body-section">
-          <h4>Commands</h4>
+    </div>
+    <div slot="body" class="body">
+      <div class="name-container">
+        <h1 class="h1">{{service.alias}}</h1>
+      </div>
+      <div class="body-section" v-if="service.description">
+        <h4>Description</h4>
+        <p>{{service.description | emoji}}</p>
+      </div>
+      <div class="body-section">
+        <h4>Commands</h4>
 
-          <div v-for="(command, name, index) in commands" class="command" :key="index">
-            <h3>{{name}}</h3>
-            <p>{{command.help}}</p>
-            <h5>Example</h5>
-            <pre class="snippet"><code class="code">result = {{service.alias}} {{name}}<template v-for="(arg, name, index) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template><button class="clippy-btn" @click="copyText"><img class="clippy" width="13" :src="clippy" alt="Copy to clipboard"></button></code>
-            </pre>
+        <div v-for="(command, name, index) in commands" class="command" :key="index">
+          <h3>{{name}}</h3>
+          <p>{{command.help}}</p>
+          <h5>Example</h5>
+          <div class="snippet"><code class="code">result = {{service.alias}} {{name}}<template v-for="(arg, name, index) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template><button class="clippy-btn" @click="copyText"><img class="clippy" width="13" :src="clippy" alt="Copy to clipboard"></button></code></div>
 
-            <div v-if="command.arguments">
-              <h5>Arguments</h5>
+          <div v-if="command.arguments">
+            <h5>Arguments</h5>
+            <div class="arguments-table-container">
               <table class="table is-bordered">
                 <thead>
                   <tr>
@@ -61,11 +58,11 @@
                 </tbody>
               </table>
             </div>
+          </div>
 
-            <div v-if="command.output && command.output.type">
-              <h5>Output</h5>
-              <div>{{command.output}}</div>
-            </div>
+          <div v-if="command.output && command.output.type">
+            <h5>Output</h5>
+            <div>{{command.output}}</div>
           </div>
         </div>
       </div>
@@ -137,7 +134,7 @@
         </div>
       </div>
     </div> -->
-  </div>
+  </two-column-sidebar>
 </template>
 
 <script>
@@ -242,9 +239,6 @@ export default {
       font-size 2em
       color #3E87DA
 
-  .margin-left-3
-    margin-left 0.8em
-
   .command
     margin-bottom 2em
     padding-bottom 1.5em
@@ -256,14 +250,17 @@ export default {
     background-color #f9f9f9
 
   .snippet
-    .code
-      position relative
-      border-radius 4px
-      font-size 1.3em
-      background-color #f9f9f9
-      border 1px solid #ccc
-      padding 12px 16px
+    position relative
+    border-radius 4px
+    font-size 1.3em
+    background-color #f9f9f9
+    border 1px solid #ccc
+    padding 12px 16px
 
+    &:hover .code .clippy-btn
+      opacity 1
+
+    .code
       .tag
         font-size 1em
         background #E181E5
@@ -274,7 +271,7 @@ export default {
         padding 3px 6px
         position absolute
         right 10px
-        top 10px
+        top 12px
         cursor: pointer;
         background-color #eee
         background-image linear-gradient(#fcfcfc,#eee)
@@ -299,17 +296,11 @@ export default {
           position relative
           top 1px
 
-      &:hover .clippy-btn
-        opacity 1
+  .arguments-table-container
+    max-width: calc(100vw - 24px);
+    overflow: scroll;
 
-.columns
-  max-width 1100px
-  margin 0 auto
-  text-align left
 
-.search-result
-  padding-top 1.5em
-  border-top 1px solid #C7C7C7
 
 .pricing-bar
   background #F1F1F1

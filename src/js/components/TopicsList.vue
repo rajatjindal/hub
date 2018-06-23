@@ -37,6 +37,11 @@ export default {
 </script>
 
 <style scoped lang="styl">
+@media (max-width: 768px)
+  .topic-item
+    display inline-block
+    margin-right 0.3em
+
 .topics-list
   list-style none
   padding-left 0
