@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="search">
-    <input class="input search-bar" type="text" placeholder="Search Hub" v-model="searchInput">
+    <input class="input search-bar" type="text" placeholder="Search Hub" v-model="searchInput" aria-label="Search Hub">
   </form>
 </template>
 

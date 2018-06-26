@@ -16,7 +16,7 @@
     "apollo-client": "^2.3.1",
     "apollo-link": "^1.2.2",
     "apollo-link-http": "^1.5.4",
-    "asyncy-ui-components": "0.0.16",
+    "asyncy-ui-components": "0.0.17",
     "bulma": "^0.7.1",
     "chunk": "0.0.2",
     "graphql": "^0.13.2",
