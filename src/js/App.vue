@@ -38,13 +38,16 @@ export default {
 @import "../../node_modules/bulma/sass/elements/tag";
 @import "../../node_modules/bulma/sass/elements/box";
 @import "../../node_modules/bulma/sass/elements/table";
+@import "../assets/fonts/1804-GFNGYO";
+</style>
 
+<style>
 @import "../../node_modules/asyncy-ui-components/dist/AppFooter.css";
 @import "../../node_modules/asyncy-ui-components/dist/AppHeader.css";
 @import "../../node_modules/asyncy-ui-components/dist/HeroBackground.css";
+</style>
 
-@import "../assets/fonts/1804-GFNGYO";
-
+<style lang="styl">
 .table {
   border-spacing: 0px;
   border-collapse: collapse;
@@ -97,7 +100,7 @@ a {
 }
 
 h1 {
-  font-size: 2.8em;
+  font-size: 2.1em;
   margin-bottom: 0.3em;
 }
 </style>

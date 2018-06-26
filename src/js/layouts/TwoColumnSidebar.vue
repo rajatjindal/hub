@@ -4,7 +4,7 @@
       <div class="column is-one-fifth sidebar">
         <slot name="sidebar"/>
       </div>
-      <div class="column is-8 main-container">
+      <div class="column is-four-fifths main-container">
         <slot name="body"/>
       </div>
     </div>
@@ -26,7 +26,7 @@ export default {};
   min-height 650px
 
 .columns
-  max-width 1100px
+  max-width 1200px
   margin 0 auto
   text-align left
   display flex

@@ -19,7 +19,7 @@
     </div>
     <div slot="body" class="body">
       <div class="name-container">
-        <h1 class="h1">{{service.alias}}</h1>
+        <h1>{{service.alias}}</h1>
       </div>
       <div class="body-section" v-if="service.description">
         <h4>Description</h4>
@@ -29,13 +29,23 @@
         <h4>Commands</h4>
 
         <div v-for="(command, name, index) in commands" class="command" :key="index">
-          <h3>{{name}}</h3>
-          <p>{{command.help}}</p>
-          <h5>Example</h5>
-          <div class="snippet"><code class="code">result = {{service.alias}} {{name}}<template v-for="(arg, name, index) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template><button class="clippy-btn" @click="copyText"><img class="clippy" width="13" :src="clippy" alt="Copy to clipboard"></button></code></div>
+          <div class="command-name">{{name}}</div>
 
-          <div v-if="command.arguments">
-            <h5>Arguments</h5>
+          <div v-if="command.help" class="section">
+            <div class="subtitle">Description</div>
+            <p>{{command.help}}</p>
+          </div>
+
+          <div class="section">
+            <div class="subtitle">Example</div>
+            <div class="code-container">
+              <pre class="snippet"><code class="code language-coffeescript">result = {{service.alias}} {{name}}<template v-for="(arg, name, index) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template></code></pre>
+              <button class="clippy-btn" @click="copyText"><img class="clippy" width="13" :src="clippy" alt="Copy to clipboard"></button>
+            </div>
+          </div>
+
+          <div v-if="command.arguments" class="section">
+            <div class="subtitle">Arguments</div>
             <div class="arguments-table-container">
               <table class="table is-bordered">
                 <thead>
@@ -49,8 +59,8 @@
                   <tr v-for="(arg, name, index) in command.arguments">
                     <td><code class="arg">{{name}}</code></td>
                     <td><code class="arg">{{arg.type}}</code></td>
-                    <td>
-                      <span v-if="arg.required" class="has-text-weight-bold">Required. </span>
+                    <td class="description">
+                      <span v-if="arg.required" class="required">Required. </span>
                       <span v-if="arg.default">(Default: <code class="arg">{{arg.default}}</code>) </span>
                       <span v-if="arg.help">{{arg.help}}</span>
                     </td>
@@ -138,6 +148,8 @@
 </template>
 
 <script>
+import Prism from 'prismjs';
+
 import clippy from '../../assets/clippy.svg';
 import queries from '../utils/graphql';
 import ServiceSummary from '../components/ServiceSummary';
@@ -163,6 +175,11 @@ export default {
       clippy,
       service: {},
     };
+  },
+  watch: {
+    commands() {
+      setTimeout(Prism.highlightAll, 0);
+    },
   },
   methods: {
     copyText(e) {
@@ -225,10 +242,11 @@ export default {
   margin-top 1em
 
   & > .body-section
-    margin-top 2.5em
+    margin-top 1.8em
 
-  & > .body-section ~ .body-section
-    margin-top 3.2em
+    p
+      margin 0
+      font-size 0.95em
 
   .name-container
     margin-bottom 1.5em
@@ -240,67 +258,93 @@ export default {
       color #3E87DA
 
   .command
-    margin-bottom 2em
-    padding-bottom 1.5em
+    margin-top 1.2em
+    margin-bottom 3em
+
+    .section
+      margin-top 1.5em
+
+    .subtitle
+      font-size 0.9em
+      color #999
+
+    .command-name
+      margin-top 0.8em
+      font-size 26px
 
   .arg
     border-radius 3px
-    padding 2px 6px
+    padding 4px 12px
     border 1px solid #ccc
     background-color #f9f9f9
+
+  .code-container
+    width fit-content
+    overflow scroll
+    position relative
+
+    &:hover .clippy-btn
+      opacity 1
+
+    @media (max-width 768px)
+      width calc(100vw - 24px)
 
   .snippet
     position relative
-    border-radius 4px
-    font-size 1.3em
-    background-color #f9f9f9
-    border 1px solid #ccc
-    padding 12px 16px
+    margin 10px 0px
+    font-size 0.9em
+    padding 10px 22px
+    border-radius 3px
 
-    &:hover .code .clippy-btn
-      opacity 1
+  .clippy-btn
+    transition opacity .3s ease-in-out
+    opacity 0
+    padding 3px 6px
+    position absolute
+    right 8px
+    top 18px
+    cursor: pointer;
+    background-color #eee
+    border-radius 3px
+    outline none
 
-    .code
-      .tag
-        font-size 1em
-        background #E181E5
+    &:active
+      background-color #dcdcdc
+      background-image none
+      border-color #b5b5b5
+      box-shadow inset 0 2px 4px rgba(0,0,0,.15)
 
-      .clippy-btn
-        transition opacity .3s ease-in-out
-        opacity 0
-        padding 3px 6px
-        position absolute
-        right 10px
-        top 12px
-        cursor: pointer;
-        background-color #eee
-        background-image linear-gradient(#fcfcfc,#eee)
-        border 1px solid #d5d5d5
-        border-radius 3px
-        outline none
+    &:hover
+      text-decoration none
+      background-color #ddd
+      border-color #ccc
 
-        &:active
-          background-color #dcdcdc
-          background-image none
-          border-color #b5b5b5
-          box-shadow inset 0 2px 4px rgba(0,0,0,.15)
-
-        &:hover
-          text-decoration none
-          background-color #ddd
-          background-image linear-gradient(#eee,#ddd)
-          border-color #ccc
-
-        .clippy
-          pointer-events none
-          position relative
-          top 1px
+    .clippy
+      pointer-events none
+      position relative
+      top 1px
 
   .arguments-table-container
-    max-width: calc(100vw - 24px);
-    overflow: scroll;
+    max-width calc(100vw - 24px)
+    overflow scroll
+    padding-top 0.4em
 
+    .required
+      font-weight 500
 
+    table
+      font-size 0.95em
+      th
+        font-weight 500
+      .description
+        min-width 280px
+
+        @media (min-width: 1024px)
+          min-width 400px
+
+        @media (max-width: 769px)
+          min-width auto
+          width 100%
 
 .pricing-bar
   background #F1F1F1

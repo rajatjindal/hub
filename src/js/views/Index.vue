@@ -10,7 +10,7 @@
         :right-x="-85"
         :right-y="-80"
       />
-      <h1>Asyncy Hub</h1>
+      <h1 class="hero-header">Asyncy Hub</h1>
       <p class="subtitle">Service discovery and marketplace for Asyncy</p>
       <div class="search-bar-container">
         <div class="field">
@@ -122,6 +122,9 @@ export default {
 </script>
 
 <style scoped lang="styl">
+.hero-header
+  font-size 2.8em
+
 .subtitle
   display: block;
   font-size: 1.15em;
