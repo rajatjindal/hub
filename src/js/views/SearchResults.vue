@@ -96,7 +96,6 @@ h2
   filter brightness(70%)
 
 .search-bar-container
-  margin-top 1.5em
   margin-bottom 1em
 
 .help-text

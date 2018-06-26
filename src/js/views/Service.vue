@@ -208,8 +208,6 @@ export default {
 
 <style scoped lang="styl">
 .sidebar
-  margin-top 1em
-
   .button
     margin-bottom 0.8em
 
@@ -239,8 +237,6 @@ export default {
     margin-bottom 0.4em
 
 .body
-  margin-top 1em
-
   & > .body-section
     margin-top 1.8em
 

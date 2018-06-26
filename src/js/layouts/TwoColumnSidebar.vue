@@ -24,6 +24,7 @@ export default {};
 
 .index
   min-height 650px
+  margin-top 1.5em
 
 .columns
   max-width 1200px
