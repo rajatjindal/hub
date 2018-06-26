@@ -38,14 +38,18 @@ export default {
 
 .input
   font-size 1em
-  border-radius 6px
-  border 1px solid #ccc
+  border-radius 5px
+  border 1px solid #C7C7C7
   padding 15px 20px
   margin-bottom 10px
-  background-color rgba(35,35,35,1)
+  background-color #FBFBFB
+  box-shadow 0 1px 2px 0 rgba(208,208,208,0.5)
   color rgba(190,190,190,1)
   transition all 0.2s ease-in-out
   outline none
+  background url(../../assets/search.svg) no-repeat
+  background-position calc(100% - 18px) 50%
+  background-size 18px 18px
 
 .input:focus
   border-color #515CF9

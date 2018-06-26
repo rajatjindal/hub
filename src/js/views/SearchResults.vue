@@ -30,8 +30,8 @@
         </div>
       </div>
 
-      <div v-else>
-        We couldn't find any services matching '{{search}}'
+      <div v-else class="level-left">
+        <img class="search-icon" width="15" src="../../assets/search.svg"/><span>We couldn't find any services matching `{{search}}`</span>
       </div>
     </template>
   </two-column-sidebar>
@@ -90,6 +90,10 @@ h2
 
 .link
   cursor pointer
+
+.search-icon
+  margin-right 15px
+  filter brightness(70%)
 
 .search-bar-container
   margin-top 1.5em
