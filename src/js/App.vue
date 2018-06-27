@@ -41,12 +41,6 @@ export default {
 @import "../assets/fonts/1804-GFNGYO";
 </style>
 
-<style>
-@import "../../node_modules/asyncy-ui-components/dist/AppFooter.css";
-@import "../../node_modules/asyncy-ui-components/dist/AppHeader.css";
-@import "../../node_modules/asyncy-ui-components/dist/HeroBackground.css";
-</style>
-
 <style lang="styl">
 .table {
   border-spacing: 0px;
@@ -85,17 +79,7 @@ h3, h4, h5 {
   line-height: 1.6em;
 }
 
-.button {
-  padding: 12px 32px;
-  font-size: 1em;
-  border: none;
-  color: white;
-  background: #16CE72;
-  border-radius: 3px;
-}
-
 a {
-  color: #1376E5;
   text-decoration: none;
 }
 

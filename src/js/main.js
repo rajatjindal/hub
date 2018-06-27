@@ -16,9 +16,15 @@ import TwoColumnSidebar from './layouts/TwoColumnSidebar';
 import UrlLink from './components/UrlLink';
 import TopicTag from './components/TopicTag';
 import TopicsList from './components/TopicsList';
+import AButton from '../../node_modules/asyncy-ui-components/dist/AButton';
 import AppFooter from '../../node_modules/asyncy-ui-components/dist/AppFooter';
 import AppHeader from '../../node_modules/asyncy-ui-components/dist/AppHeader';
 import HeroBackground from '../../node_modules/asyncy-ui-components/dist/HeroBackground';
+
+import '../../node_modules/asyncy-ui-components/dist/AppFooter.css';
+import '../../node_modules/asyncy-ui-components/dist/AButton.css';
+import '../../node_modules/asyncy-ui-components/dist/AppHeader.css';
+import '../../node_modules/asyncy-ui-components/dist/HeroBackground.css';
 
 const httpLink = new HttpLink({
   uri: 'https://api.asyncy.com/graphql',
@@ -42,6 +48,7 @@ Vue.config.productionTip = false;
 Vue.component('two-column-sidebar', TwoColumnSidebar);
 Vue.component('topic-tag', TopicTag);
 Vue.component('url-link', UrlLink);
+Vue.component('a-button', AButton);
 Vue.component('app-header', AppHeader);
 Vue.component('app-footer', AppFooter);
 Vue.component('hero-background', HeroBackground);

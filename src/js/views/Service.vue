@@ -1,14 +1,14 @@
 <template>
   <two-column-sidebar>
     <div slot="sidebar" class="sidebar">
-      <button class="button is-primary">+ Add to story</button>
-
-      <ul class="links">
-        <!-- <li><a href="/">Try a demo →</a></li> -->
-        <li><a :href="`https://www.github.com/${service.pullUrl}`">View on Github →</a></li>
-      </ul>
+      <button class="button">+ Add to story</button>
 
       <div class="sidebar-info">
+        <h4 class="sidebar-header">Links</h4>
+        <ul class="links">
+          <li><a :href="`https://www.github.com/${service.pullUrl}`">View on Github</a></li>
+        </ul>
+
         <topics-list v-model="service.topics"/>
 
         <h4 class="sidebar-header">Versions</h4>
@@ -18,8 +18,15 @@
       </div>
     </div>
     <div slot="body" class="body">
-      <div class="name-container">
-        <h1>{{service.alias}}</h1>
+      <div class="name-container level is-mobile">
+        <div class="level-left">
+        <div class="level-item">
+          <h1>{{service.alias}}</h1>
+        </div>
+        <div class="level-item">
+          <img :src="verifiedIcon"/>
+        </div>
+        </div>
       </div>
       <div class="body-section" v-if="service.description">
         <h4>Description</h4>
@@ -151,6 +158,7 @@
 import Prism from 'prismjs';
 
 import clippy from '../../assets/clippy.svg';
+import verifiedIcon from '../../assets/verified.svg';
 import queries from '../utils/graphql';
 import ServiceSummary from '../components/ServiceSummary';
 
@@ -174,6 +182,7 @@ export default {
     return {
       clippy,
       service: {},
+      verifiedIcon,
     };
   },
   watch: {
@@ -207,12 +216,26 @@ export default {
 </script>
 
 <style scoped lang="styl">
+.button
+  cursor pointer
+  padding 12px 32px
+  font-size 1em
+  border none
+  color white
+  background #4C5CE8
+  border-radius 3px
+  transition all 0.1s
+
+  &:hover
+    filter brightness(1.2)
+
 .sidebar
+  font-size 0.95em
   .button
     margin-bottom 0.8em
 
   .sidebar-info
-    margin-top 3.7em
+    margin-top 1.6em
 
     .sidebar-header
       margin-top 2em
@@ -223,7 +246,9 @@ export default {
     padding-left 0
 
   .links a
-    font-size 0.9em
+    color #4C5CE8
+    &:hover
+      text-decoration underline
 
   .versions
     line-height 2em
@@ -237,6 +262,8 @@ export default {
     margin-bottom 0.4em
 
 .body
+  max-width 800px
+
   & > .body-section
     margin-top 1.8em
 
@@ -268,6 +295,19 @@ export default {
       margin-top 0.8em
       font-size 26px
 
+      &::before
+        font-family -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif
+        font-weight 600
+        content '# '
+        color #c9c9c9
+        margin-left -22px
+        opacity 0
+        transition opacity 0.2s
+
+      &:hover::before
+        opacity 1
+
+
   .arg
     border-radius 3px
     padding 4px 12px
@@ -275,7 +315,7 @@ export default {
     background-color #f9f9f9
 
   .code-container
-    width fit-content
+    width calc(100% - 24px)
     overflow scroll
     position relative
 
@@ -321,26 +361,23 @@ export default {
       top 1px
 
   .arguments-table-container
-    max-width calc(100vw - 24px)
+    width calc(100% - 24px)
     overflow scroll
     padding-top 0.4em
+
+    @media (max-width: 769px)
+      width calc(100vw - 24px)
 
     .required
       font-weight 500
 
     table
+      width 100%
       font-size 0.95em
       th
         font-weight 500
       .description
-        min-width 280px
-
-        @media (min-width: 1024px)
-          min-width 400px
-
-        @media (max-width: 769px)
-          min-width auto
-          width 100%
+        min-width 320px
 
 .pricing-bar
   background #F1F1F1

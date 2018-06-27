@@ -26,7 +26,7 @@
       <topics-list v-model="topics" slot="sidebar" />
       <div slot="body">
         <section class="section">
-          <h2>Featured services</h2>
+          <h2 class="section-header">Featured services</h2>
           <div class="featured-services section-body">
             <div class="tile is-ancestor">
               <div class="tile is-parent">
@@ -51,7 +51,7 @@
         </section>
 
         <section class="section">
-          <h2>Recently added</h2>
+          <h2 class="section-header">Recently added</h2>
           <div class="section-body">
             <div class="tile is-ancestor">
               <div class="tile is-parent is-vertical">
@@ -69,8 +69,8 @@
         </section>
 
         <section class="section getting-started">
-          <h2>List your service on Asyncy Hub</h2>
-          <button class="button is-light">Get Started</button>
+          <h2 class="call-to-action">List your service on Asyncy Hub</h2>
+          <a-button color="white">Submit a service</a-button>
         </section>
       </div>
     </two-column-sidebar>
@@ -145,8 +145,8 @@ ul
   padding-bottom: 2em;
   border-bottom: 1px solid #ccc;
 
-  .section-body
-    margin-top: 1.4em;
+  .section-header
+    margin-bottom 1.4em
 
 .hero
   overflow: auto;
@@ -163,6 +163,10 @@ ul
   margin: 0 auto;
   margin-top: 1em;
   text-align: left;
+
+.call-to-action
+  font-size 1.9em
+  margin-bottom 0.8em
 
 .featured-services
   .featured
