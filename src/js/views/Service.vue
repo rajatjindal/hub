@@ -65,7 +65,7 @@
                 <tbody>
                   <tr v-for="(arg, name, index) in command.arguments">
                     <td><code class="arg">{{name}}</code></td>
-                    <td><code class="arg">{{arg.type}}</code></td>
+                    <td class="type"><code class="arg">{{arg.type}}</code></td>
                     <td class="description">
                       <span v-if="arg.required" class="required">Required. </span>
                       <span v-if="arg.default">(Default: <code class="arg">{{arg.default}}</code>) </span>
@@ -376,6 +376,9 @@ export default {
       font-size 0.95em
       th
         font-weight 500
+      .type
+        width 1px
+        white-space nowrap
       .description
         min-width 320px
 
