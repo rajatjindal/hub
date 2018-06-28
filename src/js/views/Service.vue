@@ -12,76 +12,112 @@
         <topics-list v-model="service.topics"/>
 
         <h4 class="sidebar-header">Versions</h4>
-        <ul class="versions">
-          <li class="version" v-for="tag in tags">{{tag.tag}} - {{tag.state}}</li>
+        <transition-group name="fade" class="versions" tag="ul">
+          <li class="version" v-for="tag in tags" :key="tag.tag">{{tag.tag}} - {{tag.state}}</li>
+        </transition-group>
+        <ul class="versions" v-if="tags.length <= 0 && !service.alias">
+          <li class="version"><div class="loading-shimmer tag"></div></li>
         </ul>
+        <p class="none-found" v-else-if="tags.length <= 0 && service.alias">No versions found.</p>
       </div>
     </div>
     <div slot="body" class="body">
       <div class="name-container level is-mobile">
-        <div class="level-left">
-        <div class="level-item">
-          <h1>{{service.alias}}</h1>
-        </div>
-        <div class="level-item">
-          <img :src="verifiedIcon"/>
-        </div>
-        </div>
+        <transition name="fade">
+          <div class="level-left" v-if="service.alias">
+            <div class="level-item">
+              <h1>{{service.alias}}</h1>
+            </div>
+            <div class="level-item">
+              <img :src="verifiedIcon"/>
+            </div>
+          </div>
+        </transition>
+        <div v-if="!service.alias" class="level-left loading-shimmer alias"></div>
       </div>
-      <div class="body-section" v-if="service.description">
+      <div class="body-section">
         <h4>Description</h4>
-        <p>{{service.description | emoji}}</p>
+        <transition name="fade">
+          <p v-if="service.description">{{service.description | emoji}}</p>
+          <p v-else-if="!service.description && service.alias" class="none-found">This service has no description.</p>
+          <p v-else class="loading-shimmer description"></p>
+        </transition>
       </div>
       <div class="body-section">
         <h4>Commands</h4>
 
-        <div v-for="(command, name, index) in commands" class="command" :key="index">
-          <div class="command-name">{{name}}</div>
-
-          <div v-if="command.help" class="section">
+        <div class="command" v-if="commands.length <= 0 && !service.alias">
+          <div class="loading-shimmer name"></div>
+          <div class="section">
             <div class="subtitle">Description</div>
-            <p>{{command.help}}</p>
+            <div class="loading-shimmer description"></div>
           </div>
-
           <div class="section">
             <div class="subtitle">Example</div>
-            <div class="code-container">
-              <pre class="snippet"><code class="code language-coffeescript">result = {{service.alias}} {{name}}<template v-for="(arg, name, index) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template></code></pre>
-              <button class="clippy-btn" @click="copyText"><img class="clippy" width="13" :src="clippy" alt="Copy to clipboard"></button>
-              <div class="copied"></div>
-            </div>
+            <div class="loading-shimmer example"></div>
           </div>
-
-          <div v-if="command.arguments" class="section">
+          <div class="section">
             <div class="subtitle">Arguments</div>
-            <div class="arguments-table-container">
-              <table class="table is-bordered">
-                <thead>
-                  <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Description</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(arg, name, index) in command.arguments">
-                    <td><code class="arg">{{name}}</code></td>
-                    <td class="type"><code class="arg">{{arg.type}}</code></td>
-                    <td class="description">
-                      <span v-if="arg.required" class="required">Required. </span>
-                      <span v-if="arg.default">(Default: <code class="arg">{{arg.default}}</code>) </span>
-                      <span v-if="arg.help">{{arg.help}}</span>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
+            <div class="loading-shimmer description"></div>
+          </div>
+        </div>
+
+        <transition name="fade">
+          <div v-if="commands.length <= 0 && service.alias" class="none-found">
+            This service has no commands.
+          </div>
+        </transition>
+
+        <transition-group name="fade" tag="div">
+          <div v-for="(command, name, index) in commands" class="command" :key="name">
+            <a :href="`#${name}`" :name="name"><div class="command-name">{{name}}</div></a>
+
+            <div v-if="command.help" class="section">
+              <div class="subtitle">Description</div>
+              <p>{{command.help}}</p>
+            </div>
+
+            <div class="section">
+              <div class="subtitle">Example</div>
+              <div class="code-container">
+                <pre class="snippet"><code class="code language-coffeescript">result = {{service.alias}} {{name}}<template v-for="(arg, name, index) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template></code></pre>
+                <button class="clippy-btn" @click="copyText"><img class="clippy" width="13" :src="clippy" alt="Copy to clipboard"></button>
+                <div class="copied"></div>
+              </div>
+            </div>
+
+            <div v-if="command.arguments" class="section">
+              <div class="subtitle">Arguments</div>
+              <div class="arguments-table-container">
+                <table class="table is-bordered">
+                  <thead>
+                    <tr>
+                      <th>Name</th>
+                      <th>Type</th>
+                      <th>Description</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="(arg, name, index) in command.arguments">
+                      <td><code class="arg">{{name}}</code></td>
+                      <td class="type"><code class="arg">{{arg.type}}</code></td>
+                      <td class="description">
+                        <span v-if="arg.required" class="required">Required. </span>
+                        <span v-if="arg.default">(Default: <code class="arg">{{arg.default}}</code>) </span>
+                        <span v-if="arg.help">{{arg.help}}</span>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div v-if="command.output && command.output.type">
+              <h5>Output</h5>
+              <div>{{command.output}}</div>
             </div>
           </div>
-
-          <div v-if="command.output && command.output.type">
-            <h5>Output</h5>
-            <div>{{command.output}}</div>
-          </div>
+          </transition-group>
         </div>
       </div>
     </div>
@@ -198,16 +234,16 @@ export default {
   },
   computed: {
     commands() {
-      return this.service &&
+      return (this.service &&
         this.service.serviceTags &&
         this.service.serviceTags.nodes &&
         this.service.serviceTags.nodes.length > 0 &&
-        this.service.serviceTags.nodes[0].configuration.commands;
+        this.service.serviceTags.nodes[0].configuration.commands) || [];
     },
     tags() {
-      return this.service &&
+      return (this.service &&
         this.service.serviceTags &&
-        this.service.serviceTags.nodes;
+        this.service.serviceTags.nodes) || [];
     },
   },
   components: {
@@ -262,6 +298,10 @@ export default {
     font-size 0.9em
     margin-bottom 0.4em
 
+.none-found
+  font-size 0.9em
+  color #aaa
+
 .body
   max-width 800px
 
@@ -293,6 +333,7 @@ export default {
       color #999
 
     .command-name
+      color #111
       margin-top 0.8em
       font-size 26px
 
@@ -424,5 +465,23 @@ export default {
     .fa-check
       color #2FC050
       font-size 0.95em
+
+.loading-shimmer
+  &.tag
+    width 100px
+    height 1.4em
+  &.alias
+    height 2.4em
+    width 150px
+  &.description
+    height 1.2em
+    max-width 340px
+  &.name
+    width 100px
+    height 1.8em
+  &.example
+    margin-top 0.6em
+    max-width 520px
+    height 1.8em
 
 </style>

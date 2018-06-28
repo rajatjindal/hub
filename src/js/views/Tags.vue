@@ -11,7 +11,7 @@
         </div>
         <div class="results-container">
           <div class="tile is-ancestor">
-            <div class="tile is-parent is-vertical">
+            <transition-group class="tile is-parent is-vertical" tag="div" name="fade">
               <div v-for="(r, index) in results" class="tile is-parent" :key="index">
                 <div class="tile is-child is-6">
                   <service-summary :title="r[0].alias" :description="r[0].description" :tags="r[0].topics"></service-summary>
@@ -20,9 +20,9 @@
                   <service-summary :title="r[1].alias" :description="r[1].description" :tags="r[1].topics"></service-summary>
                 </div>
               </div>
-              <div v-if="results.length === 0">
-                No services found.
-              </div>
+            </transition-group>
+            <div v-if="results.length === 0">
+              <p>No services found.</p>
             </div>
           </div>
         </div>
@@ -41,7 +41,7 @@ export default {
   data() {
     return {
       totalItems: 0,
-      results: [],
+      results: [[{}, {}], [{}, {}]],
       prevPage: {
         name: '',
         path: '',
@@ -77,6 +77,9 @@ export default {
 </script>
 
 <style scoped lang="styl">
+.index
+  min-height 580px
+
 h2
   font-weight normal
   font-size 1.8em

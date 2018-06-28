@@ -42,33 +42,30 @@ export default {
 </style>
 
 <style lang="styl">
-.table {
+@import "../styles/loading-shimmer"
+
+.table
   border-spacing: 0px;
   border-collapse: collapse;
-}
 
-body {
+body
   background: #111;
   margin: 0;
 
-  *, *:before, *:after {
+  *, *:before, *:after
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
-  }
-}
 
-h1, h2, h3, h4, h5 {
+h1, h2, h3, h4, h5
   font-weight: normal;
   margin-top: 0;
   margin-bottom: 0.5em;
-}
 
-h3, h4, h5 {
+h3, h4, h5
   font-weight: 500;
-}
 
-.app {
+.app
   background: white;
   font-family: Graphik Web, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -77,14 +74,21 @@ h3, h4, h5 {
   color: black;
   font-size: 1em;
   line-height: 1.6em;
-}
 
-a {
-  text-decoration: none;
-}
+a
+  color #4C5CE8
+  text-decoration none
 
-h1 {
+h1
   font-size: 2.1em;
   margin-bottom: 0.3em;
-}
+
+.fade-enter-active
+  transition opacity .3s
+
+.fade-leave-active
+  position absolute
+
+.fade-enter, .fade-leave-to
+  opacity 0
 </style>

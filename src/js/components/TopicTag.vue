@@ -28,6 +28,7 @@ export default {
 
 <style scoped lang="styl">
 .tag
+  font-size 0.8em
   transition all 0.3s
 .tag:hover
   filter brightness(0.95)
