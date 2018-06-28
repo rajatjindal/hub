@@ -34,9 +34,7 @@ export default {
 @import "../../node_modules/bulma/sass/grid/tiles";
 @import "../../node_modules/bulma/sass/components/level";
 @import "../../node_modules/bulma/sass/components/media";
-@import "../../node_modules/bulma/sass/components/card";
 @import "../../node_modules/bulma/sass/elements/tag";
-@import "../../node_modules/bulma/sass/elements/box";
 @import "../../node_modules/bulma/sass/elements/table";
 @import "../assets/fonts/1804-GFNGYO";
 </style>

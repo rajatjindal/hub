@@ -170,6 +170,7 @@ ul
 
 .call-to-action
   font-size 1.9em
+  line-height 1.4em
   margin-bottom 0.8em
 
 .featured-services
