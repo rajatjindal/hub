@@ -14,7 +14,7 @@ const webpackConfig = {
       {
         test: /\.scss$/i,
         use: [
-          MiniCssExtractPlugin.loader,
+          'vue-style-loader',
           'css-loader',
           'sass-loader',
         ],
@@ -22,7 +22,7 @@ const webpackConfig = {
       {
         test: /\.styl$/i,
         use: [
-          MiniCssExtractPlugin.loader,
+          'vue-style-loader',
           'css-loader',
           'stylus-loader',
         ],
@@ -30,7 +30,7 @@ const webpackConfig = {
       {
         test: /\.css$/i,
         use: [
-          MiniCssExtractPlugin.loader,
+          'vue-style-loader',
           'css-loader',
         ],
       },
