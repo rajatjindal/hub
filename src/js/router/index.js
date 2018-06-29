@@ -4,6 +4,7 @@ import Index from '../views/Index';
 import SearchResults from '../views/SearchResults';
 import Service from '../views/Service';
 import Tags from '../views/Tags';
+import About from '../views/About';
 
 Vue.use(Router);
 
@@ -44,6 +45,11 @@ export default new Router({
       props(route) {
         return { topic: route.params.topic };
       },
+    },
+    {
+      path: '/about',
+      name: 'About',
+      component: About,
     },
   ],
   scrollBehavior() {

@@ -6,9 +6,9 @@
         :right-image="headerRight"
         :scale="0.6"
         :left-x="-320"
-        :left-y="-80"
+        :left-y="-60"
         :right-x="-85"
-        :right-y="-80"
+        :right-y="-60"
       />
       <h1 class="hero-header">Asyncy Hub</h1>
       <p class="subtitle">Service discovery and marketplace for Asyncy</p>

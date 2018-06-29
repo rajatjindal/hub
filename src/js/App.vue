@@ -1,7 +1,8 @@
 <template>
   <div class="app">
-    <app-header link-component="url-link" :show-search="hasSearch" :on-search="onSearch" :links="[
+    <app-header class="app-header" link-component="url-link" :show-search="hasSearch" :on-search="onSearch" :links="[
       { text: 'Explore', to: '/' },
+      { text: 'About Hub', to: '/about' },
       { text: 'Platform', to: 'https://www.asyncy.com/platform' },
       { text: 'Documentation', to: 'https://docs.asyncy.com'},
       { text: 'Submit a service', to: '/', button: true },
@@ -74,7 +75,7 @@ h3, h4, h5
   line-height: 1.6em;
 
 a
-  color #4C5CE8
+  color #7A33D7
   text-decoration none
 
 h1
