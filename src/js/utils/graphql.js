@@ -1,13 +1,6 @@
 import gql from 'graphql-tag';
 
 const INDEX_QUERY = gql`{
-  featuredServices: allServices(first: 3) {
-    nodes {
-      uuid
-      alias
-      topics
-    }
-  },
   recentlyAddedServices: allServices(first: 6) {
     nodes {
       uuid
