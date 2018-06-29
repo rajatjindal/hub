@@ -6,7 +6,7 @@
       <div class="sidebar-info">
         <h4 class="sidebar-header">Links</h4>
         <ul class="links">
-          <li><a :href="`https://www.github.com/${service.pullUrl}`">View on Github</a></li>
+          <li><a :href="`https://www.github.com/${service.repo.owner.username}/${service.alias}`">View on Github</a></li>
         </ul>
 
         <topics-list v-model="service.topics"/>
