@@ -5,9 +5,11 @@
 
       <div class="sidebar-info">
         <h4 class="sidebar-header">Links</h4>
-        <ul class="links">
-          <li><a :href="`https://www.github.com/${service.repo.owner.username}/${service.alias}`">View on Github</a></li>
-        </ul>
+        <transition name="fade">
+          <div class="links" v-if="service.repo && service.alias"><a :href="`https://www.github.com/${service.repo.owner.username}/${service.alias}`">View on Github</a></div>
+          <div v-else-if="!service.repo && !service.alias" class="loading-shimmer tag"></div>
+          <p class="links none-found" v-else>No links found.</p>
+        </transition>
 
         <topics-list v-model="service.topics"/>
 
@@ -276,6 +278,9 @@ export default {
 
     .sidebar-header
       margin-top 2em
+
+  .links
+    padding-bottom 1.8em
 
   .links, .versions
     margin-top 0
