@@ -112,9 +112,9 @@
               </div>
             </div>
 
-            <div v-if="command.output && command.output.type">
-              <h5>Output</h5>
-              <div>{{command.output}}</div>
+            <div v-if="command.output && command.output.type" class="section">
+              <div class="subtitle">Output</div>
+              <p>Returns output of type <code>{{command.output.type}}</code>.</p>
             </div>
           </div>
           </transition-group>
