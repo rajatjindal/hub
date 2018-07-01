@@ -1,7 +1,7 @@
 import gql from 'graphql-tag';
 
 const INDEX_QUERY = gql`{
-  recentlyAddedServices: allServices(first: 6) {
+  recentlyAddedServices: searchServices(searchTerms: "microservice", first: 10) {
     nodes {
       uuid
       alias
