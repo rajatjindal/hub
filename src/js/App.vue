@@ -2,7 +2,6 @@
   <div class="app">
     <app-header class="app-header" link-component="url-link" :show-search="hasSearch" :on-search="onSearch" :links="[
       { text: 'Explore', to: '/' },
-      { text: 'About Hub', to: '/about' },
       { text: 'Platform', to: 'https://www.asyncy.com/platform' },
       { text: 'Documentation', to: 'https://docs.asyncy.com'},
       { text: 'Submit a service', to: '/', button: true },
