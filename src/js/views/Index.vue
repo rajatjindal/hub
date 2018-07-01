@@ -31,19 +31,19 @@
             <div class="tile is-ancestor">
               <div class="tile is-parent">
                 <router-link :to="`/service/slack`">
-                  <div class="featured tile is-child slack-service">Slack</div>
+                  <div class="featured tile is-child slack-service"><img :src="slackLogo" alt="Slack"/></div>
                 </router-link>
               </div>
 
               <div class="tile is-parent">
                 <router-link :to="`/service/twitter`">
-                  <div class="featured tile is-child twitter-service">Twitter</div>
+                  <div class="featured tile is-child twitter-service"><img :src="twitterLogo" width="50" alt="Twitter"/></div>
                 </router-link>
               </div>
 
               <div class="tile is-parent">
                 <router-link :to="`/service/twilio`">
-                  <div class="featured tile is-child twilio-service">Twilio</div>
+                  <div class="featured tile is-child twilio-service"><img :src="twilioLogo" alt="Twilio"/></div>
                 </router-link>
               </div>
             </div>
@@ -82,6 +82,10 @@ import queries from '../utils/graphql';
 import ServiceSummary from '../components/ServiceSummary';
 import SearchBar from '../components/SearchBar';
 
+import slackLogo from '../../assets/slack_logo_text.svg';
+import twitterLogo from '../../assets/twitter_logo.svg';
+import twilioLogo from '../../assets/twilio_logo_text.svg';
+
 import headerLeft from '../../../node_modules/asyncy-ui-components/assets/images/home_header_left.svg';
 import headerRight from '../../../node_modules/asyncy-ui-components/assets/images/home_header_right.svg';
 
@@ -101,6 +105,9 @@ export default {
     return {
       headerLeft,
       headerRight,
+      twitterLogo,
+      slackLogo,
+      twilioLogo,
       data: {
         recentServices: [{}, {}, {}, {}, {}, {}],
       },
@@ -178,14 +185,20 @@ ul
     display flex
     justify-content center
     align-items center
+    transition all 0.2s
+    &:hover
+      transform scale(1.05, 1.05)
 
   .slack-service
-    background-color #573753
+    background-image url('../../assets/slack_bg.svg')
+    background-color #78D4B6
 
   .twitter-service
+    background-image url('../../assets/twitter_bg.svg')
     background-color #1DA1F2
 
   .twilio-service
+    background-image url('../../assets/twilio_bg.svg')
     background-color #F22F44
 
   a
