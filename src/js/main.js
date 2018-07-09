@@ -8,6 +8,8 @@ import { InMemoryCache } from 'apollo-cache-inmemory';
 import VueApollo from 'vue-apollo';
 import VueClipboard from 'vue-clipboard2';
 import emoji from 'node-emoji';
+import Raven from 'raven-js';
+import RavenVue from 'raven-js/plugins/vue';
 
 import App from './App';
 import router from './router';
@@ -25,6 +27,11 @@ import '../../node_modules/asyncy-ui-components/dist/AppFooter.css';
 import '../../node_modules/asyncy-ui-components/dist/AButton.css';
 import '../../node_modules/asyncy-ui-components/dist/AppHeader.css';
 import '../../node_modules/asyncy-ui-components/dist/HeroBackground.css';
+
+Raven.config('https://93f5d14ba8eb424d903a1a0881d1fa6d@sentry.io/1206503', {
+  environment: process.env.NODE_ENV,
+}).addPlugin(RavenVue, Vue)
+  .install();
 
 const httpLink = new HttpLink({
   uri: 'https://api.asyncy.com/graphql',
@@ -68,13 +75,15 @@ Vue.filter('capitalize', (value) => {
   return '';
 });
 
-/* eslint-disable no-new */
-new Vue({
-  el: '#app',
-  router,
-  template: '<App/>',
-  components: {
-    App,
-  },
-  apolloProvider,
+Raven.context(() => {
+  /* eslint-disable no-new */
+  new Vue({
+    el: '#app',
+    router,
+    template: '<App/>',
+    components: {
+      App,
+    },
+    apolloProvider,
+  });
 });

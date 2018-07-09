@@ -24,6 +24,7 @@
     "graphql-tag": "^2.9.2",
     "node-emoji": "^1.8.1",
     "prismjs": "^1.15.0",
+    "raven-js": "^3.26.3",
     "style-loader": "^0.21.0",
     "vue": "^2.5.16",
     "vue-apollo": "^3.0.0-alpha.3",
