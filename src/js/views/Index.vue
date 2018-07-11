@@ -4,11 +4,11 @@
        <hero-background
         :left-image="headerLeft"
         :right-image="headerRight"
-        :scale="0.6"
-        :left-x="-320"
-        :left-y="-60"
-        :right-x="-85"
-        :right-y="-60"
+        :scale="2.6"
+        :left-x="-200"
+        :left-y="-30"
+        :right-x="-200"
+        :right-y="-30"
       />
       <h1 class="hero-header">Asyncy Hub</h1>
       <p class="subtitle">Service discovery and marketplace for Asyncy</p>
@@ -81,6 +81,7 @@
 import queries from '../utils/graphql';
 import ServiceSummary from '../components/ServiceSummary';
 import SearchBar from '../components/SearchBar';
+import HeroBackground from '../../../node_modules/asyncy-ui-components/dist/HeroBackground';
 
 import slackLogo from '../../assets/slack_logo_text.svg';
 import twitterLogo from '../../assets/twitter_logo.svg';
@@ -119,6 +120,7 @@ export default {
     },
   },
   components: {
+    HeroBackground,
     ServiceSummary,
     SearchBar,
   },
@@ -126,6 +128,9 @@ export default {
 </script>
 
 <style scoped lang="styl">
+.hero
+  clip-path inset(-100px 0 0 0)
+
 .hero-header
   font-size 2.8em
 
@@ -175,7 +180,6 @@ ul
 
 .featured-services
   .featured
-    width 100%
     height 150px
     border-radius 5px
     padding 25px

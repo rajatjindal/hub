@@ -28,6 +28,7 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../../node_modules/asyncy-ui-components/dist/css/global.css";
 @import "../../node_modules/bulma/sass/utilities/_all";
 @import "../../node_modules/bulma/sass/base/helpers";
 @import "../../node_modules/bulma/sass/grid/columns";
@@ -50,11 +51,6 @@ body
   background: #111;
   margin: 0;
 
-  *, *:before, *:after
-    -webkit-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-
 h1, h2, h3, h4, h5
   font-weight: normal;
   margin-top: 0;
@@ -65,9 +61,6 @@ h3, h4, h5
 
 .app
   background: white;
-  font-family: Graphik Web, -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: black;
   font-size: 1em;

@@ -21,12 +21,6 @@ import TopicsList from './components/TopicsList';
 import AButton from '../../node_modules/asyncy-ui-components/dist/AButton';
 import AppFooter from '../../node_modules/asyncy-ui-components/dist/AppFooter';
 import AppHeader from '../../node_modules/asyncy-ui-components/dist/AppHeader';
-import HeroBackground from '../../node_modules/asyncy-ui-components/dist/HeroBackground';
-
-import '../../node_modules/asyncy-ui-components/dist/AppFooter.css';
-import '../../node_modules/asyncy-ui-components/dist/AButton.css';
-import '../../node_modules/asyncy-ui-components/dist/AppHeader.css';
-import '../../node_modules/asyncy-ui-components/dist/HeroBackground.css';
 
 Raven.config('https://93f5d14ba8eb424d903a1a0881d1fa6d@sentry.io/1206503', {
   environment: process.env.NODE_ENV,
@@ -58,7 +52,6 @@ Vue.component('url-link', UrlLink);
 Vue.component('a-button', AButton);
 Vue.component('app-header', AppHeader);
 Vue.component('app-footer', AppFooter);
-Vue.component('hero-background', HeroBackground);
 Vue.component('topics-list', TopicsList);
 
 Vue.filter('emoji', value => emoji.emojify(value, () => '🐙'));

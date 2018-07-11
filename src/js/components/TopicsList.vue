@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4>Topics</h4>
+    <h5>Topics</h5>
       <transition-group name="fade" tag="ul" class="topics-list">
         <li v-for="topic in topics" :key="topic" class="topic-item"><topic-tag>{{topic}}</topic-tag></li>
       </transition-group>
