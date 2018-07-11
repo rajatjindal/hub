@@ -6,7 +6,7 @@
           <div class="service-image" :style="{ backgroundColor: color }">{{ firstLetterCapitalized }}</div>
         </div>
         <div class="media-content">
-          <h4>{{ title }}</h4>
+          <h5>{{ title }}</h5>
           <div>{{ (description || title) | emoji }}</div>
           <div v-if="tags" class="tags-container">
             <span class="tag-container" v-for="t in tags" :key="t"><topic-tag>{{ t }}</topic-tag></span>
