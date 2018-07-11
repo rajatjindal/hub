@@ -1,26 +1,30 @@
 <template>
   <two-column-sidebar>
     <div slot="sidebar" class="sidebar">
-      <button class="button">+ Add to story</button>
-
       <div class="sidebar-info">
-        <h4 class="sidebar-header">Links</h4>
-        <transition name="fade">
-          <div class="links" v-if="service.repo && service.alias"><a :href="`https://www.github.com/${service.repo.owner.username}/${service.alias}`">View on Github</a></div>
-          <div v-else-if="!service.repo && !service.alias" class="loading-shimmer tag"></div>
-          <p class="links none-found" v-else>No links found.</p>
-        </transition>
+        <div class="section">
+          <h5>Links</h5>
+          <transition name="fade">
+            <div class="links" v-if="service.repo && service.alias"><a :href="`https://www.github.com/${service.repo.owner.username}/${service.alias}`">View on Github</a></div>
+            <div v-else-if="!service.repo && !service.alias" class="loading-shimmer tag"></div>
+            <p class="links none-found" v-else>No links found.</p>
+          </transition>
+        </div>
 
-        <topics-list v-model="service.topics"/>
+        <div class="section">
+          <topics-list v-model="service.topics"/>
+        </div>
 
-        <h4 class="sidebar-header">Versions</h4>
-        <transition-group name="fade" class="versions" tag="ul">
-          <li class="version" v-for="tag in tags" :key="tag.tag">{{tag.tag}} - {{tag.state}}</li>
-        </transition-group>
-        <ul class="versions" v-if="tags.length <= 0 && !service.alias">
-          <li class="version"><div class="loading-shimmer tag"></div></li>
-        </ul>
-        <p class="none-found" v-else-if="tags.length <= 0 && service.alias">No versions found.</p>
+        <div class="section">
+          <h5>Versions</h5>
+          <transition-group name="fade" class="versions" tag="ul">
+            <li class="version" v-for="tag in tags" :key="tag.tag">{{tag.tag}} - {{tag.state}}</li>
+          </transition-group>
+          <ul class="versions" v-if="tags.length <= 0 && !service.alias">
+            <li class="version"><div class="loading-shimmer tag"></div></li>
+          </ul>
+          <p class="none-found" v-else-if="tags.length <= 0 && service.alias">No versions found.</p>
+        </div>
       </div>
     </div>
     <div slot="body" class="body">
@@ -38,7 +42,7 @@
         <div v-if="!service.alias" class="level-left loading-shimmer alias"></div>
       </div>
       <div class="body-section">
-        <h4>Description</h4>
+        <h5>Description</h5>
         <transition name="fade">
           <p v-if="service.description">{{service.description | emoji}}</p>
           <p v-else-if="!service.description && service.alias" class="none-found">This service has no description.</p>
@@ -46,7 +50,7 @@
         </transition>
       </div>
       <div class="body-section">
-        <h4>Commands</h4>
+        <h5>Commands</h5>
 
         <div class="command" v-if="commands.length <= 0 && !service.alias">
           <div class="loading-shimmer name"></div>
@@ -270,17 +274,9 @@ export default {
 
 .sidebar
   font-size 0.95em
-  .button
-    margin-bottom 0.8em
 
-  .sidebar-info
-    margin-top 1.6em
-
-    .sidebar-header
-      margin-top 2em
-
-  .links
-    padding-bottom 1.8em
+  .section:not(:first-child)
+    margin-top 1.2em
 
   .links, .versions
     margin-top 0
