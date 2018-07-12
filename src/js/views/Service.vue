@@ -86,7 +86,8 @@
             <div class="section">
               <div class="subtitle">Example</div>
               <div class="code-container">
-                <pre class="snippet"><code class="code language-coffeescript">result = {{service.alias}} {{name}}<template v-for="(arg, name, index) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template></code></pre>
+                <pre class="snippet"><code class="code language-coffeescript"><template v-if="!command.run">result = </template>{{service.alias}} {{name}}<template v-for="(arg, name, index) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template><template v-if="command.run"> as result =
+    ...</template></code></pre>
                 <button class="clippy-btn" @click="copyText"><img class="clippy" width="13" :src="clippy" alt="Copy to clipboard"></button>
                 <div class="copied"></div>
               </div>
