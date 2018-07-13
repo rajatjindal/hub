@@ -45,6 +45,12 @@ export default new Router({
         return { topic: route.params.topic };
       },
     },
+    {
+      path: '/r/:owner/:repo',
+      beforeEnter({ params }) {
+        window.location = `https://www.github.com/${params.owner}/${params.repo}`;
+      },
+    },
   ],
   scrollBehavior() {
     return { x: 0, y: 0 };
