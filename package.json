@@ -42,7 +42,7 @@
     "babel-plugin-prismjs": "1.0.2",
     "babel-preset-env": "1.6.0",
     "compression-webpack-plugin": "1.0.0",
-    "copy-webpack-plugin": "4.0.1",
+    "copy-webpack-plugin": "4.5.2",
     "cross-env": "5.0.5",
     "css-loader": "0.28.11",
     "eslint": "4.4.1",
