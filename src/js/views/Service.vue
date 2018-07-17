@@ -50,9 +50,9 @@
         </transition>
       </div>
       <div class="body-section">
-        <h5>Commands</h5>
+        <h5>Commands ({{numCommands}})</h5>
 
-        <div class="command" v-if="commands.length <= 0 && !service.alias">
+        <div class="command" v-if="numCommands <= 0 && !service.alias">
           <div class="loading-shimmer name"></div>
           <div class="section">
             <div class="subtitle">Description</div>
@@ -69,14 +69,27 @@
         </div>
 
         <transition name="fade">
-          <div v-if="commands.length <= 0 && service.alias" class="none-found">
+          <div v-if="numCommands <= 0 && service.alias" class="none-found">
             This service has no commands.
+          </div>
+        </transition>
+
+        <transition name="fade">
+          <div class="toc-commands-container">
+            <table class="table toc-commands">
+              <tbody>
+                <tr v-for="(command, name, index) in commands" :key="name">
+                  <td><a :href="`#${name}`">{{name}}</a></td>
+                  <td>{{command.help}}</td>
+                </tr>
+              </tbody>
+            </table>
           </div>
         </transition>
 
         <transition-group name="fade" tag="div">
           <div v-for="(command, name, index) in commands" class="command" :key="name">
-            <a :href="`#${name}`" :name="name"><div class="command-name">{{name}}</div></a>
+            <a :href="`#${name}`" :name="name"><span class="command-name">{{name}}</span></a>
 
             <div v-if="command.help" class="section">
               <div class="subtitle">Description</div>
@@ -240,12 +253,15 @@ export default {
     },
   },
   computed: {
+    numCommands() {
+      return Object.keys(this.commands).length;
+    },
     commands() {
       return (this.service &&
         this.service.serviceTags &&
         this.service.serviceTags.nodes &&
         this.service.serviceTags.nodes.length > 0 &&
-        this.service.serviceTags.nodes[0].configuration.commands) || [];
+        this.service.serviceTags.nodes[0].configuration.commands) || {};
     },
     tags() {
       return (this.service &&
@@ -260,18 +276,10 @@ export default {
 </script>
 
 <style scoped lang="styl">
-.button
-  cursor pointer
-  padding 12px 32px
-  font-size 1em
-  border none
-  color white
-  background #4C5CE8
-  border-radius 3px
-  transition all 0.1s
-
-  &:hover
-    filter brightness(1.2)
+.links a:hover, .toc-commands a:hover
+  text-decoration underline
+a:focus
+  outline none
 
 .sidebar
   font-size 0.95em
@@ -283,11 +291,6 @@ export default {
     margin-top 0
     list-style none
     padding-left 0
-
-  .links a
-    color #4C5CE8
-    &:hover
-      text-decoration underline
 
   .versions
     line-height 2em
@@ -317,6 +320,9 @@ export default {
   .name-container
     margin-bottom 1.5em
     line-height 2.8em
+
+    h1
+      margin-bottom 0
 
     .checkmark
       margin-left 0.8em
@@ -351,6 +357,30 @@ export default {
       &:hover::before
         opacity 1
 
+  .toc-commands-container
+    width calc(100% - 24px)
+    overflow scroll
+    margin-bottom 48px
+
+    @media (max-width: 769px)
+      width calc(100vw - 24px)
+
+  .toc-commands
+    max-width 510px
+    font-size 0.9em
+
+    tr:not(:last-child)
+      border-bottom 1px solid #979797
+
+    td
+      max-width 450px
+      white-space nowrap
+      overflow hidden
+      text-overflow ellipsis
+
+    & td:first-child
+      padding-right 2em
+      padding-left 0px
 
   .arg
     border-radius 3px

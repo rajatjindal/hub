@@ -68,10 +68,6 @@ a
   color #7A33D7
   text-decoration none
 
-h1
-  font-size: 2.1em;
-  margin-bottom: 0.3em;
-
 .fade-enter-active
   transition opacity .3s
 
