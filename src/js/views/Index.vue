@@ -6,9 +6,9 @@
         :right-image="headerRight"
         :scale="2.6"
         :left-x="-200"
-        :left-y="-30"
+        :left-y="-70"
         :right-x="-200"
-        :right-y="-30"
+        :right-y="-70"
       />
       <h1 class="hero-header">Asyncy Hub</h1>
       <p class="subtitle">Service discovery and marketplace for Asyncy</p>
@@ -128,9 +128,6 @@ export default {
 </script>
 
 <style scoped lang="styl">
-.hero
-  clip-path inset(-100px 0 0 0)
-
 .hero-header
   font-size 2.8em
 
@@ -158,7 +155,8 @@ ul
     margin-bottom 1.4em
 
 .hero
-  overflow: auto;
+  position relative
+  overflow: hidden;
   padding: 28px 25px 50px 25px;
   color: white;
   background: #111;
