@@ -366,6 +366,7 @@ a:focus
       width calc(100vw - 24px)
 
   .toc-commands
+    min-width 380px
     max-width 510px
     font-size 0.9em
 
