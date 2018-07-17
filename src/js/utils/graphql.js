@@ -32,6 +32,38 @@ const SERVICE_QUERY = gql`query ServiceByAlias($where: Alias!) {
   }
 }`;
 
+const SERVICE_BY_OWNER_AND_REPO_QUERY = gql`query ServiceByOwnerAndRepo($owner: Username!, $repo: Username!) {
+  allOwners(condition: { username: $owner }) {
+    nodes {
+      repos(condition:{ name: $repo }) {
+        nodes {
+          services {
+            nodes {
+              uuid
+              alias
+              description
+              topics
+              repo {
+                owner {
+                  username
+                }
+              }
+              serviceTags {
+                nodes {
+                  tag
+                  state
+                  configuration
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+`;
+
 const SEARCH_SERVICE_QUERY = gql`query SearchServices($searchTerm: String!) {
   searchServices(searchTerms: $searchTerm, first: 25) {
     totalCount
@@ -52,4 +84,5 @@ export default {
   INDEX_QUERY,
   SERVICE_QUERY,
   SEARCH_SERVICE_QUERY,
+  SERVICE_BY_OWNER_AND_REPO_QUERY,
 };

@@ -4,6 +4,7 @@ import Index from '../views/Index';
 import SearchResults from '../views/SearchResults';
 import Service from '../views/Service';
 import Tags from '../views/Tags';
+import PageNotFound from '../views/PageNotFound';
 
 Vue.use(Router);
 
@@ -47,9 +48,20 @@ export default new Router({
     },
     {
       path: '/r/:owner/:repo',
-      beforeEnter({ params }) {
-        window.location = `https://www.github.com/${params.owner}/${params.repo}`;
+      component: Service,
+      meta: {
+        hasSearch: true,
       },
+      props(route) {
+        return {
+          owner: route.params.owner,
+          repo: route.params.repo,
+        };
+      },
+    },
+    {
+      path: '*',
+      component: PageNotFound,
     },
   ],
   scrollBehavior() {

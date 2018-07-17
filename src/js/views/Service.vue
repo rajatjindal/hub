@@ -221,10 +221,13 @@ import ServiceSummary from '../components/ServiceSummary';
 
 export default {
   name: 'SearchResults',
-  props: ['alias'],
+  props: ['alias', 'owner', 'repo'],
   apollo: {
-    service: {
+    serviceByAlias: {
       query: queries.SERVICE_QUERY,
+      skip() {
+        return !this.alias;
+      },
       variables() {
         return {
           where: this.alias,
@@ -234,17 +237,42 @@ export default {
         return data.serviceByAlias;
       },
     },
+    serviceByOwnerAndRepo: {
+      query: queries.SERVICE_BY_OWNER_AND_REPO_QUERY,
+      skip() {
+        return !this.owner && !this.repo;
+      },
+      variables() {
+        return {
+          owner: this.owner,
+          repo: this.repo,
+        };
+      },
+      update(data) {
+        return data.allOwners.nodes.length > 0 &&
+          data.allOwners.nodes[0].repos.nodes.length > 0 &&
+          data.allOwners.nodes[0].repos.nodes[0].services.nodes.length > 0 &&
+          data.allOwners.nodes[0].repos.nodes[0].services.nodes[0];
+      },
+    },
   },
   data() {
     return {
       clippy,
-      service: {},
+      serviceByAlias: undefined,
+      serviceByOwnerAndRepo: undefined,
       verifiedIcon,
     };
   },
   watch: {
     commands() {
       setTimeout(Prism.highlightAll, 0);
+    },
+    serviceByAlias(newValue) {
+      if (!newValue) this.$router.push('/404');
+    },
+    serviceByOwnerAndRepo(newValue) {
+      if (!newValue) this.$router.push('/404');
     },
   },
   methods: {
@@ -253,6 +281,9 @@ export default {
     },
   },
   computed: {
+    service() {
+      return this.serviceByAlias || this.serviceByOwnerAndRepo || {};
+    },
     numCommands() {
       return Object.keys(this.commands).length;
     },
