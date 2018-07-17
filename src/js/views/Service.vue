@@ -75,7 +75,7 @@
         </transition>
 
         <transition name="fade">
-          <div class="toc-commands-container">
+          <div class="toc-commands-container" v-if="numCommands > 1">
             <table class="table toc-commands">
               <tbody>
                 <tr v-for="(command, name, index) in commands" :key="name">
