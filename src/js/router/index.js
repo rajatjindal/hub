@@ -4,6 +4,7 @@ import Index from '../views/Index';
 import SearchResults from '../views/SearchResults';
 import Service from '../views/Service';
 import Tags from '../views/Tags';
+import Faq from '../views/Faq';
 import PageNotFound from '../views/PageNotFound';
 
 Vue.use(Router);
@@ -57,6 +58,13 @@ export default new Router({
           owner: route.params.owner,
           repo: route.params.repo,
         };
+      },
+    },
+    {
+      path: '/faq',
+      component: Faq,
+      meta: {
+        hasSearch: true,
       },
     },
     {

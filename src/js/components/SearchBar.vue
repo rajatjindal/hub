@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import AInput from '../../../node_modules/asyncy-ui-components/dist/AInput';
 import ServiceSummary from '../components/ServiceSummary';
 
 export default {
@@ -23,7 +22,6 @@ export default {
   },
   components: {
     ServiceSummary,
-    AInput,
   },
 };
 </script>
@@ -33,5 +31,4 @@ export default {
   width 100%
   z-index 1
   position relative
-
 </style>

@@ -1,22 +1,42 @@
 <template>
   <div class="app">
+    <transition name="fade">
+      <SubmitAServiceModal v-if="modalOpen" @close="closeSubmitAServiceModal"/>
+    </transition>
     <app-header class="app-header" link-component="url-link" :show-search="hasSearch" :on-search="onSearch" :links="[
       { text: 'Explore', to: '/' },
       { text: 'Platform', to: 'https://www.asyncy.com/platform' },
       { text: 'Documentation', to: 'https://docs.asyncy.com'},
-      { text: 'Submit a service', to: '/', button: true },
-    ]"></app-header>
-    <router-view></router-view>
+    ]">
+      <template slot="afterLinks"><a-button @click.native="openSubmitAServiceModal">Submit a Service</a-button></template>
+    </app-header>
+    <router-view @open-submit-service-modal="openSubmitAServiceModal"></router-view>
     <app-footer/>
   </div>
 </template>
 
 <script>
+import SubmitAServiceModal from './components/SubmitAServiceModal';
+
 export default {
   name: 'app',
+  components: {
+    SubmitAServiceModal,
+  },
+  data() {
+    return {
+      modalOpen: false,
+    };
+  },
   methods: {
     onSearch(value) {
       this.$router.push(`/search?q=${value}`);
+    },
+    openSubmitAServiceModal() {
+      this.modalOpen = true;
+    },
+    closeSubmitAServiceModal() {
+      this.modalOpen = false;
     },
   },
   computed: {

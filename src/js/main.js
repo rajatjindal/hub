@@ -19,8 +19,15 @@ import UrlLink from './components/UrlLink';
 import TopicTag from './components/TopicTag';
 import TopicsList from './components/TopicsList';
 import AButton from '../../node_modules/asyncy-ui-components/dist/AButton';
+import AInput from '../../node_modules/asyncy-ui-components/dist/AInput';
 import AppFooter from '../../node_modules/asyncy-ui-components/dist/AppFooter';
 import AppHeader from '../../node_modules/asyncy-ui-components/dist/AppHeader';
+
+import '../../node_modules/asyncy-ui-components/dist/AButton.css';
+import '../../node_modules/asyncy-ui-components/dist/AInput.css';
+import '../../node_modules/asyncy-ui-components/dist/AppFooter.css';
+import '../../node_modules/asyncy-ui-components/dist/AppHeader.css';
+import '../../node_modules/asyncy-ui-components/dist/css/global.css';
 
 Raven.config('https://93f5d14ba8eb424d903a1a0881d1fa6d@sentry.io/1206503', {
   environment: process.env.NODE_ENV,
@@ -50,6 +57,7 @@ Vue.component('two-column-sidebar', TwoColumnSidebar);
 Vue.component('topic-tag', TopicTag);
 Vue.component('url-link', UrlLink);
 Vue.component('a-button', AButton);
+Vue.component('a-input', AInput);
 Vue.component('app-header', AppHeader);
 Vue.component('app-footer', AppFooter);
 Vue.component('topics-list', TopicsList);

@@ -70,7 +70,7 @@
 
         <section class="section getting-started">
           <h2 class="call-to-action">List your service on Asyncy Hub</h2>
-          <a-button color="white">Submit a service</a-button>
+          <a-button color="white" @click.native="$emit('open-submit-service-modal')">Submit a service</a-button>
         </section>
       </div>
     </two-column-sidebar>
