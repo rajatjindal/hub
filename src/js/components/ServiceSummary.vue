@@ -1,6 +1,6 @@
 <template>
   <div :class="{ disabled: !title, summary: true }">
-    <router-link :to="`/service/${title}`">
+    <router-link :to="(isAlias ? `/service/` : '/r/') + title">
       <div class="media" v-if="!isLoading && title">
         <div class="media-left">
           <div class="service-image" :style="{ backgroundColor: color }">{{ firstLetterCapitalized }}</div>
@@ -31,7 +31,7 @@
 import md5 from 'crypto-js/md5';
 
 export default {
-  props: ['title', 'description', 'tags'],
+  props: ['title', 'description', 'tags', 'isAlias'],
   computed: {
     color() {
       const randomNumFromTitle = md5(this.title).words[0];

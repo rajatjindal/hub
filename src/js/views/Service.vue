@@ -5,8 +5,8 @@
         <div class="section">
           <h5>Links</h5>
           <transition name="fade">
-            <div class="links" v-if="service.repo && service.alias"><a :href="`https://www.github.com/${service.repo.owner.username}/${service.alias}`">View on Github</a></div>
-            <div v-else-if="!service.repo && !service.alias" class="loading-shimmer tag"></div>
+            <div class="links" v-if="service.repo && serviceName"><a :href="`https://www.github.com/${service.repo.owner.username}/${serviceName}`">View on Github</a></div>
+            <div v-else-if="!service.repo && !serviceName" class="loading-shimmer tag"></div>
             <p class="links none-found" v-else>No links found.</p>
           </transition>
         </div>
@@ -20,39 +20,39 @@
           <transition-group name="fade" class="versions" tag="ul">
             <li class="version" v-for="tag in tags" :key="tag.tag">{{tag.tag}} - {{tag.state}}</li>
           </transition-group>
-          <ul class="versions" v-if="tags.length <= 0 && !service.alias">
+          <ul class="versions" v-if="tags.length <= 0 && !serviceName">
             <li class="version"><div class="loading-shimmer tag"></div></li>
           </ul>
-          <p class="none-found" v-else-if="tags.length <= 0 && service.alias">No versions found.</p>
+          <p class="none-found" v-else-if="tags.length <= 0 && serviceName">No versions found.</p>
         </div>
       </div>
     </div>
     <div slot="body" class="body">
       <div class="name-container level is-mobile">
         <transition name="fade">
-          <div class="level-left" v-if="service.alias">
+          <div class="level-left" v-if="serviceName">
             <div class="level-item">
-              <h1>{{service.alias}}</h1>
+              <h1>{{serviceName}}</h1>
             </div>
             <div class="level-item">
               <img :src="verifiedIcon"/>
             </div>
           </div>
         </transition>
-        <div v-if="!service.alias" class="level-left loading-shimmer alias"></div>
+        <div v-if="!serviceName" class="level-left loading-shimmer alias"></div>
       </div>
       <div class="body-section">
         <h5>Description</h5>
         <transition name="fade">
           <p v-if="service.description">{{service.description | emoji}}</p>
-          <p v-else-if="!service.description && service.alias" class="none-found">This service has no description.</p>
+          <p v-else-if="!service.description && serviceName" class="none-found">This service has no description.</p>
           <p v-else class="loading-shimmer description"></p>
         </transition>
       </div>
       <div class="body-section">
         <h5>Commands ({{numCommands}})</h5>
 
-        <div class="command" v-if="numCommands <= 0 && !service.alias">
+        <div class="command" v-if="numCommands <= 0 && !serviceName">
           <div class="loading-shimmer name"></div>
           <div class="section">
             <div class="subtitle">Description</div>
@@ -69,7 +69,7 @@
         </div>
 
         <transition name="fade">
-          <div v-if="numCommands <= 0 && service.alias" class="none-found">
+          <div v-if="numCommands <= 0 && serviceName" class="none-found">
             This service has no commands.
           </div>
         </transition>
@@ -98,7 +98,7 @@
 
             <div class="section">
               <div class="subtitle">Example</div>
-              <Code lang="coffeescript"><template v-if="!command.run">result = </template>{{service.alias}} {{name}}<template v-for="(arg, name, index) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template><template v-if="command.run"> as result
+              <Code lang="coffeescript"><template v-if="!command.run">result = </template>{{ serviceName }} {{name}}<template v-for="(arg, name, index) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template><template v-if="command.run"> as result
     ...</template></Code>
             </div>
 
@@ -273,6 +273,9 @@ export default {
   computed: {
     service() {
       return this.serviceByAlias || this.serviceByOwnerAndRepo || {};
+    },
+    serviceName() {
+      return this.service.alias || this.service.repo.name;
     },
     numCommands() {
       return Object.keys(this.commands).length;

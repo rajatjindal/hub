@@ -30,7 +30,7 @@
             <div class="tile is-parent is-vertical">
               <transition-group tag="div" name="fade">
                 <div v-for="(r, index) in results" :key="r.alias || index" class="tile is-child search-result">
-                  <service-summary :title="r.alias" :description="r.description" :tags="r.topics"></service-summary>
+                  <service-summary :title="r.alias || `${r.repo.owner.username}/${r.repo.name}`" :is-alias="r.alias ? true : false" :description="r.description" :tags="r.topics"></service-summary>
                 </div>
               </transition-group>
             </div>

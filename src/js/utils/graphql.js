@@ -44,6 +44,7 @@ const SERVICE_BY_OWNER_AND_REPO_QUERY = gql`query ServiceByOwnerAndRepo($owner: 
               description
               topics
               repo {
+                name
                 owner {
                   username
                 }
@@ -75,6 +76,12 @@ const SEARCH_SERVICE_QUERY = gql`query SearchServices($searchTerm: String!) {
         alias
         description
         topics
+        repo {
+          name
+          owner {
+            username
+          }
+        }
       }
     }
   }
