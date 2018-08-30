@@ -56,12 +56,12 @@
             <div class="tile is-ancestor">
               <transition-group name="fade" tag="div" class="tile is-parent is-vertical">
                 <div v-for="(r, index) in data.recentServices.slice(0, 3)" class="tile is-child" :key="r.alias || index">
-                  <service-summary :title="r.alias" :description="r.description" :tags="r.topics"></service-summary>
+                  <service-summary :title="r.alias || `${r.repo.owner.username}/${r.repo.name}`" :is-alias="r.alias ? true : false" :description="r.description" :tags="r.topics"></service-summary>
                 </div>
               </transition-group>
               <transition-group name="fade" tag="div" class="tile is-parent is-vertical">
                 <div v-for="(r, index) in data.recentServices.slice(3, 6)" class="tile is-child" :key="r.alias || index">
-                  <service-summary :title="r.alias" :description="r.description" :tags="r.topics"></service-summary>
+                  <service-summary :title="r.alias || `${r.repo.owner.username}/${r.repo.name}`" :is-alias="r.alias ? true : false" :description="r.description" :tags="r.topics"></service-summary>
                 </div>
               </transition-group>
             </div>
