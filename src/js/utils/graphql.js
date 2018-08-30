@@ -7,6 +7,12 @@ const INDEX_QUERY = gql`{
       alias
       description
       topics
+      repo {
+        name
+        owner {
+          username
+        }
+      }
     }
   }
 }`;
