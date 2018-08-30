@@ -24,6 +24,7 @@ const SERVICE_QUERY = gql`query ServiceByAlias($where: Alias!) {
     description
     topics
     repo {
+      name
       owner {
         username
       }
