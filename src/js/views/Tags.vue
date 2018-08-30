@@ -14,10 +14,10 @@
             <transition-group class="tile is-parent is-vertical" tag="div" name="fade">
               <div v-for="(r, index) in results" class="tile is-parent" :key="index">
                 <div class="tile is-child is-6">
-                  <service-summary :title="r[0].alias" :description="r[0].description" :tags="r[0].topics"></service-summary>
+                  <service-summary :title="r[0].alias || `${r[0].repo.owner.username}/${r[0].repo.name}`" :is-alias="r[0].alias ? true: false" :description="r[0].description" :tags="r[0].topics"></service-summary>
                 </div>
                 <div class="tile is-child is-6" v-if="r.length > 1">
-                  <service-summary :title="r[1].alias" :description="r[1].description" :tags="r[1].topics"></service-summary>
+                  <service-summary :title="r[1].alias || `${r[1].repo.owner.username}/${r[1].repo.name}`" :is-alias="r[1].alias ? true: false" :description="r[1].description" :tags="r[1].topics"></service-summary>
                 </div>
               </div>
             </transition-group>
