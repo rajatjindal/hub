@@ -5,7 +5,7 @@
         <div class="section">
           <h5>Links</h5>
           <transition name="fade">
-            <div class="links" v-if="service.repo && serviceName"><a :href="`https://www.github.com/${service.repo.owner.username}/${serviceName}`">View on Github</a></div>
+            <div class="links" v-if="service.repo && service.repo.owner && serviceName"><a :href="`https://www.github.com/${service.repo.owner.username}/${serviceName}`">View on Github</a></div>
             <div v-else-if="!service.repo && !serviceName" class="loading-shimmer tag"></div>
             <p class="links none-found" v-else>No links found.</p>
           </transition>
@@ -215,7 +215,7 @@ import queries from '../utils/graphql';
 import Code from '../components/Code';
 
 export default {
-  name: 'SearchResults',
+  name: 'Service',
   props: ['alias', 'owner', 'repo'],
   apollo: {
     serviceByAlias: {
@@ -274,6 +274,9 @@ export default {
       return this.serviceByAlias || this.serviceByOwnerAndRepo || {};
     },
     serviceName() {
+      if (!this.service || !this.service.alias || !this.service.repo) {
+        return '';
+      }
       return this.service.alias || `${this.service.repo.owner.username}/${this.service.repo.name}`;
     },
     numCommands() {
