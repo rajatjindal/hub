@@ -212,7 +212,6 @@ import Prism from 'prismjs';
 
 import verifiedIcon from '../../assets/verified.svg';
 import queries from '../utils/graphql';
-import ServiceSummary from '../components/ServiceSummary';
 import Code from '../components/Code';
 
 export default {
@@ -294,7 +293,6 @@ export default {
     },
   },
   components: {
-    ServiceSummary,
     Code,
   },
 };
@@ -354,6 +352,16 @@ a:focus
       font-size 2em
       color #3E87DA
 
+  /* colors is the array of the secondary brand colors */
+  colors = #001fff, #2de5ea, #86e028, #ffce00, #ff7900, #f72d2d, #ff107d
+  /* put color from brands into children (repeat mode) */
+  for color, i in colors
+    .command
+      &:nth-of-type({ length(colors) }n + { i + 1 })
+        .command-name
+          &::before
+            color color
+
   .command
     margin-top 1.2em
     margin-bottom 3em
@@ -369,18 +377,19 @@ a:focus
       color #111
       margin-top 0.8em
       font-size 26px
-
+      
       &::before
         font-family -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif
         font-weight 600
         content '# '
-        color #c9c9c9
         margin-left -22px
-        opacity 0
-        transition opacity 0.2s
+        opacity 0.4
+        transition opacity .2s
 
-      &:hover::before
-        opacity 1
+      &:hover
+        &::before
+          opacity 0.7
+
 
   .toc-commands-container
     width calc(100% - 24px)
