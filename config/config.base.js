@@ -9,5 +9,6 @@ module.exports = {
   debug: false,
   sessionName: 'session_id',
   credential: 'same-origin',
-  exampleAPI: exports.getURL('/thing/')
+  exampleAPI: exports.getURL('/thing/'),
+  SENTRY_DSN: 'https://93f5d14ba8eb424d903a1a0881d1fa6d@sentry.io/1206503'
 };

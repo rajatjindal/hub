@@ -4,10 +4,13 @@ const webpack = require('webpack');
 const ESlintFormatter = require('eslint-friendly-formatter');
 const { VueLoaderPlugin } = require('vue-loader')
 
+const sentryDsn = process.env.SENTRY_DSN ? process.env.SENTRY_DSN : config.SENTRY_DSN
+
 const defaults = {
   __DEV__: JSON.stringify(config.isDev),
   __PROD__: JSON.stringify(config.isProd),
   'process.env.NODE_ENV': `"${config.env}"`,
+  '__SENTRY_DSN__': `"${sentryDsn}"`,
   __APP_MODE__: `"${config.appMode}"`,
 };
 
