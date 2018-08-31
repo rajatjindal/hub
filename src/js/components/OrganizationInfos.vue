@@ -1,7 +1,7 @@
 <template>
   <div class="organization">
     <transition name="fade">
-      <div v-if="!isLoading && username" class="organization-image" :style="`background-image: url(https://avatars.githubusercontent.com/${username}`" />
+      <div v-if="!isLoading && username" class="organization-image" :style="`background-image: url(https://avatars.githubusercontent.com/${username}?s=128`" />
       <div v-else class="loading-shimmer organization-image"></div>
     </transition>
     <transition name="fade">

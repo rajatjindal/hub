@@ -73,7 +73,7 @@ const SERVICE_BY_OWNER_AND_REPO_QUERY = gql`query ServiceByOwnerAndRepo($owner: 
 `;
 
 const SERVICE_BY_OWNER_QUERY = gql`query ServiceByOwner($owner: Username!) {
-  allOwners(condition: { username: $owner }) {
+  allOwners(condition: { username: $owner }, first: 1) {
     nodes {
       username
       name
