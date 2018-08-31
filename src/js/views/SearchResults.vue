@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     getTitle(r) {
-      if (!r.alias || !r.repo || !r.repo.owner) {
+      if (!r.alias && (!r.repo || !r.repo.owner)) {
         return '';
       }
       return r.alias || `${r.repo.owner.username}/${r.repo.name}`;
