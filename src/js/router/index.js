@@ -2,6 +2,7 @@ import Vue from 'vue';
 import Router from 'vue-router';
 import Index from '../views/Index';
 import SearchResults from '../views/SearchResults';
+import Organization from '../views/Organization';
 import Service from '../views/Service';
 import Tags from '../views/Tags';
 import Faq from '../views/Faq';
@@ -45,6 +46,18 @@ export default new Router({
       },
       props(route) {
         return { topic: route.params.topic };
+      },
+    },
+    {
+      path: '/r/:owner',
+      component: Organization,
+      meta: {
+        hasSearch: true,
+      },
+      props(route) {
+        return {
+          owner: route.params.owner,
+        };
       },
     },
     {

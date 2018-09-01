@@ -274,7 +274,7 @@ export default {
       return this.serviceByAlias || this.serviceByOwnerAndRepo || {};
     },
     serviceName() {
-      if (!this.service || !this.service.alias || !this.service.repo) {
+      if (!this.service.alias && (!this.service.repo || !this.service.repo.owner)) {
         return '';
       }
       return this.service.alias || `${this.service.repo.owner.username}/${this.service.repo.name}`;
