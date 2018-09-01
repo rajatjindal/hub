@@ -29,7 +29,8 @@ import '../../node_modules/asyncy-ui-components/dist/AppFooter.css';
 import '../../node_modules/asyncy-ui-components/dist/AppHeader.css';
 import '../../node_modules/asyncy-ui-components/dist/css/global.css';
 
-Raven.config('https://93f5d14ba8eb424d903a1a0881d1fa6d@sentry.io/1206503', {
+/* global __SENTRY_DSN__ */
+Raven.config(__SENTRY_DSN__, {
   environment: process.env.NODE_ENV,
 }).addPlugin(RavenVue, Vue)
   .install();
