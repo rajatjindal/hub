@@ -98,9 +98,12 @@
 
             <div class="section">
               <div class="subtitle">Example</div>
+                <p>{{command}}</p>
               <Code lang="coffeescript">
-                <template v-if="!command.run">result = </template>{{ serviceName }} {{name}}<template v-for="(arg, name) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template>
-                <template v-if="command.run"> as result...</template>
+                <template v-if="!command.run && command.output || command.output && command.output.type">result = </template>{{ serviceName }} {{name}}
+                <template v-for="(arg, name) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template>
+                <template v-if="command.run"> as result
+                  ...</template>
               </Code>
             </div>
 
