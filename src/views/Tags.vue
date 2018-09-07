@@ -2,7 +2,7 @@
   <div class="index">
     <div class="columns">
       <div class="column is-12 body">
-        <div class="breadcrumb" v-if="prevPage.name === 'Hub'"><router-link :to="prevPage.path">{{prevPage.name}}</router-link> / {{topic | from-topic}}</div>
+        <div class="breadcrumb" v-if="prevPage.name === 'hub'"><router-link :to="prevPage.path">{{prevPage.name | capitalize }}</router-link> / {{topic | from-topic}}</div>
 
         <div class="level name-container is-mobile">
           <div class="level-left">
