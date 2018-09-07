@@ -98,13 +98,15 @@
 
             <div class="section">
               <div class="subtitle">Example</div>
-                <p>{{command}}</p>
-              <Code lang="coffeescript">
-                <template v-if="!command.run && command.output || command.output && command.output.type">result = </template>{{ serviceName }} {{name}}
-                <template v-for="(arg, name) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template>
-                <template v-if="command.run"> as result
-                  ...</template>
-              </Code>
+                <Code v-if="!command.events" lang="coffeescript">
+                  <template v-if="!command.run">result = </template>{{ serviceName }} {{ name }}<template v-for="(arg, name) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template><template v-if="command.run"> as result
+...</template>
+                </Code>
+                <Code v-if="command.events" lang="coffeescript">
+                  {{ serviceName }} {{ name }} as client <template v-for="(val, key) in command.events">
+  when client {{ key }} <template v-for="(val, key) in val.arguments">{{key}}:[{{val.type}}] </template>as result
+    ...</template>
+                </Code>
             </div>
 
             <div v-if="command.arguments" class="section">
