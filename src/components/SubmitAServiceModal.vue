@@ -16,51 +16,59 @@ import Code from './Code'
 export default {
   components: { Code },
   methods: {
-    onClickDone: function () {
+    onClickDone: function() {
       this.$emit('close')
     }
   }
 }
 </script>
 
-<style scoped lang="sass">
-.darken-background
-  z-index: 1000
-  position: fixed
-  top: 0
-  left: 0
-  width: 100vw
-  height: 100vh
-  background-color: rgba(black, 0.5)
-  display: flex
-  align-items: center
-  justify-content: center
+<style scoped lang="scss">
+.darken-background {
+  z-index: 1000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(black, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
 
-.modal
-  text-align: left
-  max-width: 680px
-  border-radius: 4px
-  padding: 41px 53px
-  margin: 10px
-  background-color: white
+.modal {
+  text-align: left;
+  max-width: 680px;
+  border-radius: 4px;
+  padding: 41px 53px;
+  margin: 10px;
+  background-color: white;
+}
 
-.code
-  color: #111
-  font-size: 1.3em
-  border: 1px solid #DCDCDC
-  margin-bottom: 1em
-  border-radius: 5px
-  background-color: #F8F8F8
+.code {
+  color: #111;
+  font-size: 1.3em;
+  border: 1px solid #dcdcdc;
+  margin-bottom: 1em;
+  border-radius: 5px;
+  background-color: #f8f8f8;
+}
 
-h2
-  font-weight: 500
-  margin-bottom: 1em
+h2 {
+  font-weight: 500;
+  margin-bottom: 1em;
+}
 
-p
-  margin-bottom: 1em
+p {
+  margin-bottom: 1em;
+}
 
-a
-  font-weight: 500
-  &:hover
-    text-decoration: underline
+a {
+  font-weight: 500;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
 </style>

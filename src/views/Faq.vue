@@ -43,36 +43,45 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
-h1
-  line-height: 3.2rem
+<style scoped lang="scss">
+h1 {
+  line-height: 3.2rem;
+}
 
-.container
-  margin: 75px auto
-  padding: 25px
-  max-width: 900px
-  text-align: left
+.container {
+  margin: 75px auto;
+  padding: 25px;
+  max-width: 900px;
+  text-align: left;
+}
 
-.subtitle
-  font-size: 1.3em
-  color: #555
+.subtitle {
+  font-size: 1.3em;
+  color: #555;
+}
 
-.highlight
-  font-weight: 500
+.highlight {
+  font-weight: 500;
+}
 
-.step
-  margin-top: 75px
+.step {
+  margin-top: 75px;
 
-  p
-    font-size: 1.2em
-    margin-bottom: 1.8em
+  p {
+    font-size: 1.2em;
+    margin-bottom: 1.8em;
+  }
 
-  code
-    font-size: 1.2em
+  code {
+    font-size: 1.2em;
+  }
 
-  img
-    max-width: 800px
+  img {
+    max-width: 800px;
+  }
+}
 
-/*.final-button
-  font-size 1.4rem !important*/
+// .final-button {
+//   font-size: 1.4rem !important;
+// }
 </style>

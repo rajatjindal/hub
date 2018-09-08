@@ -47,42 +47,59 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
-.body
-  max-width: 700px
-  padding: 25px
-  text-align: left
-  margin: 25px auto
+<style scoped lang="scss">
+.body {
+  max-width: 700px;
+  padding: 25px;
+  text-align: left;
+  margin: 25px auto;
+}
 
-.back
-  margin-bottom: 2em
-  a
-    color: #707073
-  .back-icon
-    height: 30px
-    width: 30px
-    border-radius: 5px
-    background-color: #ECECEC
-    display: inline-flex
-    justify-content: center
-    margin-right: 0.5em
+.back {
+  margin-bottom: 2em;
 
-h1
-  margin-bottom: 1em
+  a {
+    color: #707073;
+  }
 
-.p
-  line-height: 1.9em
+  .back-icon {
+    height: 30px;
+    width: 30px;
+    border-radius: 5px;
+    background-color: #ececec;
+    display: inline-flex;
+    justify-content: center;
+    margin-right: 0.5em;
+  }
+}
 
-.links
-  padding-top: 2em
-  .title
-    font-size: 1em
-    font-weight: 500
-  ul
-    padding-left: 0
-    list-style: none
-    li
-      line-height: 2.1em
-      a:hover
-        text-decoration: underline
+h1 {
+  margin-bottom: 1em;
+}
+
+.p {
+  line-height: 1.9em;
+}
+
+.links {
+  padding-top: 2em;
+
+  .title {
+    font-size: 1em;
+    font-weight: 500;
+  }
+
+  ul {
+    padding-left: 0;
+    list-style: none;
+
+    li {
+      line-height: 2.1em;
+
+      a:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
 </style>

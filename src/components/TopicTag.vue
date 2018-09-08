@@ -12,22 +12,26 @@ export default {
     text: ''
   }),
   computed: {
-    linkTo: function () {
+    linkTo: function() {
       return `/tags/${this.text}`
     }
   },
-  mounted: function () {
-    this.text = this.$slots.default &&
+  mounted: function() {
+    this.text =
+      this.$slots.default &&
       this.$slots.default.length > 0 &&
       this.$slots.default[0].text
   }
 }
 </script>
 
-<style scoped lang="sass">
-.tag
-  font-size: 0.8em
-  transition: all 0.3s
-.tag:hover
-  filter: brightness(0.95)
+<style scoped lang="scss">
+.tag {
+  font-size: 0.8em;
+  transition: all 0.3s;
+
+  &:hover {
+    filter: brightness(0.95);
+  }
+}
 </style>

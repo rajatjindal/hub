@@ -33,77 +33,93 @@ import md5 from 'crypto-js/md5'
 export default {
   props: ['title', 'description', 'tags', 'isAlias'],
   computed: {
-    color: function () {
+    color: function() {
       const randomNumFromTitle = md5(this.title).words[0]
       const numBetweenZeroAndOne = Math.abs(randomNumFromTitle) / 2147483647
       const hue = numBetweenZeroAndOne * 360
       return `hsla(${hue}, 45%, 65%, 1)`
     },
-    firstLetterCapitalized: function () {
+    firstLetterCapitalized: function() {
       return this.title && this.title.slice(0, 1).toUpperCase()
     },
-    isLoading: function () {
+    isLoading: function() {
       return !this.title
     }
   }
 }
 </script>
 
-<style scoped lang="sass">
-.disabled
-  pointer-events: none
+<style scoped lang="scss">
+.disabled {
+  pointer-events: none;
+}
 
-a
-  color: black
+a {
+  color: black;
+}
 
-.service-image
-  min-width: 65px
-  height: 65px
-  border-radius: 4px
-  display: flex
-  align-items: center
-  justify-content: center
-  font-size: 1.6em
-  color: white
+.service-image {
+  min-width: 65px;
+  height: 65px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6em;
+  color: white;
+}
 
-h4
-  margin-top: 0
-  margin-bottom: 0.3em
+h4 {
+  margin-top: 0;
+  margin-bottom: 0.3em;
+}
 
-p
-  margin: 0
+p {
+  margin: 0;
+}
 
-.media
-  opacity: 1
+.media {
+  opacity: 1;
+}
 
-.tags-container
-  margin-top: 1em
+.tags-container {
+  margin-top: 1em;
 
-  .tag-container
-    margin-right: 0.4em
+  .tag-container {
+    margin-right: 0.4em;
+  }
+}
 
-.loading-shimmer
-  margin-bottom: 0.8em
+.loading-shimmer {
+  margin-bottom: 0.8em;
 
-  &.service-image
-    border-color: transparent
+  &.service-image {
+    border-color: transparent;
+  }
 
-  &.title
-    width: 200px
-    height: 16px
+  &.title {
+    width: 200px;
+    height: 16px;
+  }
 
-  &.description
-    width: 250px
-    height: 11px
+  &.description {
+    width: 250px;
+    height: 11px;
+  }
 
-  &.tags
-    margin-top: 1.4em
-    width: 100px
-    height: 1em
+  &.tags {
+    margin-top: 1.4em;
+    width: 100px;
+    height: 1em;
+  }
+}
 
-.fade-enter-active, .fade-leave-active
-  transition: opacity .5s
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.5s;
+}
 
-.fade-enter, .fade-leave-to
-  opacity: 0
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0;
+}
 </style>

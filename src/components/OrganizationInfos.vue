@@ -38,56 +38,59 @@ export default {
   data: () => ({
     isLoading: true
   }),
-  mounted: function () {
+  mounted: function() {
     // currently should only happen when data is loaded via cache
     if (this.title) {
       this.isLoading = false
     }
   },
   watch: {
-    title: function () {
+    title: function() {
       this.isLoading = false
     }
   },
   computed: {
-    topics: function () {
+    topics: function() {
       return this.value || []
     },
-    color: function () {
+    color: function() {
       const randomNumFromTitle = md5(this.title).words[0]
       const numBetweenZeroAndOne = Math.abs(randomNumFromTitle) / 2147483647
       const hue = numBetweenZeroAndOne * 360
       return `hsla(${hue}, 45%, 65%, 1)`
     },
-    firstLetterCapitalized: function () {
+    firstLetterCapitalized: function() {
       return this.username && this.username.slice(0, 1).toUpperCase()
     }
   }
 }
 </script>
 
-<style scoped lang="sass">
+<style scoped lang="scss">
+.organization {
+  text-align: center;
+  margin: 0 auto;
+}
 
-.organization
-  text-align: center
-  margin: 0 auto
+.organization-name {
+  margin-top: 10px;
+  font-size: 1.5rem;
+}
 
-.organization-name
-  margin-top: 10px
-  font-size: 1.5 rem
+.organization-title {
+  font-weight: 300;
+}
 
-.organization-title
-  font-weight: 300
-
-.organization-image
-  margin: 0 auto
-  background-size: 100% 100%
-  width: 128px
-  height: 128px
-  border-radius: 4px
-  display: flex
-  align-items: center
-  justify-content: center
-  font-size: 1.6em
-  color: white
+.organization-image {
+  margin: 0 auto;
+  background-size: 100% 100%;
+  width: 128px;
+  height: 128px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6em;
+  color: white;
+}
 </style>

@@ -15,21 +15,25 @@
 export default {}
 </script>
 
-<style scoped lang="sass">
-@media (max-width: 768px)
-  .sidebar
-    order: 1
-    flex-basis: 100%
-    flex-grow: 1
+<style scoped lang="scss">
+@include breakpoint(max $bp-m) {
+  .sidebar {
+    order: 1;
+    flex-basis: 100%;
+    flex-grow: 1;
+  }
+}
 
-.index
-  min-height: 650px
-  margin-top: 1.5em
+.index {
+  min-height: 650px;
+  margin-top: 1.5em;
+}
 
-.columns
-  max-width: 1200px
-  margin: 0 auto
-  text-align: left
-  display: flex
-  flex-wrap: wrap
+.columns {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: left;
+  display: flex;
+  flex-wrap: wrap;
+}
 </style>

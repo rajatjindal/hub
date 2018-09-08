@@ -49,27 +49,27 @@ export default {
   apollo: {
     results: {
       query: SearchQuery,
-      variables: function () {
+      variables: function() {
         return {
           searchTerm: this.topic || 'microservice'
         }
       },
-      update: function (data) {
+      update: function(data) {
         this.totalItems = data.searchServices.totalCount
         return chunk(data.searchServices.edges.map(e => e.node))
       }
     }
   },
   beforeRouteEnter: (to, from, next) => {
-    next((vm) => {
+    next(vm => {
       // eslint-disable-next-line
-      vm.prevPage.name = from.name;
+      vm.prevPage.name = from.name
       // eslint-disable-next-line
-      vm.prevPage.path = from.path;
+      vm.prevPage.path = from.path
     })
   },
   methods: {
-    getTitle: function (r) {
+    getTitle: function(r) {
       if (!r.alias && (!r.repo || !r.repo.owner)) {
         return ''
       }
@@ -82,25 +82,30 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
-.index
-  min-height: 580px
+<style scoped lang="scss">
+.index {
+  min-height: 580px;
+}
 
-h2
-  font-weight: normal
-  font-size: 1.8em
-  margin: 0
+h2 {
+  font-weight: normal;
+  font-size: 1.8em;
+  margin: 0;
+}
 
-.breadcrumb
-  color: #7E7E7E
-  font-size: 0.9em
-  margin-bottom: 2.2em
+.breadcrumb {
+  color: #7e7e7e;
+  font-size: 0.9em;
+  margin-bottom: 2.2em;
+}
 
-.columns
-  max-width: 1100px
-  margin: 25px auto
-  text-align: left
+.columns {
+  max-width: 1100px;
+  margin: 25px auto;
+  text-align: left;
+}
 
-.results-container
-  width: 100%
+.results-container {
+  width: 100%;
+}
 </style>
