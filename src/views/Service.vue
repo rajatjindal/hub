@@ -461,11 +461,6 @@ a:focus {
 
     .section-event {
       margin-top: 1.25em;
-
-      .section {
-        margin-top: 0;
-        padding-left: 20px;
-      }
     }
 
     .command-name {
