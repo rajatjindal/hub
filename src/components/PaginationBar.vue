@@ -17,7 +17,6 @@
 </template>
 
 <script>
-
 export default {
   name: 'PaginationBar',
   props: ['totalItems'],
@@ -27,7 +26,7 @@ export default {
     }
   }),
   methods: {
-    onChange: function () {
+    onChange: function() {
       this.$emit('change', this.pagination.currentPage)
     }
   }
@@ -35,12 +34,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
-  @import "~bulma/sass/utilities/_all";
-  @import "~bulma/sass/components/pagination";
+@import "~bulma/sass/utilities/_all";
+@import "~bulma/sass/components/pagination";
 
-  .pagination-container {
-    margin-top: 2em;
-  }
+.pagination-container {
+  margin-top: 2em;
 
   /deep/ {
     .pagination-nav {
@@ -53,11 +51,16 @@ export default {
       padding-left: 0;
     }
 
-    a[disabled], .pagination-page.disabled, .pagination-prev.disabled, .pagination-next.disabled {
+    a[disabled],
+    .pagination-page.disabled,
+    .pagination-prev.disabled,
+    .pagination-next.disabled {
       @extend .pagination-link[disabled];
     }
 
-    .pagination-page, .pagination-prev, .pagination-next {
+    .pagination-page,
+    .pagination-prev,
+    .pagination-next {
       @extend .pagination-link;
       padding-left: 0;
       padding-right: 0;
@@ -79,5 +82,5 @@ export default {
       }
     }
   }
-
+}
 </style>

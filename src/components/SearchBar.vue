@@ -10,13 +10,13 @@ import ServiceSummary from '@/components/ServiceSummary'
 export default {
   name: 'SearchResults',
   props: ['value'],
-  data: function () {
+  data: function() {
     return {
       searchInput: this.value || ''
     }
   },
   methods: {
-    search: function () {
+    search: function() {
       this.$router.push(`/search?q=${this.searchInput}`)
     }
   },
@@ -26,9 +26,10 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
-.input.search-bar
-  width: 100%
-  z-index: 1
-  position: relative
+<style scoped lang="scss">
+.input.search-bar {
+  width: 100%;
+  z-index: 1;
+  position: relative;
+}
 </style>

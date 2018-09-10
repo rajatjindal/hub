@@ -220,34 +220,36 @@ export default {
   apollo: {
     serviceByAlias: {
       query: ServiceQuery,
-      skip: function () {
+      skip: function() {
         return !this.alias
       },
-      variables: function () {
+      variables: function() {
         return {
           where: this.alias
         }
       },
-      update: function (data) {
+      update: function(data) {
         return data.serviceByAlias
       }
     },
     serviceByOwnerAndRepo: {
       query: ServiceByOwnerAndRepoQuery,
-      skip: function () {
+      skip: function() {
         return !this.owner && !this.repo
       },
-      variables: function () {
+      variables: function() {
         return {
           owner: this.owner,
           repo: this.repo
         }
       },
-      update: function (data) {
-        return data.allOwners.nodes.length > 0 &&
+      update: function(data) {
+        return (
+          data.allOwners.nodes.length > 0 &&
           data.allOwners.nodes[0].repos.nodes.length > 0 &&
           data.allOwners.nodes[0].repos.nodes[0].services.nodes.length > 0 &&
           data.allOwners.nodes[0].repos.nodes[0].services.nodes[0]
+        )
       }
     }
   },
@@ -260,34 +262,46 @@ export default {
     serviceByAlias: function (newValue) {
       if (!newValue) this.$router.push('/404')
     },
-    serviceByOwnerAndRepo: function (newValue) {
+    serviceByOwnerAndRepo: function(newValue) {
       if (!newValue) this.$router.push('/404')
     }
   },
   computed: {
-    service: function () {
+    service: function() {
       return this.serviceByAlias || this.serviceByOwnerAndRepo || {}
     },
-    serviceName: function () {
-      if (!this.service.alias && (!this.service.repo || !this.service.repo.owner)) {
+    serviceName: function() {
+      if (
+        !this.service.alias &&
+        (!this.service.repo || !this.service.repo.owner)
+      ) {
         return ''
       }
-      return this.service.alias || `${this.service.repo.owner.username}/${this.service.repo.name}`
+      return (
+        this.service.alias ||
+        `${this.service.repo.owner.username}/${this.service.repo.name}`
+      )
     },
-    numCommands: function () {
+    numCommands: function() {
       return Object.keys(this.commands).length
     },
-    commands: function () {
-      return (this.service &&
-        this.service.serviceTags &&
-        this.service.serviceTags.nodes &&
-        this.service.serviceTags.nodes.length > 0 &&
-        this.service.serviceTags.nodes[0].configuration.commands) || {}
+    commands: function() {
+      return (
+        (this.service &&
+          this.service.serviceTags &&
+          this.service.serviceTags.nodes &&
+          this.service.serviceTags.nodes.length > 0 &&
+          this.service.serviceTags.nodes[0].configuration.commands) ||
+        {}
+      )
     },
-    tags: function () {
-      return (this.service &&
-        this.service.serviceTags &&
-        this.service.serviceTags.nodes) || []
+    tags: function() {
+      return (
+        (this.service &&
+          this.service.serviceTags &&
+          this.service.serviceTags.nodes) ||
+        []
+      )
     }
   },
   components: {
@@ -296,192 +310,250 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
-.links a:hover, .toc-commands a:hover
-  text-decoration: underline
-a:focus
-  outline: none
+<style scoped lang="scss">
+.links a:hover,
+.toc-commands a:hover {
+  text-decoration: underline;
+}
 
-.sidebar
-  font-size: 0.95em
+a:focus {
+  outline: none;
+}
 
-  .section:not(:first-child)
-    margin-top: 1.2em
+.sidebar {
+  font-size: 0.95em;
 
-  .links, .versions
-    margin-top: 0
-    list-style: none
-    padding-left: 0
+  .section:not(:first-child) {
+    margin-top: 1.2em;
+  }
 
-  .versions
-    line-height: 2em
+  .links,
+  .versions {
+    margin-top: 0;
+    list-style: none;
+    padding-left: 0;
+  }
 
-    .version
-      font-size: 0.95em
-      color: #6E6E6E
+  .versions {
+    line-height: 2em;
 
-  .tag
-    font-size: 0.9em
-    margin-bottom: 0.4em
+    .version {
+      font-size: 0.95em;
+      color: #6e6e6e;
+    }
+  }
 
-.none-found
-  font-size: 0.9em
-  color: #aaa
+  .tag {
+    font-size: 0.9em;
+    margin-bottom: 0.4em;
+  }
+}
 
-.body
-  max-width: 800px
+.none-found {
+  font-size: 0.9em;
+  color: #aaa;
+}
 
-  & > .body-section
-    margin-top: 1.8em
+.body {
+  max-width: 800px;
 
-    p
-      margin: 0
-      font-size: 0.95em
+  & > .body-section {
+    margin-top: 1.8em;
 
-  .name-container
-    margin-bottom: 1.5em
-    line-height: 2.8em
+    p {
+      margin: 0;
+      font-size: 0.95em;
+    }
+  }
 
-    h1
-      margin-bottom: 0
+  .name-container {
+    margin-bottom: 1.5em;
+    line-height: 2.8em;
 
-    .checkmark
-      margin-left: 0.8em
-      font-size: 2em
-      color: #3E87DA
+    h1 {
+      margin-bottom: 0;
+    }
 
-  /* colors is the array of the secondary brand colors */
-  $colors: #001fff #2de5ea #86e028 #ffce00 #ff7900 #f72d2d #ff107d
-  /* put color from brands into children (repeat mode) */
-  @each $color in $colors
-    $i: index($colors, $color)
-    .command
-      &:nth-of-type(#{ length($colors) }n + #{ $i })
-        .command-name
-          &::before
-            color: nth($colors, $i)
+    .checkmark {
+      margin-left: 0.8em;
+      font-size: 2em;
+      color: #3e87da;
+    }
+  }
 
-  .command
-    margin-top: 1.2em
-    margin-bottom: 3em
+  $colors: #001fff, #2de5ea, #86e028, #ffce00, #ff7900, #f72d2d, #ff107d;
 
-    .section
-      margin-top: 1.5em
+  @for $index from 1 to length($colors) {
+    .command {
+      &:nth-of-type(#{length($colors)}n + #{$index}) .command-name:before {
+        color: nth($colors, $index);
+      }
+    }
+  }
 
-    .subtitle
-      font-size: 0.9em
-      color: #999
+  .command {
+    margin-top: 1.2em;
+    margin-bottom: 3em;
 
-    .command-name
-      color: #111
-      margin-top: 0.8em
-      font-size: 26px
+    .section {
+      margin-top: 1.5em;
+    }
 
-      &::before
-        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif
-        font-weight: 600
-        content: '# '
-        margin-left: -22px
-        opacity: 0.4
-        transition: opacity .2s
+    .subtitle {
+      font-size: 0.9em;
+      color: #999;
+    }
 
-      &:hover
-        &::before
-          opacity: 0.7
+    .command-name {
+      color: #111;
+      margin-top: 0.8em;
+      font-size: 26px;
 
-  .toc-commands-container
-    width: calc(100% - 24px)
-    overflow: auto
-    margin-bottom: 48px
+      &::before {
+        font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica,
+          Arial, sans-serif;
+        font-weight: 600;
+        content: "# ";
+        margin-left: -22px;
+        opacity: 0.4;
+        transition: opacity 0.2s;
+      }
 
-    @media (max-width: 769px)
-      width: calc(100vw - 24px)
+      &:hover {
+        &::before {
+          opacity: 0.7;
+        }
+      }
+    }
+  }
 
-  .toc-commands
-    min-width: 380px
-    max-width: 510px
-    font-size: 0.9em
+  .toc-commands-container {
+    width: calc(100% - 24px);
+    overflow: scroll;
+    margin-bottom: 48px;
 
-    tr:not(:last-child)
-      border-bottom: 1px solid #979797
+    @include breakpoint(max $bp-m) {
+      width: calc(100vw - 24px);
+    }
+  }
 
-    td
-      max-width: 450px
-      white-space: nowrap
-      overflow: hidden
-      text-overflow: ellipsis
+  .toc-commands {
+    min-width: 380px;
+    max-width: 510px;
+    font-size: 0.9em;
 
-    & td:first-child
-      padding-right: 2em
-      padding-left: 0px
+    tr:not(:last-child) {
+      border-bottom: 1px solid #979797;
+    }
 
-  .arg
-    border-radius: 3px
-    padding: 4px 12px
-    border: 1px solid #ccc
-    background-color: #f9f9f9
+    td {
+      max-width: 450px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
 
-  .arguments-table-container
-    width: calc(100% - 24px)
-    overflow: auto
-    padding-top: 0.4em
+    & td:first-child {
+      padding-right: 2em;
+      padding-left: 0px;
+    }
+  }
 
-    @media (max-width: 769px)
-      width: calc(100vw - 24px)
+  .arg {
+    border-radius: 3px;
+    padding: 4px 12px;
+    border: 1px solid #ccc;
+    background-color: #f9f9f9;
+  }
 
-    .required
-      font-weight: 500
+  .arguments-table-container {
+    width: calc(100% - 24px);
+    overflow: scroll;
+    padding-top: 0.4em;
 
-    table
-      width: 100%
-      font-size: 0.95em
-      th
-        font-weight: 500
-      .type
-        width: 1px
-        white-space: nowrap
-      .description
-        min-width: 320px
+    @include breakpoint(max $bp-m) {
+      width: calc(100vw - 24px);
+    }
 
-.pricing-bar
-  background: #F1F1F1
-  width: 100vw
-  margin-top: 2em
+    .required {
+      font-weight: 500;
+    }
 
-  .pricing-bar-left
-    padding-left: 0
+    table {
+      width: 100%;
+      font-size: 0.95em;
 
-  .is-disabled
-    border: 1px solid #979797
-    opacity: 0.22
+      th {
+        font-weight: 500;
+      }
 
-  .button
-    padding: 0px 56px
+      .type {
+        width: 1px;
+        white-space: nowrap;
+      }
 
-  .pricing-details
-    margin-left: 0em
-    padding-left: 1.3em
-    list-style: none
+      .description {
+        min-width: 320px;
+      }
+    }
+  }
+}
 
-    .fa-check
-      color: #2FC050
-      font-size: 0.95em
+.pricing-bar {
+  background: #f1f1f1;
+  width: 100vw;
+  margin-top: 2em;
 
-.loading-shimmer
-  &.tag
-    width: 100px
-    height: 1.4em
-  &.alias
-    height: 2.4em
-    width: 150px
-  &.description
-    height: 1.2em
-    max-width: 340px
-  &.name
-    width: 100px
-    height: 1.8em
-  &.example
-    margin-top: 0.6em
-    max-width: 520px
-    height: 1.8em
+  .pricing-bar-left {
+    padding-left: 0;
+  }
+
+  .is-disabled {
+    border: 1px solid #979797;
+    opacity: 0.22;
+  }
+
+  .button {
+    padding: 0px 56px;
+  }
+
+  .pricing-details {
+    margin-left: 0em;
+    padding-left: 1.3em;
+    list-style: none;
+
+    .fa-check {
+      color: #2fc050;
+      font-size: 0.95em;
+    }
+  }
+}
+
+.loading-shimmer {
+  &.tag {
+    width: 100px;
+    height: 1.4em;
+  }
+
+  &.alias {
+    height: 2.4em;
+    width: 150px;
+  }
+
+  &.description {
+    height: 1.2em;
+    max-width: 340px;
+  }
+
+  &.name {
+    width: 100px;
+    height: 1.8em;
+  }
+
+  &.example {
+    margin-top: 0.6em;
+    max-width: 520px;
+    height: 1.8em;
+  }
+}
 </style>

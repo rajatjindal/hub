@@ -48,23 +48,28 @@ export default {
   apollo: {
     results: {
       query: ServiceByOwnerQuery,
-      skip: function () {
+      skip: function() {
         return !this.owner
       },
-      variables: function () {
+      variables: function() {
         return {
           owner: this.owner
         }
       },
-      update: function (data) {
+      update: function(data) {
         if (data.allOwners.nodes.length > 0) {
           this.serviceName = data.allOwners.nodes[0].name
           this.serviceUserName = data.allOwners.nodes[0].username
           this.totalItems = data.allOwners.nodes[0].repos.totalCount
         }
-        return data.allOwners.nodes.length > 0 &&
+        return (
+          data.allOwners.nodes.length > 0 &&
           data.allOwners.nodes[0].repos.nodes.length > 0 &&
-          data.allOwners.nodes[0].repos.nodes.reduce((r, c) => [...r, c.services.nodes[0]], [])
+          data.allOwners.nodes[0].repos.nodes.reduce(
+            (r, c) => [...r, c.services.nodes[0]],
+            []
+          )
+        )
       }
     }
   },
@@ -78,20 +83,20 @@ export default {
     serviceByOwner: undefined
   }),
   watch: {
-    results: function (newValue) {
+    results: function(newValue) {
       if (!newValue) this.$router.push('/404')
     }
   },
   computed: {
-    topics: function () {
+    topics: function() {
       return this.results.map(r => r.topics)
     },
-    service: function () {
+    service: function() {
       return this.serviceByOwner || {}
     }
   },
   methods: {
-    getTitle: function (r) {
+    getTitle: function(r) {
       if (!r.alias && (!r.repo || !r.repo.owner)) {
         return ''
       }
@@ -106,38 +111,47 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
-h2
-  font-weight: normal
-  font-size: 1.8em
-  line-height: 1.8em
-  margin-top: 1em
+<style scoped lang="scss">
+h2 {
+  font-weight: normal;
+  font-size: 1.8em;
+  line-height: 1.8em;
+  margin-top: 1em;
+}
 
-.body
-  padding-bottom: 2em
+.body {
+  padding-bottom: 2em;
+}
 
-.link
-  cursor: pointer
+.link {
+  cursor: pointer;
+}
 
-.search-icon
-  margin-right: 15px
-  filter: brightness(70%)
+.search-icon {
+  margin-right: 15px;
+  filter: brightness(70%);
+}
 
-.search-bar-container
-  margin-bottom: 1em
+.search-bar-container {
+  margin-bottom: 1em;
+}
 
-.help-text
-  color: #727272
+.help-text {
+  color: #727272;
+}
 
-.service-result-title-container
-  margin-top: 1em
-  margin-bottom: 0.8em
+.service-result-title-container {
+  margin-top: 1em;
+  margin-bottom: 0.8em;
+}
 
-.search-result
-  padding-top: 1.5em
-  padding-bottom: 1em
-  border-top: 1px solid #C7C7C7
+.search-result {
+  padding-top: 1.5em;
+  padding-bottom: 1em;
+  border-top: 1px solid #c7c7c7;
 
-  &:last-child
-    border-bottom: 1px solid #C7C7C7
+  &:last-child {
+    border-bottom: 1px solid #c7c7c7;
+  }
+}
 </style>

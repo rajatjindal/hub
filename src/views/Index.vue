@@ -95,7 +95,7 @@ export default {
   apollo: {
     data: {
       query: IndexQuery,
-      update: (data) => ({
+      update: data => ({
         recentServices: data.recentlyAddedServices.nodes
       })
     }
@@ -111,12 +111,12 @@ export default {
     }
   }),
   computed: {
-    topics: function () {
+    topics: function() {
       return this.data.recentServices.map(s => s.topics)
     }
   },
   methods: {
-    getTitle: function (r) {
+    getTitle: function(r) {
       if (!r.alias && (!r.repo || !r.repo.owner)) {
         return ''
       }
@@ -131,85 +131,104 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
-.hero-header
-  font-size: 2.8em
+<style scoped lang="scss">
+.hero-header {
+  font-size: 2.8em;
+}
 
-.subtitle
-  display: block
-  font-size: 1.15em
-  margin-top: 1.5em
-  margin-bottom: 1.5em
+.subtitle {
+  display: block;
+  font-size: 1.15em;
+  margin-top: 1.5em;
+  margin-bottom: 1.5em;
+}
 
-.help-message
-  font-size: 0.9em
-  color: #ccc
+.help-message {
+  font-size: 0.9em;
+  color: #ccc;
+}
 
-ul
-  list-style: none
-  padding-left: 0
-  line-height: 2em
+ul {
+  list-style: none;
+  padding-left: 0;
+  line-height: 2em;
+}
 
-.section
-  margin-bottom: 2em
-  padding-bottom: 2em
-  border-bottom: 1px solid #ccc
+.section {
+  margin-bottom: 2em;
+  padding-bottom: 2em;
+  border-bottom: 1px solid #ccc;
 
-  .section-header
-    margin-bottom: 1.4em
+  .section-header {
+    margin-bottom: 1.4em;
+  }
+}
 
-.hero
-  position: relative
-  overflow: hidden
-  padding: 28px 25px 50px 25px
-  color: white
-  background: #111
+.hero {
+  position: relative;
+  overflow: hidden;
+  padding: 28px 25px 50px 25px;
+  color: white;
+  background: #111;
 
-  .search-bar-container
-    max-width: 580px
-    margin: 0 auto
+  .search-bar-container {
+    max-width: 580px;
+    margin: 0 auto;
+  }
+}
 
-.columns
-  max-width: 1100px
-  margin: 0 auto
-  margin-top: 1em
-  text-align: left
+.columns {
+  max-width: 1100px;
+  margin: 0 auto;
+  margin-top: 1em;
+  text-align: left;
+}
 
-.call-to-action
-  font-size: 1.9em
-  line-height: 1.4em
-  margin-bottom: 0.8em
+.call-to-action {
+  font-size: 1.9em;
+  line-height: 1.4em;
+  margin-bottom: 0.8em;
+}
 
-.featured-services
-  .featured
-    height: 150px
-    border-radius: 5px
-    padding: 25px
-    font-size: 0.9
-    font-weight: 600
-    color: white
-    display: flex
-    justify-content: center
-    align-items: center
-    transition: all 0.2s
-    &:hover
-      transform: scale(1.05, 1.05)
+.featured-services {
+  .featured {
+    height: 150px;
+    border-radius: 5px;
+    padding: 25px;
+    font-size: 0.9;
+    font-weight: 600;
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: all 0.2s;
 
-  .slack-service
-    background-image: url('~@/assets/slack_bg.svg')
-    background-color: #78D4B6
+    &:hover {
+      transform: scale(1.05, 1.05);
+    }
+  }
 
-  .twitter-service
-    background-image: url('~@/assets/twitter_bg.svg')
-    background-color: #1DA1F2
+  .slack-service {
+    background-image: url("../assets/slack_bg.svg");
+    background-color: #78d4b6;
+  }
 
-  .twilio-service
-    background-image: url('~@/assets/twilio_bg.svg')
-    background-color: #F22F44
+  .twitter-service {
+    background-image: url("../assets/twitter_bg.svg");
+    background-color: #1da1f2;
+  }
 
-  a
-    width: 100%
+  .twilio-service {
+    background-image: url("../assets/twilio_bg.svg");
+    background-color: #f22f44;
+  }
 
-.getting-started
-  text-align: center
+  a {
+    width: 100%;
+  }
+}
+
+.getting-started {
+  text-align: center;
+}
 </style>

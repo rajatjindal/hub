@@ -25,21 +25,24 @@ export default {
   data: () => ({
     isLoading: true
   }),
-  mounted: function () {
+  mounted: function() {
     // currently should only happen when data is loaded via cache
     if (this.value && this.value.length <= 0) {
       this.isLoading = false
     }
   },
   watch: {
-    value: function () {
+    value: function() {
       this.isLoading = false
     }
   },
   computed: {
-    topics: function () {
+    topics: function() {
       const inputTopics = this.value || []
-      const allTopics = inputTopics.reduce((acc, topics) => acc.concat(topics), [])
+      const allTopics = inputTopics.reduce(
+        (acc, topics) => acc.concat(topics),
+        []
+      )
       const uniqueTopics = Array.from(new Set(allTopics))
 
       // alphanumeric descending sort
@@ -59,25 +62,40 @@ export default {
 }
 </script>
 
-<style scoped lang="sass">
-@media (max-width: 768px)
-  .topic-item
-    display: inline-block
-    margin-right: 0.3em
+<style scoped lang="scss">
+@include breakpoint(max $bp-m) {
+  .topic-item {
+    display: inline-block;
+    margin-right: 0.3em;
+  }
+}
 
-.topics-list
-  list-style: none
-  padding-left: 0
+.topics-list {
+  display: flex;
+  flex-wrap: wrap;
+  list-style: none;
+  padding-left: 0;
 
-  .topic-item
-    margin-bottom: 0.6em
+  .topic-item {
+    margin-bottom: 0.6em;
+    margin-right: 0.6em;
+  }
 
-.no-topics
-  font-size: 0.9em
-  color: #aaa
+  @include breakpoint($bp-m) {
+    .topic-item {
+      width: 100%;
+    }
+  }
+}
 
-.loading-shimmer
-  margin-bottom: 0
-  height: 1.5em
-  width: 100px
+.no-topics {
+  font-size: 0.9em;
+  color: #aaa;
+}
+
+.loading-shimmer {
+  margin-bottom: 0;
+  height: 1.5em;
+  width: 100px;
+}
 </style>
