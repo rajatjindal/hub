@@ -1,6 +1,6 @@
 <template>
 <div class="code-container">
-  <pre class="snippet"><code :class="{ code: true, [`language-${lang}`]: lang }"><slot></slot></code></pre>
+  <pre v-highlightjs class="snippet"><code :class="{ code: true, [`${lang}`]: lang }"><slot></slot></code></pre>
   <button class="clippy-btn" @click="copyText"><img class="clippy" width="13" :src="clippy" alt="Copy to clipboard"></button>
   <div class="copied"></div>
 </div>
@@ -37,7 +37,8 @@ export default {
   position: relative
   margin: 10px 0px
   font-size: 0.9em
-  padding: 10px 22px
+  padding: 0
+  overflow: hidden
   border-radius: 3px
 
 .copied
@@ -51,7 +52,7 @@ export default {
   background-color: white
   position: absolute
   right: 8px
-  top: 17px
+  top: 15px
   transition: opacity 1s ease 0.5s
 
 .clippy-btn
@@ -60,7 +61,7 @@ export default {
   padding: 3px 6px
   position: absolute
   right: 8px
-  top: 18px
+  top: 15px
   cursor: pointer
   background-color: #eee
   border-radius: 3px

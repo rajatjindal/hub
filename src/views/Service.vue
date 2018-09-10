@@ -210,8 +210,6 @@
 </template>
 
 <script>
-import Prism from 'prismjs'
-import 'prismjs/themes/prism-tomorrow.css'
 
 import verifiedIcon from '@/assets/verified.svg'
 import { ServiceQuery, ServiceByOwnerAndRepoQuery } from '@/plugins/graphql'
@@ -260,9 +258,6 @@ export default {
     verifiedIcon
   }),
   watch: {
-    commands: function () {
-      setTimeout(Prism.highlightAll, 0)
-    },
     serviceByAlias: function (newValue) {
       if (!newValue) this.$router.push('/404')
     },
