@@ -210,11 +210,9 @@
 </template>
 
 <script>
-
 import verifiedIcon from '@/assets/verified.svg'
 import { ServiceQuery, ServiceByOwnerAndRepoQuery } from '@/plugins/graphql'
 import Code from '@/components/Code'
-// import { setTimeout } from 'timers'
 
 export default {
   name: 'Service',
