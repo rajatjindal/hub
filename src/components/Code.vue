@@ -29,7 +29,7 @@ export default {
 <style lang="scss">
 .code-container {
   width: calc(100% - 24px);
-  overflow: scroll;
+  overflow: auto;
   position: relative;
   &:hover .clippy-btn {
     opacity: 1;
