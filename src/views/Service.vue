@@ -98,11 +98,11 @@
 
             <div class="section">
               <div class="subtitle">Example</div>
-                <m-code v-if="!command.events" lang="coffeescript"><template v-if="!command.run">result = </template>{{ serviceName }} {{ name }}<template v-for="(arg, name) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template><template v-if="command.run"> as result
-...</template></m-code>
-                <m-code v-if="command.events" lang="coffeescript">{{ serviceName }} {{ name }} as client <template v-for="(val, key) in command.events">
+                <Code v-if="!command.events" lang="coffeescript"><template v-if="!command.run">result = </template>{{ serviceName }} {{ name }}<template v-for="(arg, name) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template><template v-if="command.run"> as result
+...</template></Code>
+                <Code v-if="command.events" lang="coffeescript">{{ serviceName }} {{ name }} as client <template v-for="(val, key) in command.events">
   when client {{ key }} <template v-for="(val, key) in val.arguments">{{key}}:[{{val.type}}] </template>as result
-    ...</template></m-code>
+    ...</template></Code>
             </div>
 
             <div v-if="command.arguments" class="section">
@@ -213,7 +213,7 @@
 
 import verifiedIcon from '@/assets/verified.svg'
 import { ServiceQuery, ServiceByOwnerAndRepoQuery } from '@/plugins/graphql'
-import MCode from '@/components/Code'
+import Code from '@/components/Code'
 // import { setTimeout } from 'timers'
 
 export default {
@@ -293,7 +293,7 @@ export default {
     }
   },
   components: {
-    MCode
+    Code
   }
 }
 </script>
