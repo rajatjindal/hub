@@ -7,7 +7,7 @@ import { createProvider } from '@/plugins/vue-apollo'
 // import '@/plugins/styles'
 import '@/plugins/components'
 import '@/plugins/filters'
-import '@/plugins/highlightjs'
+import '@/plugins/prism'
 // import Raven from '@/plugins/sentry'
 
 Vue.config.productionTip = false
