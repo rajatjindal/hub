@@ -1,6 +1,6 @@
 <template>
 <div class="code-container">
-  <pre class="snippet"><code :class="{ code: true, [`language-${lang}`]: lang }"><slot></slot></code></pre>
+  <prism class="snippet" :language="lang"><slot></slot></prism>
   <button class="clippy-btn" @click="copyText"><img class="clippy" width="13" :src="clippy" alt="Copy to clipboard"></button>
   <div class="copied"></div>
 </div>
