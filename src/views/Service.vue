@@ -131,6 +131,61 @@
               </div>
             </div>
 
+            <div v-if="command.events" class="section">
+              <div class="subtitle">Events</div>
+              <div class="section-event">
+                <div class="arguments-table-container">
+                  <table class="table is-bordered">
+                      <thead>
+                        <tr>
+                          <th>Name</th>
+                          <th>Description</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <template v-for="(event, name) in command.events">
+                          <tr :key="name">
+                            <td><code class="arg">{{name}}</code></td>
+                            <td class="description">
+                              <span v-if="event.required" class="required">Required. </span>
+                              <span v-if="event.default">(Default: <code class="arg">{{event.default}}</code>) </span>
+                              <span v-if="event.help">{{event.help}}</span>
+                            </td>
+                          </tr>
+                          <tr v-if="event.arguments" :key="`event-${name}-args-list`">
+                            <td colspan="2">
+                              <div class="subtitle">Arguments</div>
+                              <div class="arguments-table-container">
+                                <table class="table is-bordered">
+                                  <thead>
+                                    <tr>
+                                      <th>Name</th>
+                                      <th>Type</th>
+                                      <th>Description</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr v-for="(arg, name) in event.arguments" :key="name">
+                                      <td><code class="arg">{{name}}</code></td>
+                                      <td class="type"><code class="arg">{{arg.type}}</code></td>
+                                      <td class="description">
+                                        <span v-if="arg.required" class="required">Required. </span>
+                                        <span v-if="arg.default">(Default: <code class="arg">{{arg.default}}</code>) </span>
+                                        <span v-if="arg.help">{{arg.help}}</span>
+                                      </td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                              </div>
+                            </td>
+                          </tr>
+                        </template>
+                      </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
             <div v-if="command.output && command.output.type" class="section">
               <div class="subtitle">Output</div>
               <p>Returns output of type <code>{{command.output.type}}</code>.</p>
@@ -404,6 +459,15 @@ a:focus {
       color: #999;
     }
 
+    .section-event {
+      margin-top: 1.25em;
+
+      .section {
+        margin-top: 0;
+        padding-left: 20px;
+      }
+    }
+
     .command-name {
       color: #111;
       margin-top: 0.8em;
@@ -429,7 +493,7 @@ a:focus {
 
   .toc-commands-container {
     width: calc(100% - 24px);
-    overflow: scroll;
+    overflow: auto;
     margin-bottom: 48px;
 
     @include breakpoint(max $bp-m) {
@@ -468,7 +532,7 @@ a:focus {
 
   .arguments-table-container {
     width: calc(100% - 24px);
-    overflow: scroll;
+    overflow: auto;
     padding-top: 0.4em;
 
     @include breakpoint(max $bp-m) {
