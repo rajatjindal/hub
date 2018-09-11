@@ -8,15 +8,16 @@ import { createProvider } from '@/plugins/vue-apollo'
 import '@/plugins/components'
 import '@/plugins/filters'
 import '@/plugins/prism'
-// import Raven from '@/plugins/sentry'
+import '@/plugins/fontawesome'
+import Raven from '@/plugins/sentry'
 
 Vue.config.productionTip = false
 
-// Raven.context(() => {
-new Vue({
-  router,
-  // store,
-  apolloProvider: createProvider({ connectToDevTools: process.env.NODE_ENV === 'development' }),
-  render: h => h(Hub)
-}).$mount('#hub')
-// })
+Raven.context(() => {
+  new Vue({
+    router,
+    // store,
+    apolloProvider: createProvider({ connectToDevTools: process.env.NODE_ENV === 'development' }),
+    render: h => h(Hub)
+  }).$mount('#hub')
+})
