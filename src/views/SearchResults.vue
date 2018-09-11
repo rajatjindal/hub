@@ -7,9 +7,8 @@
     </div>
     <div slot="body" class="body">
       <div class="search-bar-container">
-        <search-bar :value="search" ref="searchBar"/>
+        <search-bar :value="search" ref="searchBar" />
       </div>
-
       <div>
         <transition name="fade">
           <div class="level is-mobile service-result-title-container" v-if="!isLoading && totalItems > 0">
@@ -72,12 +71,15 @@ export default {
       }
     }
   },
-  data: () => ({
-    isLoading: true,
-    orderBy: 'NATURAL',
-    totalItems: 3,
-    results: [{}, {}, {}]
-  }),
+  data: function () {
+    return {
+      q: this.search,
+      isLoading: true,
+      orderBy: 'NATURAL',
+      totalItems: 3,
+      results: [{}, {}, {}]
+    }
+  },
   computed: {
     topics: function() {
       return this.results.map(r => r.topics)

@@ -1,45 +1,31 @@
 <template>
   <div id="hub">
-    <transition name="fade">
-      <SubmitAServiceModal v-if="modalOpen" @close="closeSubmitAServiceModal"/>
+    <a-cookie />
+    <a-header @open-service-modal="openSubmitAServiceModal" />
+    <transition name="view-fade" mode="out-in">
+      <router-view @open-submit-service-modal="openSubmitAServiceModal"></router-view>
     </transition>
-    <app-header class="app-header" link-component="url-link" :show-search="hasSearch" :on-search="onSearch" :links="[
-      { text: 'Explore', to: '/' },
-      { text: 'Platform', to: 'https://www.asyncy.com/platform' },
-      { text: 'Documentation', to: 'https://docs.asyncy.com'},
-    ]">
-      <template slot="afterLinks"><a-button @click.native="openSubmitAServiceModal">Submit a Service</a-button></template>
-    </app-header>
-    <router-view @open-submit-service-modal="openSubmitAServiceModal"></router-view>
     <app-footer/>
+    <submit-service-modal id="submit-service-modal" ref="submitAServiceModal" />
   </div>
 </template>
 
 <script>
-import SubmitAServiceModal from '@/components/SubmitAServiceModal'
+import SubmitServiceModal from '@/components/SubmitAServiceModal'
+import AHeader from '@/components/Header'
 
 export default {
   name: 'app',
   components: {
-    SubmitAServiceModal
+    SubmitServiceModal,
+    AHeader
   },
-  computed: {
-    hasSearch: function() {
-      return this.$route.meta.hasSearch
-    }
-  },
-  data: () => ({
-    modalOpen: false
-  }),
   methods: {
-    onSearch: function(value) {
-      this.$router.push(`/search?q=${value}`)
-    },
     openSubmitAServiceModal: function() {
-      this.modalOpen = true
+      this.$refs.submitAServiceModal.show = true
     },
     closeSubmitAServiceModal: function() {
-      this.modalOpen = false
+      this.$refs.submitAServiceModal.show = false
     }
   }
 }
@@ -102,9 +88,41 @@ a {
   position: absolute;
 }
 
+.align-items-center {
+  align-items: center;
+}
+
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+
+.header-search-bar {
+  margin-bottom: 0 !important;
+}
+
+#hub {
+  .section {
+    padding-top: 0;
+    padding-bottom: 2em;
+  }
+}
+
+.view-fade-enter-active,
+.view-fade-leave-active {
+  transition-duration: 0.1s;
+  transition-property: opacity;
+  transition-timing-function: ease;
+}
+
+.view-fade-enter,
+.view-fade-leave-active {
+  opacity: 0
+}
+
+.left-image,
+.right-image {
+  z-index: -1 !important;
 }
 
 @import "~asyncy-ui-components/dist/css/global.css";

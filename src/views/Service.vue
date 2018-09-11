@@ -523,6 +523,7 @@ a:focus {
     padding: 4px 12px;
     border: 1px solid #ccc;
     background-color: #f9f9f9;
+    word-break: keep-all;
   }
 
   .arguments-table-container {
