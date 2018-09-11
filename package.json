@@ -13,7 +13,7 @@
     "@fortawesome/free-solid-svg-icons": "^5.3.1",
     "@fortawesome/vue-fontawesome": "^0.1.1",
     "asyncy-ui-components": "^0.4.2",
-    "asyncy-vue": "^0.0.16",
+    "asyncy-vue": "^0.0.18",
     "bulma": "^0.7.1",
     "crypto-js": "^3.1.9-1",
     "prismjs": "^1.15.0",
