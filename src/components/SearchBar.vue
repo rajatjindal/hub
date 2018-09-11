@@ -1,27 +1,22 @@
 <template>
   <form @submit.prevent="search">
-    <a-input color="white" class="input search-bar" type="text" placeholder="Search Hub" v-model="searchInput" aria-label="Search Hub"/>
+    <a-input placeholder="Search Hub" v-model="input" aria-label="Search Hub" />
   </form>
 </template>
 
 <script>
-import ServiceSummary from '@/components/ServiceSummary'
-
 export default {
-  name: 'SearchResults',
+  name: 'SearchBar',
   props: ['value'],
   data: function() {
     return {
-      searchInput: this.value || ''
+      input: this.value || ''
     }
   },
   methods: {
     search: function() {
-      this.$router.push(`/search?q=${this.searchInput}`)
+      this.$router.push({ name: 'search', query: { q: this.input } })
     }
-  },
-  components: {
-    ServiceSummary
   }
 }
 </script>

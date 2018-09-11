@@ -4,18 +4,18 @@
        <hero-background
         :left-image="headerLeft"
         :right-image="headerRight"
-        :scale="2.6"
+        :scale="6"
         :left-x="-200"
         :left-y="-70"
         :right-x="-200"
         :right-y="-70"
       />
-      <h1 class="hero-header">Asyncy Hub</h1>
+      <h1 class="display-1">Asyncy Hub</h1>
       <p class="subtitle">Service discovery and marketplace for Asyncy</p>
       <div class="search-bar-container">
         <div class="field">
           <div class="control">
-            <search-bar/>
+            <search-bar />
           </div>
         </div>
       </div>
@@ -70,7 +70,7 @@
 
         <section class="section getting-started">
           <h2 class="call-to-action">List your service on Asyncy Hub</h2>
-          <a-button color="white" @click.native="$emit('open-submit-service-modal')">Submit a service</a-button>
+          <a-button type="neutral" @click.native="$emit('open-submit-service-modal')">Submit a service</a-button>
         </section>
       </div>
     </two-column-sidebar>
@@ -145,7 +145,7 @@ export default {
 
 .help-message {
   font-size: 0.9em;
-  color: #ccc;
+  color: #aaa;
 }
 
 ul {
@@ -167,9 +167,9 @@ ul {
 .hero {
   position: relative;
   overflow: hidden;
-  padding: 28px 25px 50px 25px;
-  color: white;
-  background: #111;
+  padding: 4em 5em;
+  background: #eeeeee;
+  z-index: 1;
 
   .search-bar-container {
     max-width: 580px;
