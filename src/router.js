@@ -73,6 +73,31 @@ export default new Router({
       }
     },
     {
+      path: '/integrations',
+      name: 'integrations',
+      component: () => import('@/views/Integrations')
+    },
+    {
+      path: '/integration/:repo',
+      name: 'integration',
+      component: () => import('@/views/Integration'),
+      props: function (route) {
+        return {
+          repo: route.params.repo
+        }
+      }
+    },
+    {
+      path: '/integration/:repo/guide',
+      name: 'guide',
+      component: () => import('@/views/Guide'),
+      props: function (route) {
+        return {
+          repo: route.params.repo
+        }
+      }
+    },
+    {
       path: '/faq',
       component: () => import('@/views/Faq'),
       meta: {

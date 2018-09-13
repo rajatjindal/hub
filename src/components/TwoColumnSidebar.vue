@@ -1,18 +1,38 @@
 <template>
-  <div class="index">
+  <div id="index" class="index">
     <div class="columns">
-      <div class="column is-one-fifth sidebar">
-        <slot name="sidebar"/>
-      </div>
-      <div class="column is-four-fifths main-container">
-        <slot name="body"/>
-      </div>
+      <template v-if="!reverse">
+        <div class="column is-one-fifth sidebar">
+          <slot name="sidebar"/>
+        </div>
+        <div class="column is-four-fifths main-container">
+          <slot name="body"/>
+        </div>
+      </template>
+      <template v-else>
+        <div class="column is-four-fifths main-container">
+          <slot name="body"/>
+        </div>
+        <div class="column is-one-fifth sidebar">
+          <slot name="sidebar"/>
+        </div>
+      </template>
     </div>
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  name: 'two-column-sidebar',
+  props: {
+    reverse: {
+      type: Boolean,
+      default: false,
+      required: false,
+      description: 'place the sidebar on the left or on the right side'
+    }
+  }
+}
 </script>
 
 <style scoped lang="scss">
