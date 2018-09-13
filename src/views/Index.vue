@@ -145,7 +145,7 @@ export default {
 
 .help-message {
   font-size: 0.9em;
-  color: #aaa;
+  color: #111;
 }
 
 ul {
