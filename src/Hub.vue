@@ -1,12 +1,23 @@
 <template>
   <div id="hub">
     <a-cookie />
-    <a-header @open-service-modal="openSubmitAServiceModal" />
+    <a-header @open-service-modal="openSubmitAServiceModal" @login="loginWait = true" />
     <transition name="view-fade" mode="out-in">
       <router-view @open-submit-service-modal="openSubmitAServiceModal"></router-view>
     </transition>
     <app-footer/>
     <submit-service-modal id="submit-service-modal" ref="submitAServiceModal" />
+    <transition name="fade">
+      <div class="login" v-show="loginWait">
+        <a-card shadow>
+          <h3 class="mb-20">{{ loginMessage }}</h3>
+          <p>
+            <font-awesome-icon icon="spinner" pulse />
+          </p>
+          <a-button v-show="loginCancelDisplay" type="neutral" @click="loginWait = false">Cancel login</a-button>
+        </a-card>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -16,9 +27,50 @@ import AHeader from '@/components/Header'
 
 export default {
   name: 'app',
+  data: () => ({
+    loginWait: false,
+    loginWindow: null,
+    loginMessage: 'Waiting for your authentication',
+    loginCancelDisplay: true
+  }),
   components: {
     SubmitServiceModal,
     AHeader
+  },
+  watch: {
+    loginWait: function (newValue) {
+      if (newValue) {
+        document.body.classList.add('modal-open')
+        let dualScreenLeft = window.screenLeft !== undefined ? window.screenLeft : window.screenX
+        let dualScreenTop = window.screenTop !== undefined ? window.screenTop : window.screenY
+
+        let w = 600
+        let h = 400
+        let width = window.innerWidth ? window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width
+        let height = window.innerHeight ? window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height
+
+        let left = ((width / 2) - (w / 2)) + dualScreenLeft
+        let top = ((height / 2) - (h / 2)) + dualScreenTop
+
+        this.loginWindow = window.open('//login.asyncy.com/github?state=123', 'loginWindow', 'titlebar=1, toolbar=0, location=0, status=1, menubar=0, scrollbars=0, resizable=0, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left)
+        this.loginWindow.focus()
+        const timer = setInterval(() => {
+          if (this.loginWindow.closed) {
+            clearInterval(timer)
+            this.loginMessage = 'Fetching personal informations'
+            this.loginCancelDisplay = false
+            setTimeout(() => {
+              this.loginWait = false
+            }, 1000)
+          }
+        }, 1000)
+      } else {
+        document.body.classList.remove('modal-open')
+        this.loginWindow = null
+        this.loginMessage = 'Waiting for your authentication'
+        this.loginCancelDisplay = true
+      }
+    }
   },
   methods: {
     openSubmitAServiceModal: function() {
@@ -32,6 +84,21 @@ export default {
 </script>
 
 <style lang="scss">
+
+.login {
+  background-color: rgba(0,0,0,0.3);
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  align-items: center;
+  z-index: 2147483647;
+}
+
 @import "~bulma/sass/utilities/_all";
 @import "~bulma/sass/grid/columns";
 @import "~bulma/sass/grid/tiles";
@@ -65,6 +132,10 @@ h3,
 h4,
 h5 {
   font-weight: 500;
+}
+
+.no-padding {
+  padding: 0 !important;
 }
 
 #hub {

@@ -31,21 +31,21 @@
       </div>
     </div>
 
-    <transition name="fade">
-      <template v-if="hasSearch">
-        <div class="column align-center is-hidden-mobile search-container">
-            <form
-              class="header-form"
-              @submit.prevent="onSearch">
-              <a-input
-                placeholder="Search"
-                v-model="search"
-                class="header-search-bar" />
-            </form>
-          </div>
-        <div class="column is-hidden-mobile"></div>
-      </template>
-    </transition>
+    <template v-if="hasSearch">
+      <transition name="fade">
+        <div key="header-search" class="column align-center is-hidden-mobile search-container">
+          <form
+            class="header-form"
+            @submit.prevent="onSearch">
+            <a-input
+              placeholder="Search"
+              v-model="search"
+              class="header-search-bar" />
+          </form>
+        </div>
+      </transition>
+      <div key="hidden" class="column is-hidden-mobile"></div>
+    </template>
 
     <ul class="navbar-nav ml-lg-auto align-items-center">
       <li class="nav-item">
@@ -62,6 +62,12 @@
           outline
           type="primary"
           @click.native="$emit('open-service-modal')">Submit a Service</a-button>
+      </li>
+       <li class="nav-item">
+        <a-button
+          outline
+          type="primary"
+          @click.native="$emit('login')">Login</a-button>
       </li>
     </ul>
   </a-nav>
