@@ -8,14 +8,12 @@ export default gql`query ServiceByOwnerAndRepo($owner: Username!, $repo: Usernam
           services {
             nodes {
               uuid
+              name
               alias
               description
               topics
-              repo {
-                name
-                owner {
-                  username
-                }
+              organization {
+                username
               }
               serviceTags {
                 nodes {

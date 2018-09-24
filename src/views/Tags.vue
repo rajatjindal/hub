@@ -70,10 +70,10 @@ export default {
   },
   methods: {
     getTitle: function(r) {
-      if (!r.alias && (!r.repo || !r.repo.owner)) {
+      if (!r.alias && (!r.organization || !r.organization.username)) {
         return ''
       }
-      return r.alias || `${r.repo.owner.username}/${r.repo.name}`
+      return r.alias || `${r.organization.username}/${r.name}`
     }
   },
   components: {

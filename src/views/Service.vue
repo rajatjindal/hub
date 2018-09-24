@@ -5,8 +5,8 @@
         <div class="section">
           <h5>Links</h5>
           <transition name="fade">
-            <div class="links" v-if="service.repo && service.repo.owner && serviceName"><a :href="`https://www.github.com/${service.repo.owner.username}/${serviceName}`">View on Github</a></div>
-            <div v-else-if="!service.repo && !serviceName" class="loading-shimmer tag"></div>
+            <div class="links" v-if="service.organization && service.organization.username && serviceName"><a :href="`https://www.github.com/${service.organization.username}/${serviceName}`">View on Github</a></div>
+            <div v-else-if="!service.organization && !serviceName" class="loading-shimmer tag"></div>
             <p class="links none-found" v-else>No links found.</p>
           </transition>
         </div>
