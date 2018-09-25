@@ -7,11 +7,9 @@ export default gql`{
       alias
       description
       topics
-      repo {
-        name
-        owner {
-          username
-        }
+      name
+      organization {
+        username
       }
     }
   }

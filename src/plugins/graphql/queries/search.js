@@ -8,14 +8,12 @@ export default gql`query SearchServices($searchTerm: String!) {
     }
     edges {
       node {
+        name
         alias
         description
         topics
-        repo {
-          name
-          owner {
-            username
-          }
+        organization {
+          username
         }
       }
     }
