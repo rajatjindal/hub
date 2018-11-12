@@ -7,7 +7,7 @@ export default gql`query ServiceByAlias($where: Alias!) {
     alias
     description
     topics
-    organization {
+    owner {
       username
     }
     serviceTags {

@@ -15,7 +15,7 @@ export default gql`query ServiceByOwner($owner: Username!) {
               alias
               description
               topics
-              organization {
+              owner {
                 username
               }
               serviceTags {
