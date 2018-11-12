@@ -1,12 +1,16 @@
 <template>
   <div id="hub">
-    <a-cookie />
+    <!-- <a-cookie /> -->
     <a-header @open-service-modal="openSubmitAServiceModal" />
     <transition name="view-fade" mode="out-in">
       <router-view @open-submit-service-modal="openSubmitAServiceModal"></router-view>
     </transition>
-    <app-footer/>
-    <submit-service-modal id="submit-service-modal" ref="submitAServiceModal" />
+    <div class="section bg--dark">
+      <div class="container">
+        <a-footer dark />
+      </div>
+    </div>
+    <!-- <submit-service-modal id="submit-service-modal" ref="submitAServiceModal" /> -->
   </div>
 </template>
 
@@ -32,47 +36,44 @@ export default {
 </script>
 
 <style lang="scss">
-@import "~bulma/sass/utilities/_all";
-@import "~bulma/sass/grid/columns";
-@import "~bulma/sass/grid/tiles";
-@import "~bulma/sass/components/level";
-@import "~bulma/sass/components/media";
-@import "~bulma/sass/elements/tag";
-@import "~bulma/sass/elements/table";
-@import "~@/assets/loading-shimmer";
 
 .table {
   border-spacing: 0px;
   border-collapse: collapse;
 }
 
-body {
-  background: #111;
+.section {
+  color: color(dark);
+  z-index: 2;
+  display: block;
+  height: auto;
+  position: relative;
+  padding: 0;
   margin: 0;
+
+  .container {
+    max-width: 1440px;
+    width: 100%;
+    margin: 0 auto;
+    flex: 1;
+    padding: 3rem 2rem;
+    z-index: 10;
+    position: relative;
+
+    &.full-width {
+      width: 100%;
+      max-width: 100%;
+    }
+  }
 }
 
-h1,
-h2,
-h3,
-h4,
-h5 {
-  font-weight: normal;
-  margin-top: 0;
-  margin-bottom: 0.5em;
-}
-
-h3,
-h4,
-h5 {
-  font-weight: 500;
+.footer-container {
+  background: color(dark);
 }
 
 #hub {
-  background: white;
-  text-align: center;
-  color: black;
-  font-size: 1em;
-  line-height: 1.6em;
+  // background: white;
+  // color: black;
 }
 
 a {
@@ -101,13 +102,6 @@ a {
   margin-bottom: 0 !important;
 }
 
-#hub {
-  .section {
-    padding-top: 0;
-    padding-bottom: 2em;
-  }
-}
-
 .view-fade-enter-active,
 .view-fade-leave-active {
   transition-duration: 0.1s;
@@ -124,10 +118,4 @@ a {
 .right-image {
   z-index: -1 !important;
 }
-
-@import "~asyncy-ui-components/dist/css/global.css";
-@import "~asyncy-ui-components/dist/AButton.css";
-@import "~asyncy-ui-components/dist/AInput.css";
-@import "~asyncy-ui-components/dist/AppFooter.css";
-@import "~asyncy-ui-components/dist/AppHeader.css";
 </style>

@@ -38,7 +38,6 @@
 <script>
 import { ServiceByOwnerQuery } from '@/plugins/graphql'
 
-import PaginationBar from '@/components/PaginationBar'
 import ServiceSummary from '@/components/ServiceSummary'
 import OrganizationInfos from '@/components/OrganizationInfos'
 
@@ -104,7 +103,6 @@ export default {
     }
   },
   components: {
-    PaginationBar,
     ServiceSummary,
     OrganizationInfos
   }

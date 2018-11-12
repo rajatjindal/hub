@@ -63,7 +63,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@include breakpoint(max $bp-m) {
+@include breakpoint(max m) {
   .topic-item {
     display: inline-block;
     margin-right: 0.3em;
@@ -81,7 +81,7 @@ export default {
     margin-right: 0.6em;
   }
 
-  @include breakpoint($bp-m) {
+  @include breakpoint(m) {
     .topic-item {
       width: 100%;
     }

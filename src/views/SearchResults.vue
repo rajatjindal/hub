@@ -47,7 +47,6 @@
 <script>
 import { SearchQuery } from '@/plugins/graphql'
 
-import PaginationBar from '@/components/PaginationBar'
 import ServiceSummary from '@/components/ServiceSummary'
 import SearchBar from '@/components/SearchBar'
 import TopicsList from '@/components/TopicsList'
@@ -94,7 +93,6 @@ export default {
     }
   },
   components: {
-    PaginationBar,
     ServiceSummary,
     SearchBar,
     TopicsList,

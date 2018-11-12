@@ -491,7 +491,7 @@ a:focus {
     overflow: auto;
     margin-bottom: 48px;
 
-    @include breakpoint(max $bp-m) {
+    @include breakpoint(max m) {
       width: calc(100vw - 24px);
     }
   }
@@ -531,7 +531,7 @@ a:focus {
     overflow: auto;
     padding-top: 0.4em;
 
-    @include breakpoint(max $bp-m) {
+    @include breakpoint(max m) {
       width: calc(100vw - 24px);
     }
 

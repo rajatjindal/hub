@@ -16,7 +16,7 @@ export default {}
 </script>
 
 <style scoped lang="scss">
-@include breakpoint(max $bp-m) {
+@include breakpoint(max m) {
   .sidebar {
     order: 1;
     flex-basis: 100%;

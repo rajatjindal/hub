@@ -1,75 +1,44 @@
 <template>
   <a-nav
-    :logo="logo"
-    :isBeta="true"
-    effect="light"
-    expand
-    type="secondary"
-    @title-click="$router.push({ name: 'hub' })">
-    <div
-      class="row"
-      slot="content-header"
-      slot-scope="{closeMenu}">
-      <div class="col-6 collapse-brand">
-        <router-link :to="{ name: 'hub' }">
-          <img src="img/brand/blue.png">
-        </router-link>
-      </div>
-      <div class="col-6 collapse-close">
-        <close-button @click="closeMenu" />
-      </div>
-    </div>
-    <div
-      class="row"
-      slot="content-header"
-      slot-scope="{closeMenu}">
-      <div class="col-6 collapse-brand">
-        <router-link :to="{ name: 'hub' }">Asyncy</router-link>
-      </div>
-      <div class="col-6 collapse-close">
-        <a-close-button target="nav-inner-primary" @click="closeMenu" />
-      </div>
-    </div>
-
-    <transition name="fade">
-      <template v-if="hasSearch">
-        <div class="column align-center is-hidden-mobile search-container">
-            <form
-              class="header-form"
-              @submit.prevent="onSearch">
-              <a-input
-                placeholder="Search"
-                v-model="search"
-                class="header-search-bar" />
-            </form>
-          </div>
-        <div class="column is-hidden-mobile"></div>
-      </template>
-    </transition>
-
-    <ul class="navbar-nav ml-lg-auto align-items-center">
-      <li class="nav-item">
-        <router-link to="/" class="nav-link nav-link-icon">Explore</router-link>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Platform</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Documentation</a>
-      </li>
-      <li class="nav-item">
-        <a-button
-          outline
-          type="primary"
-          @click.native="$emit('open-service-modal')">Submit a Service</a-button>
-      </li>
-    </ul>
-  </a-nav>
+    logo="light"
+    tag="Beta"
+    type="dark"
+    effect="dark"
+    class="navbar"
+    :hasSearch="hasSearch"
+    @search="onSearch"
+    @brand-click="$router.push({ name: 'hub' })"
+    @signup="signup"
+    @signin="signin"
+    :items="[{
+        name: 'Services'
+      }, {
+        name: 'Functions'
+      }, {
+        name: 'Apps'
+      }, {
+        name: 'More',
+        children: [{
+          name: 'Publish'
+        }, {
+          name: 'Pricing'
+        }, {
+          name: 'Community'
+        }, {
+          name: 'Support'
+        }]
+      }, {
+        name: 'Login',
+        button: 'dark',
+        emit: 'signin'
+      }, {
+        name: 'Signup',
+        button: 'primary',
+        emit: 'signup'
+      }]" />
 </template>
 
 <script>
-import logo from '@/assets/logo.svg'
-
 export default {
   name: 'a-header',
   computed: {
@@ -77,30 +46,27 @@ export default {
       return this.$route.meta.hasSearch
     }
   },
-  data: () => ({
-    search: '',
-    logo
-  }),
   methods: {
-    onSearch: function () {
-      this.$router.push({ name: 'search', query: { q: this.search } })
-      this.search = ''
+    onSearch: function (q) {
+      this.$router.push({ name: 'search', query: { q } })
+    },
+    signup: function (e) {
+      console.log('signup clicked', e)
+    },
+    signin: function (e) {
+      console.log('signin clicked', e)
     }
   }
 }
 </script>
 
 <style lang="scss" scoped>
-.search-container {
-  padding: 0;
-  margin-left: 50px;
-
-  .header-search-bar {
-    width: 250px;
-    @media screen and (max-width: 990px) {
-      width: 100%;
-    }
-  }
-
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  // background-color: color(dark);
 }
+
 </style>

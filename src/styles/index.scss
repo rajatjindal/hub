@@ -1,6 +1,6 @@
-@import "./variables/breakpoints";
-@import "./variables/colors";
-@import "./variables/sizes";
-@import "./variables/misc";
+@import "~bulma/sass/utilities/_all";
+@import "~bulma/sass/components/media";
+@import "~bulma/sass/grid/tiles";
 
-@import "./utils/breakpoint";
+@import "~@/assets/loading-shimmer";
+@import "~@asyncy/vue/dist/sass/index";

@@ -99,12 +99,6 @@ h2 {
   margin-bottom: 2.2em;
 }
 
-.columns {
-  max-width: 1100px;
-  margin: 25px auto;
-  text-align: left;
-}
-
 .results-container {
   width: 100%;
 }

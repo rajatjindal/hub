@@ -1,7 +1,7 @@
 <template>
   <div class="index">
     <div class="hero">
-       <hero-background
+       <!-- <hero-background
         :left-image="headerLeft"
         :right-image="headerRight"
         :scale="6"
@@ -9,7 +9,7 @@
         :left-y="-70"
         :right-x="-200"
         :right-y="-70"
-      />
+      /> -->
       <h1 class="display-1">Asyncy Hub</h1>
       <p class="subtitle">Service discovery and marketplace for Asyncy</p>
       <div class="search-bar-container">
@@ -81,14 +81,14 @@
 import { IndexQuery } from '@/plugins/graphql'
 import ServiceSummary from '@/components/ServiceSummary'
 import SearchBar from '@/components/SearchBar'
-import HeroBackground from 'asyncy-ui-components/dist/HeroBackground'
+// import HeroBackground from 'asyncy-ui-components/dist/HeroBackground'
 
 import slackLogo from '@/assets/slack_logo_text.svg'
 import twitterLogo from '@/assets/twitter_logo.svg'
 import twilioLogo from '@/assets/twilio_logo_text.svg'
 
-import headerLeft from 'asyncy-ui-components/assets/images/home_header_left.svg'
-import headerRight from 'asyncy-ui-components/assets/images/home_header_right.svg'
+// import headerLeft from 'asyncy-ui-components/assets/images/home_header_left.svg'
+// import headerRight from 'asyncy-ui-components/assets/images/home_header_right.svg'
 
 export default {
   name: 'index',
@@ -101,8 +101,6 @@ export default {
     }
   },
   data: () => ({
-    headerLeft,
-    headerRight,
     twitterLogo,
     slackLogo,
     twilioLogo,
@@ -124,7 +122,7 @@ export default {
     }
   },
   components: {
-    HeroBackground,
+    // HeroBackground,
     ServiceSummary,
     SearchBar
   }
@@ -175,13 +173,6 @@ ul {
     max-width: 580px;
     margin: 0 auto;
   }
-}
-
-.columns {
-  max-width: 1100px;
-  margin: 0 auto;
-  margin-top: 1em;
-  text-align: left;
 }
 
 .call-to-action {

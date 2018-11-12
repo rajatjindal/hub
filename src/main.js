@@ -4,7 +4,6 @@ import router from '@/router'
 // disable the store for now
 // import store from '@/store'
 import { createProvider } from '@/plugins/vue-apollo'
-// import '@/plugins/styles'
 import '@/plugins/components'
 import '@/plugins/filters'
 import '@/plugins/prism'
