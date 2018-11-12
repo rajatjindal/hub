@@ -12,7 +12,7 @@ export default gql`query ServiceByOwnerAndRepo($owner: Username!, $repo: Usernam
               alias
               description
               topics
-              organization {
+              owner {
                 username
               }
               serviceTags {

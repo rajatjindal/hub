@@ -70,10 +70,10 @@ export default {
   },
   methods: {
     getTitle: function(r) {
-      if (!r.alias && (!r.organization || !r.organization.username)) {
+      if (!r.alias && (!r.owner || !r.owner.username)) {
         return ''
       }
-      return r.alias || `${r.organization.username}/${r.name}`
+      return r.alias || `${r.owner.username}/${r.name}`
     }
   },
   components: {

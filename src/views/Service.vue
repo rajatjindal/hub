@@ -5,8 +5,8 @@
         <div class="section">
           <h5>Links</h5>
           <transition name="fade">
-            <div class="links" v-if="service.organization && service.organization.username && serviceName"><a :href="`https://www.github.com/${service.organization.username}/${serviceName}`">View on Github</a></div>
-            <div v-else-if="!service.organization && !serviceName" class="loading-shimmer tag"></div>
+            <div class="links" v-if="service.owner && service.owner.username && serviceName"><a :href="`https://www.github.com/${service.owner.username}/${serviceName}`">View on Github</a></div>
+            <div v-else-if="!service.owner && !serviceName" class="loading-shimmer tag"></div>
             <p class="links none-found" v-else>No links found.</p>
           </transition>
         </div>
@@ -328,13 +328,13 @@ export default {
     serviceName: function() {
       if (
         !this.service.alias &&
-        (!this.service.repo || !this.service.repo.owner)
+        (!this.service.owner || !this.service.owner.username)
       ) {
         return ''
       }
       return (
         this.service.alias ||
-        `${this.service.repo.owner.username}/${this.service.repo.name}`
+        `${this.service.owner.username}/${this.service.name}`
       )
     },
     numCommands: function() {

@@ -12,7 +12,7 @@ export default gql`query SearchServices($searchTerm: String!) {
         alias
         description
         topics
-        organization {
+        owner {
           username
         }
       }

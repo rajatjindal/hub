@@ -8,7 +8,7 @@ export default gql`{
       description
       topics
       name
-      organization {
+      owner {
         username
       }
     }
