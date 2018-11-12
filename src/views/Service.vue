@@ -346,7 +346,7 @@ export default {
           this.service.serviceTags &&
           this.service.serviceTags.nodes &&
           this.service.serviceTags.nodes.length > 0 &&
-          this.service.serviceTags.nodes[0].configuration.commands) ||
+          this.service.serviceTags.nodes[0].configuration.actions) ||
         {}
       )
     },
