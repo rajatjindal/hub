@@ -69,7 +69,7 @@
           <div class="column is-half">
             <h2 class="title head-link is-3">
               Featured Services
-              <a-link state="primary" class="link">View all <font-awesome-icon icon="arrow-right" /></a-link>
+              <a-link state="primary" class="link" @click.stop="$router.push({ name: 'services' })">View all <font-awesome-icon icon="arrow-right" /></a-link>
             </h2>
             <transition-group name="fade" tag="div" class="tile is-parent is-vertical">
               <div v-for="(r, index) in data.recentServices.slice(0, 3)" class="tile is-child" :key="r.alias || index">
