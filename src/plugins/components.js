@@ -5,6 +5,7 @@ import AsyncyVue from '@asyncy/vue'
 import UrlLink from '@/components/UrlLink'
 import TopicTag from '@/components/TopicTag'
 import TopicsList from '@/components/TopicsList'
+import Stars from '@/components/Stars'
 import '@asyncy/vue/dist/asyncy-vue.css'
 
 Vue.use(AsyncyVue)
@@ -13,5 +14,6 @@ Vue.component('two-column-sidebar', TwoColumnSidebar)
 Vue.component('topic-tag', TopicTag)
 Vue.component('url-link', UrlLink)
 Vue.component('topics-list', TopicsList)
+Vue.component('stars-particles', Stars)
 
 Vue.use(Clipboard)

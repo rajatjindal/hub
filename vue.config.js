@@ -8,5 +8,8 @@ module.exports = {
         includePaths: ['./src/styles']
       }
     }
+  },
+  devServer: {
+    disableHostCheck: true
   }
 }

@@ -11,7 +11,8 @@
     @signup="signup"
     @signin="signin"
     :items="[{
-        name: 'Services'
+        name: 'Services',
+        link: 'services'
       }, {
         name: 'Functions'
       }, {
@@ -29,7 +30,7 @@
         }]
       }, {
         name: 'Login',
-        button: 'dark',
+        button: 'secondary',
         emit: 'signin'
       }, {
         name: 'Signup',

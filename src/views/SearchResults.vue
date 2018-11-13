@@ -1,5 +1,5 @@
 <template>
-  <two-column-sidebar>
+  <two-column-sidebar class="index">
     <div slot="sidebar">
       <transition name="fade">
         <topics-list v-model="topics" v-if="isLoading || totalItems > 0"/>
@@ -102,6 +102,9 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.index {
+  background-color: $white;
+}
 h2 {
   font-weight: normal;
   font-size: 1.8em;

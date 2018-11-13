@@ -2,9 +2,11 @@
   <div id="hub">
     <!-- <a-cookie /> -->
     <a-header @open-service-modal="openSubmitAServiceModal" />
-    <transition name="view-fade" mode="out-in">
-      <router-view @open-submit-service-modal="openSubmitAServiceModal"></router-view>
-    </transition>
+    <div class="main-container">
+      <transition name="view-fade" mode="out-in">
+        <router-view @open-submit-service-modal="openSubmitAServiceModal"></router-view>
+      </transition>
+    </div>
     <div class="section bg--dark">
       <div class="container">
         <a-footer dark />
@@ -42,6 +44,10 @@ export default {
   border-collapse: collapse;
 }
 
+.main-container {
+  margin-top: 4rem;
+}
+
 .section {
   color: color(dark);
   z-index: 2;
@@ -72,8 +78,12 @@ export default {
 }
 
 #hub {
-  // background: white;
+  background-color: color(dark);
   // color: black;
+}
+
+section, .section {
+  background-color: $white;
 }
 
 a {

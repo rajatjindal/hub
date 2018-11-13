@@ -1,94 +1,109 @@
 <template>
   <div class="index">
-    <div class="hero">
-       <!-- <hero-background
-        :left-image="headerLeft"
-        :right-image="headerRight"
-        :scale="6"
-        :left-x="-200"
-        :left-y="-70"
-        :right-x="-200"
-        :right-y="-70"
-      /> -->
-      <h1 class="display-1">Asyncy Hub</h1>
-      <p class="subtitle">Service discovery and marketplace for Asyncy</p>
-      <div class="search-bar-container">
-        <div class="field">
-          <div class="control">
-            <search-bar />
+    <section class="hero bg--dark is-large">
+      <div class="hero-body">
+        <div class="container text--center fixed">
+          <stars-particles />
+          <h1 class="title is-1 text--light">Asyncy Hub</h1>
+          <h2 class="subtitle is-4 text--light">Discover awesome services and functions that will help you build awesome apps</h2>
+        </div>
+      </div>
+    </section>
+    <div class="video-section bg--dark">
+      <div class="video">
+        <font-awesome-icon icon="play" />
+      </div>
+    </div>
+    <section class="section steps">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-half">
+            <span class="badge dot">1</span>
+            <h2>Find a service</h2>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto placeat ipsa, neque assumenda asperiores eius deserunt atque, repellendus mollitia voluptatibus ea. Voluptatum asperiores amet, recusandae minima suscipit dolores deserunt cupiditate.</p>
+            <a-button state="primary">Get a service <font-awesome-icon icon="arrow-right" /></a-button>
+          </div>
+          <div class="column is-half">
+            <div class="placeholder bg--dark" />
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column">
+            <div class="placeholder bg--dark" />
+          </div>
+          <div class="column is-half">
+            <span class="badge dot">2</span>
+            <h2>Find a service</h2>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto placeat ipsa, neque assumenda asperiores eius deserunt atque, repellendus mollitia voluptatibus ea. Voluptatum asperiores amet, recusandae minima suscipit dolores deserunt cupiditate.</p>
+            <a-button state="primary">Get a service <font-awesome-icon icon="arrow-right" /></a-button>
+          </div>
+        </div>
+        <div class="columns">
+          <div class="column is-half">
+            <span class="badge dot">3</span>
+            <h2>Find a service</h2>
+            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto placeat ipsa, neque assumenda asperiores eius deserunt atque, repellendus mollitia voluptatibus ea. Voluptatum asperiores amet, recusandae minima suscipit dolores deserunt cupiditate.</p>
+            <a-button state="primary">Get a service <font-awesome-icon icon="arrow-right" /></a-button>
+          </div>
+          <div class="column is-half">
+            <div class="placeholder bg--dark" />
           </div>
         </div>
       </div>
-      <p class="help-message">Try topic:social, topic:machine-learning or stars:>100</p>
-    </div>
-
-    <two-column-sidebar>
-      <topics-list v-model="topics" slot="sidebar" />
-      <div slot="body">
-        <section class="section">
-          <h2 class="section-header">Featured services</h2>
-          <div class="featured-services section-body">
-            <div class="tile is-ancestor">
-              <div class="tile is-parent">
-                <router-link :to="`/service/slack`">
-                  <div class="featured tile is-child slack-service"><img :src="slackLogo" alt="Slack"/></div>
-                </router-link>
-              </div>
-
-              <div class="tile is-parent">
-                <router-link :to="`/service/twitter`">
-                  <div class="featured tile is-child twitter-service"><img :src="twitterLogo" width="50" alt="Twitter"/></div>
-                </router-link>
-              </div>
-
-              <div class="tile is-parent">
-                <router-link :to="`/service/twilio`">
-                  <div class="featured tile is-child twilio-service"><img :src="twilioLogo" alt="Twilio"/></div>
-                </router-link>
-              </div>
-            </div>
+    </section>
+    <section class="section bg--light">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-half text--center">
+            <h2 class="title is-2">List your service on Asyncy Hub</h2>
+            <a-button
+              state="primary"
+              size="l">Submit a Service</a-button>
           </div>
-        </section>
-
-        <section class="section">
-          <h2 class="section-header">Recently added</h2>
-          <div class="section-body">
-            <div class="tile is-ancestor">
-              <transition-group name="fade" tag="div" class="tile is-parent is-vertical">
-                <div v-for="(r, index) in data.recentServices.slice(0, 3)" class="tile is-child" :key="r.alias || index">
-                  <service-summary :title="getTitle(r)" :is-alias="r.alias ? true : false" :description="r.description" :tags="r.topics"></service-summary>
-                </div>
-              </transition-group>
-              <transition-group name="fade" tag="div" class="tile is-parent is-vertical">
-                <div v-for="(r, index) in data.recentServices.slice(3, 6)" class="tile is-child" :key="r.alias || index">
-                  <service-summary :title="getTitle(r)" :is-alias="r.alias ? true : false" :description="r.description" :tags="r.topics"></service-summary>
-                </div>
-              </transition-group>
-            </div>
-          </div>
-        </section>
-
-        <section class="section getting-started">
-          <h2 class="call-to-action">List your service on Asyncy Hub</h2>
-          <a-button type="neutral" @click.native="$emit('open-submit-service-modal')">Submit a service</a-button>
-        </section>
+        </div>
       </div>
-    </two-column-sidebar>
+    </section>
+    <section class="section preview">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-half">
+            <h2 class="title head-link is-3">
+              Featured Services
+              <a-link state="primary" class="link">View all <font-awesome-icon icon="arrow-right" /></a-link>
+            </h2>
+            <transition-group name="fade" tag="div" class="tile is-parent is-vertical">
+              <div v-for="(r, index) in data.recentServices.slice(0, 3)" class="tile is-child" :key="r.alias || index">
+                <service-summary :title="getTitle(r)" :is-alias="r.alias ? true : false" :description="r.description" :tags="r.topics"></service-summary>
+              </div>
+            </transition-group>
+            <p class="helper">Want to see your service in our marketplace ?</p>
+            <a-link state="primary">Submit your service <font-awesome-icon icon="arrow-right" /></a-link>
+          </div>
+          <div class="column is-half">
+            <h2 class="title head-link is-3">
+              Community
+              <a-link state="primary" class="link">Visit <font-awesome-icon icon="arrow-right" /></a-link>
+            </h2>
+            <transition-group name="fade" tag="div" class="tile is-parent is-vertical">
+              <div v-for="(r, index) in data.recentServices.slice(0, 3)" class="tile is-child" :key="r.alias || index">
+                <article-summary :title="getTitle(r)" :description="r.description" />
+              </div>
+            </transition-group>
+          </div>
+        </div>
+      </div>
+    </section>
   </div>
 </template>
 
 <script>
 import { IndexQuery } from '@/plugins/graphql'
 import ServiceSummary from '@/components/ServiceSummary'
-import SearchBar from '@/components/SearchBar'
-// import HeroBackground from 'asyncy-ui-components/dist/HeroBackground'
+import ArticleSummary from '@/components/ArticleSummary'
 
 import slackLogo from '@/assets/slack_logo_text.svg'
 import twitterLogo from '@/assets/twitter_logo.svg'
 import twilioLogo from '@/assets/twilio_logo_text.svg'
-
-// import headerLeft from 'asyncy-ui-components/assets/images/home_header_left.svg'
-// import headerRight from 'asyncy-ui-components/assets/images/home_header_right.svg'
 
 export default {
   name: 'index',
@@ -122,16 +137,132 @@ export default {
     }
   },
   components: {
-    // HeroBackground,
     ServiceSummary,
-    SearchBar
+    ArticleSummary
   }
 }
 </script>
 
 <style scoped lang="scss">
-.hero-header {
-  font-size: 2.8em;
+svg {
+  align-items: center;
+}
+
+.helper {
+  margin: .5rem 0;
+}
+
+.section {
+  border-bottom: none !important;
+}
+.head-link {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  .link {
+    svg {
+      margin-left: .5rem;
+    }
+  }
+}
+
+.section {
+  &.preview {
+    .container {
+      .columns {
+        .column {
+          padding: 0 3rem;
+          & + .column {
+            border-left: 1px solid rgba(color(dark), 0.125);
+          }
+        }
+      }
+    }
+  }
+}
+
+.section.steps {
+  border-bottom: none;
+  position: relative;
+  .container {
+    &:before {
+      @include breakpoint(max m) { display: none }
+      content: '';
+      width: 100%;
+      height: 100%;
+      background-image: url('~@/assets/curvedline.svg');
+      background-repeat: no-repeat;
+      background-size: 80% 85%;
+      background-position: top left;
+      position: absolute;
+      top: 0;
+    }
+  }
+  .columns {
+    position: relative;
+    margin-top: 2rem;
+    & + .columns {
+      margin-top: 15rem;
+    }
+    .column {
+      p {
+        margin-bottom: 1rem;
+      }
+    }
+  }
+}
+
+.placeholder {
+  width: 85%;
+  height: 17rem;
+  border-radius: .5rem;
+  margin: 0 auto;
+}
+
+.badge {
+  &.dot {
+    background: linear-gradient(180deg, darken(state(primary), 0%), lighten(state(primary), 10%)) repeat-x;
+    border-radius: 50%;
+    width: 3rem;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: $white;
+    font-weight: bold;
+  }
+}
+
+.video-section {
+  position: relative;
+  min-height: 0;
+  padding: 0 !important;
+  z-index: 1;
+  margin-bottom: calc(150px + 2rem);
+  .video {
+    width: 800px;
+    height: 300px;
+    border-radius: .75rem;
+    position: absolute;
+    left: calc(50% - 400px);
+    top: -150px;
+    margin: 0;
+    box-shadow: 0 0 2.25rem .5rem rgba(darken(color(dark), 15%), .5);
+    background-color: darken(state(primary), 10%);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    svg {
+      cursor: pointer;
+      transition: all 0.1s ease-in-out;
+      font-size: 4rem;
+      position: relative;
+      color: $white;
+      &:hover {
+        font-size: 7rem;
+      }
+    }
+  }
 }
 
 .subtitle {
@@ -152,8 +283,13 @@ ul {
   line-height: 2em;
 }
 
+.index {
+  background-color: #fff;
+}
+
 .section {
-  margin-bottom: 2em;
+  margin-bottom: 0;
+  padding-top: 2em;
   padding-bottom: 2em;
   border-bottom: 1px solid #ccc;
 
@@ -165,8 +301,8 @@ ul {
 .hero {
   position: relative;
   overflow: hidden;
-  padding: 4em 5em;
-  background: #eeeeee;
+  // padding: 4em 5em;
+  // background: #eeeeee;
   z-index: 1;
 
   .search-bar-container {

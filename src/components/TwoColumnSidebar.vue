@@ -4,7 +4,7 @@
       <div class="column is-one-fifth sidebar">
         <slot name="sidebar"/>
       </div>
-      <div class="column is-four-fifths main-container">
+      <div class="column is-four-fifths main">
         <slot name="body"/>
       </div>
     </div>
@@ -35,5 +35,9 @@ export default {}
   text-align: left;
   display: flex;
   flex-wrap: wrap;
+}
+
+.main {
+  margin-top: 1rem;
 }
 </style>
