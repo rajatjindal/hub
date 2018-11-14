@@ -2,7 +2,7 @@
   <div class="services">
     <section class="hero bg--dark is-medium">
       <div class="hero-body">
-        <div class="container text--center fixed">
+        <div class="container text--center">
           <stars-particles />
           <h1 class="title is-1 text--light">Asyncy Services</h1>
           <h2 class="subtitle is-4 text--light">Discover awesome services that will help you get started</h2>
@@ -10,7 +10,7 @@
       </div>
     </section>
     <two-column-sidebar>
-      <topics-list v-model="topics" slot="sidebar" />
+      <services-topics-list v-model="topics" slot="sidebar" />
       <div slot="body">
         <section class="section">
           <div class="search-bar-container">
@@ -27,19 +27,43 @@
             <div class="tile is-ancestor">
               <div class="tile is-parent">
                 <router-link :to="`/service/slack`">
-                  <div class="featured tile is-child slack-service"><img :src="slackLogo" alt="Slack"/></div>
+                  <div class="feature tile is-child">
+                    <div class="avatar">
+                      <img src="@/assets/slack.png" alt="Slack"/>
+                    </div>
+                    <div class="content slack-service">
+                      <h4>Slack Service</h4>
+                      <p>Slack bot microservice</p>
+                    </div>
+                  </div>
                 </router-link>
               </div>
 
               <div class="tile is-parent">
                 <router-link :to="`/service/twitter`">
-                  <div class="featured tile is-child twitter-service"><img :src="twitterLogo" width="50" alt="Twitter"/></div>
+                  <div class="feature tile is-child">
+                    <div class="avatar">
+                      <img src="@/assets/twitter.png" alt="Twitter"/>
+                    </div>
+                    <div class="content twitter-service">
+                      <h4>Twitter Service</h4>
+                      <p>Twitter as a microservice</p>
+                    </div>
+                  </div>
                 </router-link>
               </div>
 
               <div class="tile is-parent">
                 <router-link :to="`/service/twilio`">
-                  <div class="featured tile is-child twilio-service"><img :src="twilioLogo" alt="Twilio"/></div>
+                  <div class="feature tile is-child">
+                    <div class="avatar">
+                      <img src="@/assets/twilio.svg" alt="Twilio"/>
+                    </div>
+                    <div class="content twilio-service">
+                      <h4>Twilio Service</h4>
+                      <p>Twilio as a microservice</p>
+                    </div>
+                  </div>
                 </router-link>
               </div>
             </div>
@@ -101,11 +125,7 @@
 import { IndexQuery } from '@/plugins/graphql'
 import ServiceSummary from '@/components/ServiceSummary'
 import SearchBar from '@/components/SearchBar'
-// import HeroBackground from 'asyncy-ui-components/dist/HeroBackground'
-
-import slackLogo from '@/assets/slack_logo_text.svg'
-import twitterLogo from '@/assets/twitter_logo.svg'
-import twilioLogo from '@/assets/twilio_logo_text.svg'
+import ServicesTopicsList from '@/components/ServicesTopicsList'
 
 // import headerLeft from 'asyncy-ui-components/assets/images/home_header_left.svg'
 // import headerRight from 'asyncy-ui-components/assets/images/home_header_right.svg'
@@ -121,9 +141,6 @@ export default {
     }
   },
   data: () => ({
-    twitterLogo,
-    slackLogo,
-    twilioLogo,
     data: {
       recentServices: [{}, {}, {}, {}, {}, {}]
     }
@@ -142,7 +159,7 @@ export default {
     }
   },
   components: {
-    // HeroBackground,
+    ServicesTopicsList,
     ServiceSummary,
     SearchBar
   }
@@ -254,19 +271,55 @@ ul {
     }
   }
 
-  .slack-service {
-    background-image: url("../assets/slack_bg.svg");
-    background-color: #78d4b6;
-  }
+  .feature {
+    position: relative;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    transition: all .1s ease-in-out;
 
-  .twitter-service {
-    background-image: url("../assets/twitter_bg.svg");
-    background-color: #1da1f2;
-  }
+    &:hover {
+      transform: scale(1.05);
+    }
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: -48px;
+      background-color: $white;
+      padding: 1rem;
+      z-index: 1;
+      box-shadow: 0 0 .25rem .1rem rgba(color(dark), .125);
+    }
 
-  .twilio-service {
-    background-image: url("../assets/twilio_bg.svg");
-    background-color: #f22f44;
+    .content {
+      background-color: color(dark);
+      &.slack-service { background-color: #78d4b6 }
+      &.twitter-service { background-color: #1da1f2 }
+      &.twilio-service { background-color: #f22f44 }
+
+      border-radius: .5rem;
+      justify-content: flex-end;
+      width: 100%;
+      height: 150px;
+      padding: 3rem 1rem;
+      z-index: 0;
+      h4 {
+        text-align: center;
+        color: color(light);
+        font-weight: bold;
+        padding-bottom: .5rem !important;
+      }
+      p {
+        text-align: center;
+        color: color(light);
+        font-size: fontSize(s);
+      }
+    }
   }
 
   a {

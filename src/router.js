@@ -35,7 +35,7 @@ export default new Router({
     {
       path: '/service/:alias',
       name: 'Service',
-      component: () => import('@/views/Service'),
+      component: () => import('@/views/Integration'),
       meta: {
         hasSearch: true
       },
@@ -66,13 +66,38 @@ export default new Router({
     },
     {
       path: '/r/:owner/:repo',
-      component: () => import('@/views/Service'),
+      component: () => import('@/views/Integration'),
       meta: {
         hasSearch: true
       },
       props: function (route) {
         return {
           owner: route.params.owner,
+          repo: route.params.repo
+        }
+      }
+    },
+    {
+      path: '/integrations',
+      name: 'integrations',
+      component: () => import('@/views/Integrations')
+    },
+    {
+      path: '/integration/:repo',
+      name: 'integration',
+      component: () => import('@/views/Integration'),
+      props: function (route) {
+        return {
+          repo: route.params.repo
+        }
+      }
+    },
+    {
+      path: '/integration/:repo/guide',
+      name: 'guide',
+      component: () => import('@/views/Guide'),
+      props: function (route) {
+        return {
           repo: route.params.repo
         }
       }

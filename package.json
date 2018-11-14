@@ -33,6 +33,7 @@
     "babel-core": "7.0.0-bridge.0",
     "babel-jest": "^23.6.0",
     "chunk": "^0.0.2",
+    "frappe-charts": "^1.1.0",
     "graphql-tag": "^2.10.0",
     "lint-staged": "^8.0.4",
     "node-emoji": "^1.8.1",
@@ -43,7 +44,10 @@
     "vue-cli-plugin-apollo": "^0.18.0",
     "vue-clipboard2": "^0.2.1",
     "vue-template-compiler": "^2.5.17",
-    "vuejs-uib-pagination": "^1.0.6"
+    "vue2-frappe": "^1.0.23",
+    "vue2-scrollspy": "^2.3.1",
+    "vuejs-uib-pagination": "^1.0.6",
+    "vuetrend": "^0.3.2"
   },
   "gitHooks": {
     "pre-commit": "lint-staged"

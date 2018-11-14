@@ -797,6 +797,11 @@
   dependencies:
     any-observable "^0.3.0"
 
+"@tweenjs/tween.js@^17.2.0":
+  version "17.2.0"
+  resolved "https://registry.yarnpkg.com/@tweenjs/tween.js/-/tween.js-17.2.0.tgz#21f89b709bafc4b303adae7a83b4f35a0d9e4796"
+  integrity sha1-IfibcJuvxLMDra56g7TzWg2eR5Y=
+
 "@types/accepts@^1.3.5":
   version "1.3.5"
   resolved "https://registry.yarnpkg.com/@types/accepts/-/accepts-1.3.5.tgz#c34bec115cfc746e04fe5a059df4ce7e7b391575"
@@ -4671,6 +4676,11 @@ fragment-cache@^0.2.1:
   integrity sha1-QpD60n8T6Jvn8zeZxrxaCr//DRk=
   dependencies:
     map-cache "^0.2.2"
+
+frappe-charts@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/frappe-charts/-/frappe-charts-1.1.0.tgz#c13929a1b79f4c4e72c943a0deca300b2eb78f77"
+  integrity sha512-YcmIxMRmWW+DcjTcOhFVx/bs752WN4dEV7I6mos/z1U9k0OjQ+VtaCFCXyVvP4K1a86rfGT3tbgEDbaSkF9a8Q==
 
 fresh@0.5.2:
   version "0.5.2"
@@ -10720,6 +10730,21 @@ vue-template-es2015-compiler@^1.6.0:
   resolved "https://registry.yarnpkg.com/vue-template-es2015-compiler/-/vue-template-es2015-compiler-1.6.0.tgz#dc42697133302ce3017524356a6c61b7b69b4a18"
   integrity sha512-x3LV3wdmmERhVCYy3quqA57NJW7F3i6faas++pJQWtknWT+n7k30F4TVdHvCLn48peTJFRvCpxs3UuFPqgeELg==
 
+vue2-frappe@^1.0.23:
+  version "1.0.23"
+  resolved "https://registry.yarnpkg.com/vue2-frappe/-/vue2-frappe-1.0.23.tgz#f19c1e6d921896ea4ba3f89075f495d1005d0846"
+  integrity sha1-8ZwebZIYlupLo/iQdfSV0QBdCEY=
+  dependencies:
+    frappe-charts "^1.1.0"
+
+vue2-scrollspy@^2.3.1:
+  version "2.3.1"
+  resolved "https://registry.yarnpkg.com/vue2-scrollspy/-/vue2-scrollspy-2.3.1.tgz#7a2aba7ea53e020cdd47851c56594a41731e88f4"
+  integrity sha512-nynFYH9zwfXHfhopQyFT6uxe8Vgz9c46/NibJzI24h8FAHBnlzEe9EXNhUy+wcfr+BEa4Q22V5GvnigTtbmPaQ==
+  dependencies:
+    "@tweenjs/tween.js" "^17.2.0"
+    babel-runtime "^6.26.0"
+
 vue2-transitions@^0.2.3:
   version "0.2.3"
   resolved "https://registry.yarnpkg.com/vue2-transitions/-/vue2-transitions-0.2.3.tgz#69c9d75b1db05f231b80980c03459d68490ba27d"
@@ -10734,6 +10759,11 @@ vuejs-uib-pagination@^1.0.6:
   version "1.0.6"
   resolved "https://registry.yarnpkg.com/vuejs-uib-pagination/-/vuejs-uib-pagination-1.0.6.tgz#3fb928a5295662a1f1d2d6099b9320174a118e4d"
   integrity sha512-M7blY+8M4y/mOb5rYoAuIPN3SGaL/cy4vcNYOIL29mn9CyGUFV3pbO4mAvX8IhyOFioSZ45YnMbw2N+0s1z1fw==
+
+vuetrend@^0.3.2:
+  version "0.3.2"
+  resolved "https://registry.yarnpkg.com/vuetrend/-/vuetrend-0.3.2.tgz#13100862ded562c78d3704c3865cd38c582e586a"
+  integrity sha512-nXza0yeoynEdrdV8RKStHA0KykPyVXNHjcQOqxc+5rW5051V3RMrsI9ob1+kiJM8azoww6t6XiC/+AS7aiqEew==
 
 vuex@^3.0.1:
   version "3.0.1"

@@ -79,7 +79,16 @@ export default {
 
 #hub {
   background-color: color(dark);
+  position: relative;
   // color: black;
+}
+
+.hero {
+  position: relative;
+
+  .hero-body {
+    z-index: 0;
+  }
 }
 
 section, .section {

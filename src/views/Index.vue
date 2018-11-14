@@ -101,10 +101,6 @@ import { IndexQuery } from '@/plugins/graphql'
 import ServiceSummary from '@/components/ServiceSummary'
 import ArticleSummary from '@/components/ArticleSummary'
 
-import slackLogo from '@/assets/slack_logo_text.svg'
-import twitterLogo from '@/assets/twitter_logo.svg'
-import twilioLogo from '@/assets/twilio_logo_text.svg'
-
 export default {
   name: 'index',
   apollo: {
@@ -116,9 +112,6 @@ export default {
     }
   },
   data: () => ({
-    twitterLogo,
-    slackLogo,
-    twilioLogo,
     data: {
       recentServices: [{}, {}, {}, {}, {}, {}]
     }
@@ -336,17 +329,14 @@ ul {
   }
 
   .slack-service {
-    background-image: url("../assets/slack_bg.svg");
     background-color: #78d4b6;
   }
 
   .twitter-service {
-    background-image: url("../assets/twitter_bg.svg");
     background-color: #1da1f2;
   }
 
   .twilio-service {
-    background-image: url("../assets/twilio_bg.svg");
     background-color: #f22f44;
   }
 

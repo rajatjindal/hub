@@ -61,7 +61,7 @@ a {
 .service-image {
   min-width: 65px;
   height: 65px;
-  border-radius: 4px;
+  border-radius: 100%;
   display: flex;
   align-items: center;
   justify-content: center;

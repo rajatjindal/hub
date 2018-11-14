@@ -8,6 +8,8 @@ import '@/plugins/components'
 import '@/plugins/filters'
 import '@/plugins/anime'
 import '@/plugins/prism'
+import '@/plugins/chart'
+import '@/plugins/scrollspy'
 import '@/plugins/fontawesome'
 import Raven from '@/plugins/sentry'
 
