@@ -1,11 +1,13 @@
 <template>
-  <div class="index">
-    <div class="columns">
-      <div class="column is-one-fifth sidebar">
-        <slot name="sidebar"/>
-      </div>
-      <div class="column is-four-fifths main">
-        <slot name="body"/>
+  <div class="section index">
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-one-fifth sidebar">
+          <slot name="sidebar"/>
+        </div>
+        <div class="column is-four-fifths main">
+          <slot name="body"/>
+        </div>
       </div>
     </div>
   </div>
@@ -26,18 +28,14 @@ export default {}
 
 .index {
   min-height: 650px;
-  margin-top: 1.5em;
+  margin-top: 1.5rem;
 }
 
 .columns {
-  max-width: 1200px;
+  // max-width: 1200px;
   margin: 0 auto;
   text-align: left;
   display: flex;
   flex-wrap: wrap;
-}
-
-.main {
-  margin-top: 1rem;
 }
 </style>

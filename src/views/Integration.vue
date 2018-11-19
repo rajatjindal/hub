@@ -58,10 +58,10 @@
         </div>
       </div>
     </section>
-    <two-column-sidebar>
-      <div slot="sidebar" class="sidebar sticky-sidebar">
-        <div class="sidebar-info">
-          <div class="section">
+    <div class="section">
+      <div class="container breadcrumb-container">
+        <div class="columns">
+          <div class="column is-full">
             <transition name="fade">
               <nav class="breadcrumb" aria-label="breadcrumbs">
                 <ul>
@@ -72,7 +72,12 @@
               </nav>
             </transition>
           </div>
-
+        </div>
+      </div>
+    </div>
+    <two-column-sidebar>
+      <div slot="sidebar" class="sidebar sticky-sidebar">
+        <div class="sidebar-info">
           <ul class="section sidebar-stick list-scroll-spy" v-scroll-spy-active v-scroll-spy-link>
             <li><a href="#readme">Readme</a></li>
             <li><a href="#commands">Commands</a></li>
@@ -81,7 +86,7 @@
           </ul>
         </div>
       </div>
-      <div slot="body" class="body" v-scroll-spy>
+      <div slot="body" class="body" v-scroll-spy="{ offset: 100 }">
         <div class="body-section">
           <h3 class="heading-title title is-3 text-dark" id="readme">Readme</h3>
           <p>The readme of the service</p>
@@ -257,10 +262,17 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
-.heading-title {
-  margin: 0 !important;
-  padding: 5rem 0 1rem !important;
+.body-section {
+  &:first-child {
+    .heading-title {
+      margin-top: 0 !important;
+    }
+  }
+  .heading-title {
+    margin-top: 1.5rem !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
 }
 
 .bg--darker {
@@ -274,6 +286,11 @@ export default {
   margin: 0 auto;
   position: relative;
   color: $white;
+}
+
+.breadcrumb-container {
+  padding-top: 1.5rem;
+  padding-bottom: 0;
 }
 
 .title-container {
@@ -309,6 +326,26 @@ export default {
   }
 }
 
+.toc-commands {
+  tbody {
+    tr {
+      margin-bottom: .5rem;
+      &:not(:last-child) {
+        border-bottom: 1px solid gray(200);
+      }
+      td {
+        &:first-child {
+          padding: 1rem 3rem 1rem 0;
+        }
+        max-width: 20rem;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+      }
+    }
+  }
+}
+
 .index {
   background-color: #fff;
 }
@@ -334,9 +371,9 @@ export default {
 
 .sticky-sidebar {
   position: sticky !important;
-  top: 0rem;
+  top: 5.5rem;
   .sidebar-stick {
-    margin-top: 5rem !important;
+    // margin-top: 5rem !important;
   }
 }
 
