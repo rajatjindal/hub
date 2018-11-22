@@ -46,6 +46,7 @@ export default {
 
 .main-container {
   margin-top: 4rem;
+  min-height: calc(100% - 72px - 406px);
 }
 
 .section {

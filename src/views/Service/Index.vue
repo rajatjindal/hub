@@ -12,11 +12,12 @@
                 </div>
               </div>
               <div class="column is-four-fifths main-head">
-                <h1 class="title is-1 text--light">{{ serviceName | capitalize }} service</h1>
+                <h1 class="title is-1 text--light" v-if="serviceName">{{ serviceName | capitalize }} service</h1>
+                <h1 class="title is-1 text--light" v-else>...</h1>
                 <transition name="fade">
                   <h3 v-if="service.description" class="subtitle is-4 text--light">{{service.description | emoji}}</h3>
                   <h3 v-else-if="!service.description && serviceName" class="subtitle is-4 none-found text--light">This service has no description.</h3>
-                  <!-- <h3 v-else class="loading-shimmer subtitle is-4 description"></h3> -->
+                  <h3 v-else class="subtitle is-4 description">...</h3>
                 </transition>
                 <div class="service-categories">
                   <services-icon type="popular" light />
@@ -32,27 +33,45 @@
         <div class="info-container">
           <div class="columns is-multiline">
             <div class="column is-full">
-              <h4>Version 0.1.3 &middot; MIT Licenced</h4>
-              <p>Last published 5 minutes ago</p>
+              <h4 class="version">Version {{ latestVersion || 'unknown' }} &middot; {{ license || 'No license' }}</h4>
+              <p class="publication">Last published 5 minutes ago</p>
             </div>
             <div class="column is-one-third">
-              <h5>Monthly usage - 153 users</h5>
-              <trend
-                :data="[0, 0, 0, 1, 0, 2, 5, 9, 5, 10, 3, 5]"
-                :gradient="['#a100ff', '#f72d2d']"
-                auto-draw
-                smooth />
+              <h5>Monthly usage<span class="float-right">153 users</span></h5>
+              <div class="trend">
+                <la-cartesian autoresize :width="300" :height="150" :bound="[0]" :data="[{ v: 1 }, { v: 1 }, { v: 1 }, { v: 3 }, { v: 1 }, { v: 3 }, { v: 5 }, { v: 9 }, { v: 5 }, { v: 10 }, { v: 3 }, { v: 5 }]" :padding="0">
+                  <defs>
+                    <linearGradient id="colorm-fill" x1="0" y1="0" x2="0" y2="1">
+                      <stop stop-color="#a100ff" offset="0%" />
+                      <stop stop-color="#efefef" offset="100%" />
+                    </linearGradient>
+                  </defs>
+                  <la-line curve :width="2" prop="v" color="url(#colorm-fill)" />
+                </la-cartesian>
+              </div>
             </div>
             <div class="column is-one-third">
-              <h5>Successful builds - 2,567 builds</h5>
-              <trend
-                :data="[0, 0, 0, 1, 0, 2, 5, 9, 5, 10, 3, 5]"
-                :gradient="['#a100ff', '#f72d2d']"
-                auto-draw
-                smooth />
+              <h5>Successful builds<span class="float-right">2,567 builds</span></h5>
+              <div class="trend">
+                <la-cartesian autoresize :width="300" :height="150" :bound="[0]" :data="[{ v: 10 }, { v: 5 }, { v: 7 }, { v: 6 }, { v: 20 }, { v: 15 }, { v: 30 }]" :padding="0">
+                  <defs>
+                    <linearGradient id="area-fill" x1="0" y1="0" x2="0" y2="1">
+                      <stop stop-color="#0e0f12" offset="0%" stop-opacity="0.8" />
+                      <stop stop-color="#0e0f12" offset="100%" stop-opacity="0.4" />
+                    </linearGradient>
+                  </defs>
+                  <defs>
+                    <linearGradient id="color-fill" x1="0" y1="0" x2="0" y2="1">
+                      <stop stop-color="#f72d2d" offset="0%" />
+                      <stop stop-color="#ff7900" offset="100%" />
+                    </linearGradient>
+                  </defs>
+                  <la-area fill-color="url(#area-fill)" :width="2" line color="url(#color-fill)" curve prop="v"></la-area>
+                </la-cartesian>
+              </div>
             </div>
             <div class="column is-one-third">
-                <div id="heatmap" />
+                <!-- <div id="heatmap" /> -->
             </div>
           </div>
         </div>
@@ -65,9 +84,13 @@
             <transition name="fade">
               <nav class="breadcrumb" aria-label="breadcrumbs">
                 <ul>
-                  <li><router-link to="/">Hub</router-link></li>
-                  <li><router-link to="/services">Services</router-link></li>
-                  <li class="is-active"><a href="#" @click.stop="" :aria-current="serviceName">{{ serviceName | capitalize }}</a></li>
+                  <li><router-link :to="{ name: 'hub' }">Hub</router-link></li>
+                  <li><router-link :to="{ name: 'services' }">Services</router-link></li>
+                  <li v-if="$route.name === 'service'" class="is-active"><a href="#" @click.stop="" :aria-current="serviceName">{{ serviceName | capitalize }}</a></li>
+                  <template v-else>
+                    <li><router-link :to="{ name: 'service', params: { repo } }">{{ serviceName | capitalize }}</router-link></li>
+                    <li class="is-active"><a href="#" @click.stop="" :aria-current="`${serviceName} guide`">Guide</a></li>
+                  </template>
                 </ul>
               </nav>
             </transition>
@@ -75,90 +98,15 @@
         </div>
       </div>
     </div>
-    <two-column-sidebar>
-      <div slot="sidebar" class="sidebar sticky-sidebar">
-        <div class="sidebar-info">
-          <ul class="section sidebar-stick list-scroll-spy" v-scroll-spy-active v-scroll-spy-link>
-            <li><a href="#readme">Readme</a></li>
-            <li><a href="#commands">Commands</a></li>
-            <li><a href="#similars">Similar apps</a></li>
-            <li><a href="#versions">Versions</a></li>
-          </ul>
-        </div>
-      </div>
-      <div slot="body" class="body" v-scroll-spy="{ offset: 100 }">
-        <div class="body-section">
-          <h3 class="heading-title title is-3 text-dark" id="readme">Readme</h3>
-          <p>The readme of the service</p>
-        </div>
-        <div class="body-section">
-          <h3 class="heading-title title is-3 text-dark" id="commands">Commands (9)</h3>
-          <div class="command" v-if="numCommands <= 0 && !serviceName">
-            <div class="loading-shimmer name"></div>
-          </div>
-
-          <transition name="fade">
-            <div v-if="numCommands <= 0 && serviceName" class="none-found">
-              This service has no commands.
-            </div>
-          </transition>
-
-          <transition name="fade">
-            <div class="toc-commands-container" v-if="numCommands > 1">
-              <table class="table toc-commands">
-                <tbody>
-                  <tr v-for="(command, name) in commands" :key="name">
-                    <td><router-link :to="{ name: 'guide', params: { repo }, hash: `#${name}` }" :href="`#${name}`">{{name}}</router-link></td>
-                    <td>{{command.help}}</td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </transition>
-        </div>
-        <!-- <div class="body-section">
-          <h3 class="heading-title title is-3 text-dark" id="similars">Similar apps</h3>
-          <div class="columns">
-            <div class="column is-one-third">
-              <a-card>
-                <h3>Twitter API</h3>
-                <a-button state="link"><font-awesome-icon :icon="['fab', 'github']" /> Github repo</a-button>
-                <a-button state="link"><a-logo icon /> Asyncy App</a-button>
-              </a-card>
-            </div>
-            <div class="column is-one-third">
-              <a-card>
-                <h3>Twitter Bot</h3>
-                <a-button state="link"><font-awesome-icon :icon="['fab', 'github']" /> Github repo</a-button>
-                <a-button state="link"><a-logo icon /> Asyncy App</a-button>
-              </a-card>
-            </div>
-          </div>
-        </div> -->
-        <div class="body-section">
-          <h3 class="heading-title title is-3 text-dark" id="versions">Versions</h3>
-          <h3 class="version-head">0.1.3 <a-badge state="warning" outline lower>Latest</a-badge></h3>
-          <p>
-            New methods
-            - deprecation of <span class="tag">getElement()</span>
-          </p>
-          <h3 class="version-head">0.1.2</h3>
-          <p>Improvements and bug fixes</p>
-          <h3 class="version-head">0.1.1 <a-badge state="danger" outline lower>Build failed</a-badge></h3>
-          <p>New authentication method</p>
-        </div>
-        <div style="float:right; margin-top: 10px">
-          <a-button state="neutral" @click="redirect">Get started</a-button>
-        </div>
-      </div>
-    </two-column-sidebar>
+    <transition name="fade">
+      <router-view />
+    </transition>
   </div>
 </template>
 
 <script>
-import { Chart } from 'frappe-charts/dist/frappe-charts.min.esm'
+// import { Chart } from 'frappe-charts/dist/frappe-charts.min.esm'
 import { ServiceQuery } from '@/plugins/graphql'
-import Code from '@/components/Code'
 import ServicesIcon from '@/components/ServicesIcon'
 
 export default {
@@ -188,6 +136,13 @@ export default {
   watch: {
     serviceByAlias: function (newValue) {
       if (!newValue) this.$router.push('/404')
+    },
+    commands: function (newValue) {
+      this.$nextTick(() => {
+        if (this.$route.hash) {
+          this.$scrollTo(this.$route.hash, 200, { offset: -70 })
+        }
+      })
     }
   },
   methods: {
@@ -231,37 +186,48 @@ export default {
           this.service.serviceTags.nodes) ||
         []
       )
+    },
+    license: function () {
+      return ((this.tags && this.tags.length > 0 &&
+                this.tags[0].configuration &&
+                this.tags[0].configuration.info &&
+                this.tags[0].configuration.info.license &&
+                this.tags[0].configuration.info.license.name) || undefined)
+    },
+    latestVersion: function () {
+      return ((this.tags && this.tags.length > 0 &&
+          this.tags[0].configuration &&
+          this.tags[0].configuration.info &&
+          this.tags[0].configuration.info.version) || undefined)
     }
   },
   mounted: function () {
-    console.log(Chart)
-    this.chart = new Chart('#heatmap', {
-      type: 'heatmap',
-      data: {
-        dataPoints: {
-          '1536761433': 8,
-          '1534083033': 4,
-          '1535432233': 2,
-          '1535639233': 1,
-          '1536349233': 9,
-          '1534940333': 5
-        },
-        start: this.startDate,
-        end: this.endDate
-      },
-      countLabel: 'crashs',
-      discreteDomains: 0, // default: 1
-      colors: ['#ebccff', '#d799ff', '#c466ff', '#b032ff', '#a100ff']
-    })
+    // this.chart = new Chart('#heatmap', {
+    //   type: 'heatmap',
+    //   data: {
+    //     dataPoints: {
+    //       '1536761433': 8,
+    //       '1534083033': 4,
+    //       '1535432233': 2,
+    //       '1535639233': 1,
+    //       '1536349233': 9,
+    //       '1534940333': 5
+    //     },
+    //     start: this.startDate,
+    //     end: this.endDate
+    //   },
+    //   countLabel: 'crashs',
+    //   discreteDomains: 0, // default: 1
+    //   colors: ['#ebccff', '#d799ff', '#c466ff', '#b032ff', '#a100ff']
+    // })
   },
   components: {
-    Code,
     ServicesIcon
   }
 }
 </script>
 
-<style scoped lang="scss">
+<style lang="scss">
 .body-section {
   &:first-child {
     .heading-title {
@@ -286,23 +252,42 @@ export default {
   margin: 0 auto;
   position: relative;
   color: $white;
+
+  .version {
+    padding-bottom: .5rem !important;
+  }
+
+  .publication {
+    color: gray(400);
+  }
+}
+
+.float-right {
+  float: right;
 }
 
 .breadcrumb-container {
-  padding-top: 1.5rem;
-  padding-bottom: 0;
+  padding-top: 1.5rem !important;
+  padding-bottom: 0 !important;
+}
+
+.trend {
+  svg {
+    border: 1px solid gray(800);
+    border-radius: .25rem;
+  }
 }
 
 .title-container {
   max-width: 1440px;
   width: 100%;
-  padding: 0 2rem;
-  margin: 0 auto;
+  padding: 0 2rem !important;
+  margin: 0 auto !important;
   z-index: 2;
 
   .main-head {
     h1, h3 {
-      margin-bottom: 0;
+      margin-bottom: 0 !important;
       padding-bottom: 1rem !important;
     }
     .service-categories {
@@ -337,7 +322,8 @@ export default {
         &:first-child {
           padding: 1rem 3rem 1rem 0;
         }
-        max-width: 20rem;
+        padding: 1rem 2rem 1rem 0 !important;
+        max-width: 30rem;
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
@@ -371,26 +357,9 @@ export default {
 
 .sticky-sidebar {
   position: sticky !important;
-  top: 5.5rem;
+  top: 5.5rem !important;
   .sidebar-stick {
     // margin-top: 5rem !important;
-  }
-}
-
-.list-scroll-spy {
-  li {
-    padding-left: 20px;
-    border-left-width: 2px;
-    border-left-style: solid;
-    border-left-color: transparent;
-
-    &.active {
-      border-left-color: #9100e6;
-    }
-
-    &:not(:first-child) {
-      margin-top: 10px;
-    }
   }
 }
 

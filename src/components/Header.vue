@@ -12,7 +12,7 @@
     @signin="signin"
     :items="[{
         name: 'Services',
-        link: 'services'
+        link: '/services'
       }, {
         name: 'Functions'
       }, {

@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/views/Index'
+import ServiceIndex from '@/views/Service/Index'
 // import Organization from '@/views/Organization'
 // import SearchResults from '@/views/SearchResults'
 // import Service from '@/views/Service'
@@ -34,14 +35,22 @@ export default new Router({
     },
     {
       path: '/service/:alias',
-      name: 'Service',
-      component: () => import('@/views/Integration'),
+      component: ServiceIndex,
       meta: {
         hasSearch: true
       },
       props: function (route) {
         return { alias: route.params.alias }
-      }
+      },
+      children: [{
+        path: '',
+        name: 'service',
+        component: () => import('@/views/Service/Home')
+      }, {
+        path: 'guide',
+        name: 'guide',
+        component: () => import('@/views/Service/Guide')
+      }]
     },
     {
       path: '/tags/:topic',
@@ -78,31 +87,6 @@ export default new Router({
       }
     },
     {
-      path: '/integrations',
-      name: 'integrations',
-      component: () => import('@/views/Integrations')
-    },
-    {
-      path: '/integration/:repo',
-      name: 'integration',
-      component: () => import('@/views/Integration'),
-      props: function (route) {
-        return {
-          repo: route.params.repo
-        }
-      }
-    },
-    {
-      path: '/integration/:repo/guide',
-      name: 'guide',
-      component: () => import('@/views/Guide'),
-      props: function (route) {
-        return {
-          repo: route.params.repo
-        }
-      }
-    },
-    {
       path: '/faq',
       component: () => import('@/views/Faq'),
       meta: {
@@ -114,7 +98,15 @@ export default new Router({
       component: () => import('@/views/PageNotFound')
     }
   ],
-  scrollBehavior: function () {
-    return { x: 0, y: 0 }
+  scrollBehavior: function (to, from, savedPosition) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        if (to.hash) {
+          resolve({ selector: to.hash })
+        } else {
+          resolve()
+        }
+      }, 200)
+    })
   }
 })

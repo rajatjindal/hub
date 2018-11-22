@@ -6,6 +6,7 @@ import UrlLink from '@/components/UrlLink'
 import TopicTag from '@/components/TopicTag'
 import TopicsList from '@/components/TopicsList'
 import Stars from '@/components/Stars'
+import Window from '@/components/Window'
 import '@asyncy/vue/dist/asyncy-vue.css'
 
 Vue.use(AsyncyVue)
@@ -15,5 +16,6 @@ Vue.component('topic-tag', TopicTag)
 Vue.component('url-link', UrlLink)
 Vue.component('topics-list', TopicsList)
 Vue.component('stars-particles', Stars)
+Vue.component('a-window', Window)
 
 Vue.use(Clipboard)

@@ -168,6 +168,7 @@ import Code from '@/components/Code'
 
 export default {
   name: 'Guide',
+  components: { Code },
   props: {
     repo: {
       type: String,
@@ -238,8 +239,10 @@ export default {
       )
     }
   },
-  components: {
-    Code
+  mounted: function () {
+    if (this.$router) {
+      console.log(this.$router)
+    }
   }
 }
 </script>
