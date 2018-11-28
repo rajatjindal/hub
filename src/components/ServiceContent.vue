@@ -12,8 +12,8 @@
     </h2>
     <h3 v-if="action.help">Description</h3>
     <span v-if="action.help">{{ action.help }}</span>
-    <h3>Example</h3>
-    <a-window lang="coffeescript"><slot name="example" /></a-window>
+    <h3 v-if="example">Example</h3>
+    <a-window v-if="example" lang="coffeescript">{{ example }}</a-window>
     <h3 v-if="action.arguments">Arguments</h3>
     <div v-if="action.arguments" class="arguments-table-container">
       <table class="table is-bordered">
@@ -91,6 +91,11 @@ export default {
       default: () => ({}),
       required: true,
       description: 'The action to display as a content'
+    },
+    example: {
+      type: String,
+      default: undefined,
+      description: 'The action example'
     }
   },
   computed: {

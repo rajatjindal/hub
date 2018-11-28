@@ -14,35 +14,11 @@
         </ul>
       </div>
     </div>
-    <template v-for="(command, name) in $parent.commands">
-      <div slot="body" class="body" :key="`body-${name}`">
-        <transition-group name="fade" tag="div" class="command body-section">
-          <template v-for="(event, ename) in command.events">
-            <template v-if="event.output && event.output.commands">
-              <service-content v-if="$route.hash === `#${name}-${ename}-${cname}`" v-for="(action, cname) in event.output.commands" :key="`container-${name}-event-${ename}-command-${cname}`" :action="action">
-                <template slot="example">{{ $parent.serviceName }} {{ name }} as client
-    when client {{ ename }} <template v-for="(val, key) in event.arguments">{{key}}:[{{val.type}}] </template>as result
-      result {{ cname }} <template v-for="(val, key) in command.arguments">{{ key }}:[{{val.type}}] </template></template>
-              </service-content>
-            </template>
-            <service-content :key="`container-${name}-event-${ename}`" v-if="$route.hash === `#${name}-${ename}`" :action="event">
-              <template slot="example">{{ $parent.serviceName }} {{ name }} as client
-    when client {{ ename }} <template v-for="(val, key) in event.arguments">{{key}}:[{{val.type}}] </template>as result
-      ...</template>
-            </service-content>
-          </template>
-          <service-content key="`container-${name}`" v-if="$route.hash === `#${name}`" :action="command">
-            <template slot="example">
-              <template v-if="!command.events"><template v-if="!command.run">result = </template>{{ $parent.serviceName }} {{ name }}<template v-for="(arg, name) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template><template v-if="command.run"> as result
-    ...</template></template>
-              <template v-if="command.events">{{ $parent.serviceName }} {{ name }} as client <template v-for="(val, key) in command.events">
-    when client {{ key }} <template v-for="(val, key) in val.arguments">{{key}}:[{{val.type}}] </template>as result
-      ...</template></template>
-            </template>
-          </service-content>
-        </transition-group>
-      </div>
-    </template>
+    <div slot="body" class="body">
+      <transition-group name="fade" tag="div" class="command body-section">
+        <service-content v-if="loaded" :key="`container-${getHash}`" :action="getActionFromHash" :example="getExampleFromAction" />
+      </transition-group>
+    </div>
   </two-column-sidebar>
 </template>
 
@@ -52,11 +28,80 @@ import ServiceContent from '@/components/ServiceContent'
 export default {
   name: 'ServiceGuide',
   components: { ServiceContent },
+  data: () => ({ loaded: false }),
+  computed: {
+    getHash: function () {
+      return this.$route.hash.split('#')[1]
+    },
+    getHashArray: function () {
+      return this.$route.hash.split('#')[1].split('-')
+    },
+    getActionFromHash: function () {
+      let action = this.$parent.commands[this.getHashArray[0]]
+      if (this.getHashArray.length > 1 && action.events) {
+        action = action.events[this.getHashArray[1]]
+      }
+      if (this.getHashArray.length > 2 && action.output && action.output.commands) {
+        action = action.output.commands[this.getHashArray[2]]
+      }
+      return action
+    },
+    getEventFromHash: function () {
+      return this.getHashArray.length > 1 ? this.$parent.commands[this.getHashArray[0]].events[this.getHashArray[1]] : undefined
+    },
+    getActionName: function () {
+      return this.getHashArray[this.getHashArray.length - 1]
+    },
+    getExampleFromAction: function () {
+      let action = this.getActionFromHash
+      let ret = ''
+      if (this.getHashArray.length === 2) { // it's an event
+        ret += `${this.$parent.serviceName} ${this.getHashArray[0]} as client\n  when client ${this.getActionName} `
+        for (let arg in action.arguments) {
+          ret += `${arg}:[${action.arguments[arg].type}] `
+        }
+        ret += 'as result\n    ...'
+      } else if (this.getHashArray.length === 3) { // it's an action
+        ret += `${this.$parent.serviceName} ${this.getHashArray[0]} as client\n  when client ${this.getHashArray[1]} `
+        for (let arg in this.getEventFromHash.arguments) {
+          ret += `${arg}:[${this.getEventFromHash.arguments[arg].type}] `
+        }
+        ret += `as result\n    result ${this.getActionName} `
+        for (let arg in action.arguments) {
+          ret += `${arg}:[${action.arguments[arg].type}] `
+        }
+      } else if (!action.events) { // it's a command
+        if (!action.run) {
+          ret += 'result = '
+        }
+        ret += `${this.$parent.serviceName} ${this.getActionName}`
+        for (let arg in action.arguments) {
+          if (action.arguments[arg].required) {
+            ret += ` ${arg}:[${action.arguments[arg].type}]`
+          }
+        }
+        if (action.run) {
+          ret += ' as result\n  ...'
+        }
+      } else { // it's an event-based
+        ret += `${this.$parent.serviceName} ${this.getActionName} as client `
+        for (let event in action.events) {
+          ret += `\n  when client ${event} `
+          for (let arg in action.events[event].arguments) {
+            ret += `${arg}:[${action.events[event].arguments[arg].type}] `
+          }
+          ret += `as result\n    ...`
+        }
+      }
+      return ret
+    }
+  },
   methods: {
     openRepo: function () {
       window.open(`//github.com/${this.$parent.service.pullUrl}`, '_blank')
     },
     checkHash: function () {
+      this.loaded = true
       let hash = this.$route.hash || ''
       if (this.$route.hash.length < 2) {
         hash = `#${Object.keys(this.$parent.commands)[0]}`
