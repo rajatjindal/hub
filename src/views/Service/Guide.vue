@@ -1,5 +1,5 @@
 <template>
-  <three-column-sidebar right-class="right-dark-sidebar" sidebar-class="sidebar-dark-shadow" main-class="guide-main-content">
+  <two-column-sidebar>
     <div slot="sidebar" class="sidebar sticky-sidebar">
       <div class="sidebar-info">
         <ul class="section sidebar-stick list-scroll-spy">
@@ -30,6 +30,10 @@
                 </h1>
                 <h4>Description</h4>
                 <span v-if="command.help">{{command.help}}</span>
+                <h4>Example</h4>
+                <a-window lang="coffeescript">{{ $parent.serviceName }} {{ name }} as client
+    when client {{ ename }} <template v-for="(val, key) in event.arguments">{{key}}:[{{val.type}}] </template>as result
+      result {{ cname }} <template v-for="(val, key) in command.arguments">{{ key }}:[{{val.type}}] </template></a-window>
                 <h4>Arguments</h4>
                 <div v-if="command.arguments" class="arguments-table-container">
                   <table class="table is-bordered">
@@ -43,7 +47,7 @@
                     <tbody>
                       <tr v-for="(arg, name) in command.arguments" :key="name">
                         <td><code class="arg">{{name}}</code></td>
-                        <td class="type"><i>{{arg.type}}</i></td>
+                        <td class="type"><code>{{arg.type}}</code></td>
                         <td class="description">
                           <span v-if="arg.required" class="required">Required. </span>
                           <span v-if="arg.default">(Default: <code class="arg">{{arg.default}}</code>) </span>
@@ -69,6 +73,10 @@
                 <span v-if="event.default">(Default: <code class="arg">{{event.default}}</code>) </span>
                 <span v-if="event.help">{{event.help}}</span>
               </p>
+              <h4>Example</h4>
+              <a-window v-if="event" lang="coffeescript">{{ $parent.serviceName }} {{ name }} as client
+    when client {{ ename }} <template v-for="(val, key) in event.arguments">{{key}}:[{{val.type}}] </template>as result
+      ...</a-window>
               <h4 v-if="event.arguments">Arguments</h4>
               <div v-if="event.arguments" class="arguments-table-container">
                 <table class="table is-bordered">
@@ -82,7 +90,7 @@
                   <tbody>
                     <tr v-for="(arg, name) in event.arguments" :key="`event-${ename}-arguments-${name}`">
                       <td><code class="arg">{{name}}</code></td>
-                      <td class="type"><i>{{arg.type}}</i></td>
+                      <td class="type"><code>{{arg.type}}</code></td>
                       <td class="description">
                         <span v-if="arg.required" class="required">Required. </span>
                         <span v-if="arg.default">(Default: <code class="arg">{{arg.default}}</code>) </span>
@@ -116,7 +124,7 @@
                     <tbody>
                       <tr v-for="(arg, name) in event.output.properties" :key="`event-${ename}-output-properties-${name}`">
                         <td><code class="arg">{{name}}</code></td>
-                        <td class="type"><i>{{arg.type}}</i></td>
+                        <td class="type"><code>{{arg.type}}</code></td>
                         <td class="description">
                           <span v-if="arg.required" class="required">Required. </span>
                           <span v-if="arg.default">(Default: <code class="arg">{{arg.default}}</code>) </span>
@@ -140,6 +148,12 @@
                 <h3>Description</h3>
                 <p v-if="command.help">{{ command.help }}</p>
               </div>
+              <h3>Example</h3>
+              <a-window v-if="!command.events" lang="coffeescript"><template v-if="!command.run">result = </template>{{ $parent.serviceName }} {{ name }}<template v-for="(arg, name) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template><template v-if="command.run"> as result
+    ...</template></a-window>
+              <a-window v-if="command.events" lang="coffeescript">{{ $parent.serviceName }} {{ name }} as client <template v-for="(val, key) in command.events">
+    when client {{ key }} <template v-for="(val, key) in val.arguments">{{key}}:[{{val.type}}] </template>as result
+      ...</template></a-window>
               <div v-if="command.arguments">
                 <h3>Arguments</h3>
                 <div class="arguments-table-container">
@@ -154,7 +168,7 @@
                     <tbody>
                       <tr v-for="(arg, name) in command.arguments" :key="name">
                         <td><code class="arg">{{name}}</code></td>
-                        <td class="type"><code class="arg">{{arg.type}}</code></td>
+                        <td class="type"><code>{{arg.type}}</code></td>
                         <td class="description">
                           <span v-if="arg.required" class="required">Required. </span>
                           <span v-if="arg.default">(Default: <code class="arg">{{arg.default}}</code>) </span>
@@ -172,135 +186,6 @@
                     <a-button state="neutral" outline @click.stop="$router.push({ name: $route.name, params: $route.params, hash: `#${name}-${ename}`})">{{ ename }}</a-button>
                   </li>
                 </ul>
-                  <!-- <a-card  light shadow class="argument-card">
-                    <div slot="header">
-                      <h2>{{ ename }}</h2>
-                      <small>
-                        <span v-if="event.required" class="required">Required. </span>
-                        <span v-if="event.default">(Default: <code class="arg">{{event.default}}</code>) </span>
-                        <span v-if="event.help">{{event.help}}</span>
-                      </small>
-                    </div>
-                  <a-window lang="coffeescript">{{ $parent.serviceName }} {{ name }} as client
-      when client {{ ename }} <template v-for="(val, key) in event.arguments">{{key}}:[{{val.type}}] </template>as result
-        ...</a-window>
-                    <h3 v-if="event.arguments">Arguments</h3>
-                    <ul v-if="event.arguments">
-                      <li v-for="(arg, aname) in event.arguments" :key="'event-' + name + '-arg-' + aname">
-                        <div class="columns is-mobile">
-                          <div class="column is-one-fifth">
-                            <code class="arg">{{ aname }}</code>
-                          </div>
-                          <div class="column is-one-fifth">
-                            <i>{{ arg.type }}</i>
-                          </div>
-                          <div class="column is-three-fifths">
-                            <span v-if="arg.required" class="required">Required. </span>
-                            <span v-if="arg.default">(Default: <code class="arg">{{arg.default}}</code>) </span>
-                            <span v-if="arg.help">{{arg.help}}</span>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                    <div class="columns is-centered">
-                      <div class="column text--center">
-                        <a-button state="primary" outline>View Output actions</a-button>
-                      </div>
-                    </div> -->
-                    <!-- <h3 v-if="event.output.commands">Commands</h3>
-                    <ul v-if="event.output.commands">
-                      <li v-for="(arg, cname) in event.output.commands" :key="'event-' + name + '-command-' + cname">
-                        <div class="columns is-mobile">
-                          <div class="column is-one-fifth">
-                            <code class="arg">{{ cname }}</code>
-                          </div>
-                          <div class="column is-one-fifth">
-                            <span v-if="arg.help">{{arg.help}}</span>
-                          </div>
-                          <div class="column is-three-fifths">
-                            <ul v-if="arg.arguments">
-                              <li v-for="(arg, agname) in arg.arguments" :key="'event-' + name + '-command-' + cname + '-arg-' + agname">
-                                <div class="columns is-mobile">
-                                  <div class="column is-two-fifth">
-                                    <code class="arg">{{ agname }}</code>
-                                  </div>
-                                  <div class="column is-three-fifths">
-                                    <span>[<i>{{ arg.type }}</i>] </span>
-                                    <span v-if="arg.required" class="required">Required. </span>
-                                    <span v-if="arg.default">(Default: <code class="arg">{{arg.default}}</code>) </span>
-                                    <span v-if="arg.help">{{arg.help}}</span>
-                                  </div>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </li>
-                    </ul>
-                    <h3 v-if="event.output.properties">Properties</h3>
-                    <ul v-if="event.output.properties">
-                      <li v-for="(arg, pname) in event.output.properties" :key="'event-' + name + '-property-' + pname">
-                        <div class="columns is-mobile">
-                          <div class="column is-one-fifth">
-                            <code class="arg">{{ pname }}</code>
-                          </div>
-                          <div class="column is-one-fifth">
-                            <i>{{ arg.type }}</i>
-                          </div>
-                          <div class="column is-three-fifths">
-                            <span v-if="arg.help">{{arg.help}}</span>
-                          </div>
-                        </div>
-                      </li>
-                    </ul> -->
-                  <!-- </a-card> -->
-                  <!-- <table class="table is-bordered">
-                      <thead>
-                        <tr>
-                          <th>Name</th>
-                          <th>Description</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <template v-for="(event, name) in command.events">
-                          <tr :key="name">
-                            <td><code class="arg">{{name}}</code></td>
-                            <td class="description">
-                              <span v-if="event.required" class="required">Required. </span>
-                              <span v-if="event.default">(Default: <code class="arg">{{event.default}}</code>) </span>
-                              <span v-if="event.help">{{event.help}}</span>
-                            </td>
-                          </tr>
-                          <tr v-if="event.arguments" :key="`event-${name}-args-list`">
-                            <td colspan="2">
-                              <div class="subtitle">Arguments</div>
-                              <div class="arguments-table-container">
-                                <table class="table is-bordered">
-                                  <thead>
-                                    <tr>
-                                      <th>Name</th>
-                                      <th>Type</th>
-                                      <th>Description</th>
-                                    </tr>
-                                  </thead>
-                                  <tbody>
-                                    <tr v-for="(arg, name) in event.arguments" :key="name">
-                                      <td><code class="arg">{{name}}</code></td>
-                                      <td class="type"><code class="arg">{{arg.type}}</code></td>
-                                      <td class="description">
-                                        <span v-if="arg.required" class="required">Required. </span>
-                                        <span v-if="arg.default">(Default: <code class="arg">{{arg.default}}</code>) </span>
-                                        <span v-if="arg.help">{{arg.help}}</span>
-                                      </td>
-                                    </tr>
-                                  </tbody>
-                                </table>
-                              </div>
-                            </td>
-                          </tr>
-                        </template>
-                      </tbody>
-                  </table> -->
               </div>
               <div v-if="command.output">
                 <h3>Output</h3>
@@ -311,67 +196,8 @@
           </div>
         </transition-group>
       </div>
-      <template slot="body-right" v-for="(event, ename) in command.events">
-        <div :key="`body-${name}-event-${ename}-right`" v-if="$route.hash === `#${name}-${ename}`">
-          <a-tabs>
-            <a-card>
-              <a-tab-pane title="Example">
-                <a-window v-if="event" lang="coffeescript">{{ $parent.serviceName }} {{ name }} as client
-    when client {{ ename }} <template v-for="(val, key) in event.arguments">{{key}}:[{{val.type}}] </template>as result
-      ...</a-window>
-              </a-tab-pane>
-              <a-tab-pane title="Use case">
-                <p>Coming soon</p>
-              </a-tab-pane>
-              <a-tab-pane title="Metrics">
-                <p>Coming soon</p>
-              </a-tab-pane>
-            </a-card>
-          </a-tabs>
-        </div>
-        <template v-if="event.output && event.output.commands">
-          <div v-if="$route.hash === `#${name}-${ename}-${cname}`" v-for="(command, cname) in event.output.commands" :key="`body-${name}-event-${ename}-command-${cname}-right`">
-            <a-tabs>
-              <a-card>
-                <a-tab-pane title="Example">
-                  <a-window lang="coffeescript">{{ $parent.serviceName }} {{ name }} as client
-    when client {{ ename }} <template v-for="(val, key) in event.arguments">{{key}}:[{{val.type}}] </template>as result
-      result {{ cname }} <template v-for="(val, key) in command.arguments">{{ key }}:[{{val.type}}] </template></a-window>
-                </a-tab-pane>
-                <a-tab-pane title="Use case">
-                  <p>Coming soon</p>
-                </a-tab-pane>
-                <a-tab-pane title="Metrics">
-                  <p>Coming soon</p>
-                </a-tab-pane>
-              </a-card>
-            </a-tabs>
-          </div>
-        </template>
-      </template>
-      <div slot="body-right" :key="`body-${name}-right`" v-if="$route.hash === `#${name}`">
-        <div>
-          <a-tabs>
-            <a-card>
-              <a-tab-pane title="Example">
-                <a-window v-if="!command.events" lang="coffeescript"><template v-if="!command.run">result = </template>{{ $parent.serviceName }} {{ name }}<template v-for="(arg, name) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template><template v-if="command.run"> as result
-    ...</template></a-window>
-                <a-window v-if="command.events" lang="coffeescript">{{ $parent.serviceName }} {{ name }} as client <template v-for="(val, key) in command.events">
-    when client {{ key }} <template v-for="(val, key) in val.arguments">{{key}}:[{{val.type}}] </template>as result
-      ...</template></a-window>
-              </a-tab-pane>
-              <a-tab-pane title="Use case">
-                <p>Coming soon</p>
-              </a-tab-pane>
-              <a-tab-pane title="Metrics">
-                <p>Coming soon</p>
-              </a-tab-pane>
-            </a-card>
-          </a-tabs>
-        </div>
-      </div>
     </template>
-  </three-column-sidebar>
+  </two-column-sidebar>
 </template>
 
 <script>
@@ -537,7 +363,7 @@ h3#commands {
   align-items: center;
   justify-content: space-between;
   .command-name {
-    margin: 0;
+    margin: 0 !important;
     cursor: default;
     .command-name-link {
       cursor: pointer;
