@@ -19,181 +19,27 @@
         <transition-group name="fade" tag="div" class="command body-section">
           <template v-for="(event, ename) in command.events">
             <template v-if="event.output && event.output.commands">
-              <div v-if="$route.hash === `#${name}-${ename}-${cname}`" v-for="(command, cname) in event.output.commands" :key="`container-${name}-event-${ename}-command-${cname}`">
-                <h1 class="command-header">
-                  <span class="command-name title is-1">
-                    <span class="command-name-link" @click="$router.replace({ name: $route.name, params: $route.params, hash: `#${name}`})">{{ name }}</span> -
-                    <span class="command-name-link" @click="$router.replace({ name: $route.name, params: $route.params, hash: `#${name}-${ename}`})">{{ ename }}</span> -
-                    <span>{{ cname }}</span>
-                  </span>
-                  <a-badge state="dark" class="text--light command-tag">action</a-badge>
-                </h1>
-                <h4>Description</h4>
-                <span v-if="command.help">{{command.help}}</span>
-                <h4>Example</h4>
-                <a-window lang="coffeescript">{{ $parent.serviceName }} {{ name }} as client
+              <service-content v-if="$route.hash === `#${name}-${ename}-${cname}`" v-for="(action, cname) in event.output.commands" :key="`container-${name}-event-${ename}-command-${cname}`" :action="action">
+                <template slot="example">{{ $parent.serviceName }} {{ name }} as client
     when client {{ ename }} <template v-for="(val, key) in event.arguments">{{key}}:[{{val.type}}] </template>as result
-      result {{ cname }} <template v-for="(val, key) in command.arguments">{{ key }}:[{{val.type}}] </template></a-window>
-                <h4>Arguments</h4>
-                <div v-if="command.arguments" class="arguments-table-container">
-                  <table class="table is-bordered">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(arg, name) in command.arguments" :key="name">
-                        <td><code class="arg">{{name}}</code></td>
-                        <td class="type"><code>{{arg.type}}</code></td>
-                        <td class="description">
-                          <span v-if="arg.required" class="required">Required. </span>
-                          <span v-if="arg.default">(Default: <code class="arg">{{arg.default}}</code>) </span>
-                          <span v-if="arg.help">{{arg.help}}</span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
+      result {{ cname }} <template v-for="(val, key) in command.arguments">{{ key }}:[{{val.type}}] </template></template>
+              </service-content>
             </template>
-            <div :key="`container-${name}-event-${ename}`" v-if="$route.hash === `#${name}-${ename}`">
-              <h1 class="command-header">
-                <span class="command-name title is-1">
-                  <span class="command-name-link" @click="$router.replace({ name: $route.name, params: $route.params, hash: `#${name}`})">{{ name }}</span> -
-                  <span>{{ ename }}</span>
-                </span>
-                <a-badge state="blue" class="text--light command-tag">event</a-badge>
-              </h1>
-              <h4 v-if="event.required || event.default || event.help">Description</h4>
-              <p v-if="event.required || event.default || event.help">
-                <span v-if="event.required" class="required">Required. </span>
-                <span v-if="event.default">(Default: <code class="arg">{{event.default}}</code>) </span>
-                <span v-if="event.help">{{event.help}}</span>
-              </p>
-              <h4>Example</h4>
-              <a-window v-if="event" lang="coffeescript">{{ $parent.serviceName }} {{ name }} as client
+            <service-content :key="`container-${name}-event-${ename}`" v-if="$route.hash === `#${name}-${ename}`" :action="event">
+              <template slot="example">{{ $parent.serviceName }} {{ name }} as client
     when client {{ ename }} <template v-for="(val, key) in event.arguments">{{key}}:[{{val.type}}] </template>as result
-      ...</a-window>
-              <h4 v-if="event.arguments">Arguments</h4>
-              <div v-if="event.arguments" class="arguments-table-container">
-                <table class="table is-bordered">
-                  <thead>
-                    <tr>
-                      <th>Name</th>
-                      <th>Type</th>
-                      <th>Description</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="(arg, name) in event.arguments" :key="`event-${ename}-arguments-${name}`">
-                      <td><code class="arg">{{name}}</code></td>
-                      <td class="type"><code>{{arg.type}}</code></td>
-                      <td class="description">
-                        <span v-if="arg.required" class="required">Required. </span>
-                        <span v-if="arg.default">(Default: <code class="arg">{{arg.default}}</code>) </span>
-                        <span v-if="arg.help">{{arg.help}}</span>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-              <template v-if="event.output">
-                <h4>Output</h4>
-                <p>Returns output of type <code>{{ event.output.type }}</code>.</p>
-                <h4 v-if="event.output.help">Description</h4>
-                <p v-if="event.output.help">{{event.output.help}}</p>
-                <h4 v-if="event.output.commands">Commands</h4>
-                <ul v-if="event.output.commands">
-                  <li v-for="(command, cname) in event.output.commands" :key="`event-${ename}-commands-list-${cname}`">
-                    <a-button state="neutral" outline @click.stop="$router.push({ name: $route.name, params: $route.params, hash: `#${name}-${ename}-${cname}`})">{{ cname }}</a-button>
-                  </li>
-                </ul>
-                <h4 v-if="event.output.properties">Properties</h4>
-                <div v-if="event.output.properties" class="arguments-table-container">
-                  <table class="table is-bordered">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(arg, name) in event.output.properties" :key="`event-${ename}-output-properties-${name}`">
-                        <td><code class="arg">{{name}}</code></td>
-                        <td class="type"><code>{{arg.type}}</code></td>
-                        <td class="description">
-                          <span v-if="arg.required" class="required">Required. </span>
-                          <span v-if="arg.default">(Default: <code class="arg">{{arg.default}}</code>) </span>
-                          <span v-if="arg.help">{{arg.help}}</span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </template>
-            </div>
+      ...</template>
+            </service-content>
           </template>
-          <div :key="`container-${name}`" v-if="$route.hash === `#${name}`">
-            <h1 class="command-header">
-              <span class="command-name title is-1">{{ name }}</span>
-              <a-badge :state="command.events ? 'primary' : 'orange'" class="text--light command-tag">{{ command.events ? 'event-based' : 'command' }}</a-badge>
-            </h1>
-
-            <div class="section">
-              <div>
-                <h3>Description</h3>
-                <p v-if="command.help">{{ command.help }}</p>
-              </div>
-              <h3>Example</h3>
-              <a-window v-if="!command.events" lang="coffeescript"><template v-if="!command.run">result = </template>{{ $parent.serviceName }} {{ name }}<template v-for="(arg, name) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template><template v-if="command.run"> as result
-    ...</template></a-window>
-              <a-window v-if="command.events" lang="coffeescript">{{ $parent.serviceName }} {{ name }} as client <template v-for="(val, key) in command.events">
+          <service-content key="`container-${name}`" v-if="$route.hash === `#${name}`" :action="command">
+            <template slot="example">
+              <template v-if="!command.events"><template v-if="!command.run">result = </template>{{ $parent.serviceName }} {{ name }}<template v-for="(arg, name) in command.arguments" v-if="arg.required"> {{ name }}:[{{ arg.type }}]</template><template v-if="command.run"> as result
+    ...</template></template>
+              <template v-if="command.events">{{ $parent.serviceName }} {{ name }} as client <template v-for="(val, key) in command.events">
     when client {{ key }} <template v-for="(val, key) in val.arguments">{{key}}:[{{val.type}}] </template>as result
-      ...</template></a-window>
-              <div v-if="command.arguments">
-                <h3>Arguments</h3>
-                <div class="arguments-table-container">
-                  <table class="table is-bordered">
-                    <thead>
-                      <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Description</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="(arg, name) in command.arguments" :key="name">
-                        <td><code class="arg">{{name}}</code></td>
-                        <td class="type"><code>{{arg.type}}</code></td>
-                        <td class="description">
-                          <span v-if="arg.required" class="required">Required. </span>
-                          <span v-if="arg.default">(Default: <code class="arg">{{arg.default}}</code>) </span>
-                          <span v-if="arg.help">{{arg.help}}</span>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <div v-if="command.events">
-                <h3>Events</h3>
-                <ul>
-                  <li v-for="(event, ename) in command.events" :key="`command-${name}-event-list-${ename}`">
-                    <a-button state="neutral" outline @click.stop="$router.push({ name: $route.name, params: $route.params, hash: `#${name}-${ename}`})">{{ ename }}</a-button>
-                  </li>
-                </ul>
-              </div>
-              <div v-if="command.output">
-                <h3>Output</h3>
-                <p v-if="command.output.help"> {{command.output.help}}</p>
-                <p>Returns output of type <code>{{command.output.type}}</code>.</p>
-              </div>
-            </div>
-          </div>
+      ...</template></template>
+            </template>
+          </service-content>
         </transition-group>
       </div>
     </template>
@@ -201,8 +47,11 @@
 </template>
 
 <script>
+import ServiceContent from '@/components/ServiceContent'
+
 export default {
   name: 'ServiceGuide',
+  components: { ServiceContent },
   methods: {
     openRepo: function () {
       window.open(`//github.com/${this.$parent.service.pullUrl}`, '_blank')
