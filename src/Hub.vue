@@ -45,7 +45,8 @@ export default {
 }
 
 .main-container {
-  margin-top: 4rem;
+  @include breakpoint(max m) { margin-top: 54px }
+  margin-top: 72px;
   min-height: calc(100% - 72px - 406px);
 }
 
@@ -132,6 +133,15 @@ a {
 .view-fade-enter,
 .view-fade-leave-active {
   opacity: 0
+}
+
+.router-link-exact-active {
+  &:before {
+    left: 0 !important;
+    right: 0 !important;
+    opacity: 1 !important;
+    background-color: color(light) !important;
+  }
 }
 
 .left-image,

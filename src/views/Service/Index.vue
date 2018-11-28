@@ -89,7 +89,9 @@
                   <li v-if="$route.name === 'service'" class="is-active"><a href="#" @click.stop="" :aria-current="serviceName">{{ serviceName | capitalize }}</a></li>
                   <template v-else>
                     <li><router-link :to="{ name: 'service', params: { repo } }">{{ serviceName | capitalize }}</router-link></li>
-                    <li class="is-active"><a href="#" @click.stop="" :aria-current="`${serviceName} guide`">Guide</a></li>
+                    <li v-for="(cat, idx) of getHashArray" :key="`breadcrumbs-${cat}`" :class="{ 'is-active': idx === getHashArray.length - 1 }">
+                      <a :href="`#${getHash(idx)}`" @click.stop="$router.push({name: $route.name, params: $route.params, hash: `#${getHash(idx)}` })" :aria-current="`${serviceName} guide ${cat}`">{{ cat }}</a>
+                    </li>
                   </template>
                 </ul>
               </nav>
@@ -105,13 +107,12 @@
 </template>
 
 <script>
-// import { Chart } from 'frappe-charts/dist/frappe-charts.min.esm'
-import { ServiceQuery } from '@/plugins/graphql'
+import { ServiceQuery, ServiceByOwnerAndRepoQuery } from '@/plugins/graphql'
 import ServicesIcon from '@/components/ServicesIcon'
 
 export default {
   name: 'Integration',
-  props: ['repo', 'alias'],
+  props: ['repo', 'alias', 'owner'],
   apollo: {
     serviceByAlias: {
       query: ServiceQuery,
@@ -126,33 +127,69 @@ export default {
       update: function(data) {
         return data.serviceByAlias
       }
+    },
+    serviceByOwnerAndRepo: {
+      query: ServiceByOwnerAndRepoQuery,
+      skip: function() {
+        return !this.owner && !this.repo
+      },
+      variables: function() {
+        return {
+          owner: this.owner,
+          repo: this.repo
+        }
+      },
+      update: function(data) {
+        return (
+          data.allOwners.nodes.length > 0 &&
+          data.allOwners.nodes[0].repos.nodes.length > 0 &&
+          data.allOwners.nodes[0].repos.nodes[0].services.nodes.length > 0 &&
+          data.allOwners.nodes[0].repos.nodes[0].services.nodes[0]
+        )
+      }
     }
   },
   data: () => ({
     serviceByAlias: undefined,
+    serviceByOwnerAndRepo: undefined,
     startDate: new Date('2018-05-30T12:10:30.407+05:30'),
     endDate: new Date()
   }),
   watch: {
     serviceByAlias: function (newValue) {
       if (!newValue) this.$router.push('/404')
+      else this.onReady()
     },
-    commands: function (newValue) {
-      this.$nextTick(() => {
-        if (this.$route.hash) {
-          this.$scrollTo(this.$route.hash, 200, { offset: -70 })
-        }
-      })
+    serviceByOwnerAndRepo: function(newValue) {
+      if (!newValue) this.$router.push('/404')
+      else this.onReady()
     }
   },
   methods: {
     redirect: function () {
       this.$router.push({ name: 'guide', params: { repo: this.repo } })
+    },
+    onReady: function (callback) {
+      if (callback) {
+        this.onReadyCallback = callback
+      } else {
+        if (this.onReadyCallback) {
+          this.onReadyCallback()
+        }
+      }
+    },
+    getHash: function (idx) {
+      let hash = this.$route.hash.split('#')[1].split('-')
+      hash.splice(idx + 1)
+      return hash.join('-')
     }
   },
   computed: {
     service: function() {
-      return this.serviceByAlias || {}
+      return this.serviceByAlias || this.serviceByOwnerAndRepo || {}
+    },
+    getHashArray: function () {
+      return this.$route.hash.split('#')[1].split('-')
     },
     serviceName: function() {
       if (
@@ -267,6 +304,7 @@ export default {
 }
 
 .breadcrumb-container {
+  @include breakpoint(m) { height: 3rem }
   padding-top: 1.5rem !important;
   padding-bottom: 0 !important;
 }
@@ -275,6 +313,8 @@ export default {
   svg {
     border: 1px solid gray(800);
     border-radius: .25rem;
+    padding: 0;
+    background-color: rgba(darken(color(dark), 5%), 1);
   }
 }
 
@@ -298,8 +338,9 @@ export default {
   }
 
   .avatar {
-    width: 200px;
-    height: 200px;
+    width: 100%;
+    max-width: 200px;
+    height: auto;
     border-radius: 100%;
     display: flex;
     align-items: center;
@@ -323,7 +364,13 @@ export default {
           padding: 1rem 3rem 1rem 0;
         }
         padding: 1rem 2rem 1rem 0 !important;
-        max-width: 30rem;
+        max-width: 20rem;
+        @include breakpoint(max s) {
+          max-width: 130px;
+        }
+        @include breakpoint(max m) {
+          max-width: 15rem;
+        }
         text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;

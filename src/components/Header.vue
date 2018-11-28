@@ -14,9 +14,11 @@
         name: 'Services',
         link: '/services'
       }, {
-        name: 'Functions'
+        name: 'Functions',
+        link: '/functions'
       }, {
-        name: 'Apps'
+        name: 'Apps',
+        link: '/apps'
       }, {
         name: 'More',
         children: [{

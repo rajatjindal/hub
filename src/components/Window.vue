@@ -191,7 +191,7 @@ export default {
   .content {
     margin: 0;
     position: relative;
-    padding: .25rem .5rem;
+    padding: 0;
     background-color: darken(color(dark), 5.5%);
     overflow: hidden;
     display: block;
@@ -223,7 +223,7 @@ export default {
       top: 0.5rem;
     }
     pre {
-      overflow: visible;
+      overflow: auto;
       white-space: pre;
       padding: .5rem;
       &.line-numbers {

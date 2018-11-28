@@ -254,22 +254,6 @@ ul {
 }
 
 .featured-services {
-  .featured {
-    height: 150px;
-    border-radius: 5px;
-    padding: 25px;
-    font-size: 0.9;
-    font-weight: 600;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.2s;
-
-    &:hover {
-      transform: scale(1.05, 1.05);
-    }
-  }
 
   .feature {
     position: relative;
@@ -277,10 +261,13 @@ ul {
     width: 100%;
     align-items: center;
     flex-direction: column;
-    transition: all .1s ease-in-out;
+    transition: all .2s cubic-bezier(.25, .8, .25, 1);
 
     &:hover {
       transform: scale(1.05);
+      .content {
+        box-shadow: 0 .5rem 1.2rem rgba(0,0,0, .25), 0 .5rem .5rem rgba(0,0,0, .22);
+      }
     }
     .avatar {
       width: 96px;
@@ -293,7 +280,7 @@ ul {
       background-color: $white;
       padding: 1rem;
       z-index: 1;
-      box-shadow: 0 0 .25rem .1rem rgba(color(dark), .125);
+      box-shadow: 0 0 .25rem .1rem rgba(0,0,0, .125);
     }
 
     .content {
@@ -308,6 +295,8 @@ ul {
       height: 150px;
       padding: 3rem 1rem;
       z-index: 0;
+      transition: all .2s cubic-bezier(.25, .8, .25, 1);
+      box-shadow: 0 .1rem .2rem rgba(0,0,0, .25), 0 .01rem .01rem rgba(0,0,0, .22);
       h4 {
         text-align: center;
         color: color(light);

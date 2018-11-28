@@ -23,10 +23,10 @@
   resolved "https://registry.yarnpkg.com/@apollographql/graphql-playground-html/-/graphql-playground-html-1.6.4.tgz#8945edf73df846d50e027bb3b813d018a1c5925f"
   integrity sha512-gwvaQO6/Hv4DEwhDLmmu2tzCU9oPjC5Xl9Kk8Yd0IxyKhYLlLalmkMMjsZLzU5H3fGaalLD96OYfxHL0ClVUDQ==
 
-"@asyncy/vue@^0.1.20":
-  version "0.1.20"
-  resolved "https://registry.yarnpkg.com/@asyncy/vue/-/vue-0.1.20.tgz#31f01ed1d5f91e5f464209bfcd12ccad46cbf0e3"
-  integrity sha512-GR50yp646R+22P/+pL6e5aecQxN0CbfV2bMY8fr5gNsi7+VZRqcd4mr6vbgfINFKWEoDxBDVXK2U+3hgQAHaWA==
+"@asyncy/vue@^0.1.21":
+  version "0.1.21"
+  resolved "https://registry.yarnpkg.com/@asyncy/vue/-/vue-0.1.21.tgz#fb83f9cd698e09bb1677d82c3a5c20277f2557c8"
+  integrity sha512-PjnirJ7D4C1iir04d6OKEgfrTdydaIbCUC9wTzK9puy6hBQ8rY6rV7d7IH08VyV4z1F9oxyedhRxYePqfj5jdA==
   dependencies:
     asyncy-player "^0.0.1"
     nouislider "^12.0.0"

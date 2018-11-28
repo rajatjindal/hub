@@ -10,6 +10,7 @@
         <search-bar :value="search" ref="searchBar" />
       </div>
       <div>
+        {{ results }}
         <transition name="fade">
           <div class="level is-mobile service-result-title-container" v-if="!isLoading && totalItems > 0">
             <div class="level-left"><h2 class="is-marginless">{{totalItems}} service results</h2></div>

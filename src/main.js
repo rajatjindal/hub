@@ -3,18 +3,7 @@ import Hub from '@/Hub'
 import router from '@/router'
 // disable the store for now
 // import store from '@/store'
-import { createProvider } from '@/plugins/vue-apollo'
-import '@/plugins/components'
-import '@/plugins/filters'
-import '@/plugins/anime'
-import '@/plugins/prism'
-import '@/plugins/chart'
-import '@/plugins/scrollspy'
-import '@/plugins/fontawesome'
-import '@/plugins/scrollto'
-import '@/plugins/scrollbar'
-import '@/plugins/markdown'
-import Raven from '@/plugins/sentry'
+import { Raven, createProvider } from '@/plugins'
 
 Vue.config.productionTip = false
 

@@ -53,6 +53,28 @@ export default new Router({
       }]
     },
     {
+      path: '/r/:owner/:repo',
+      component: ServiceIndex,
+      meta: {
+        hasSearch: true
+      },
+      props: function (route) {
+        return {
+          owner: route.params.owner,
+          repo: route.params.repo
+        }
+      },
+      children: [{
+        path: '',
+        name: 'service_repo',
+        component: () => import('@/views/Service/Home')
+      }, {
+        path: 'guide',
+        name: 'guide_repo',
+        component: () => import('@/views/Service/Guide')
+      }]
+    },
+    {
       path: '/tags/:topic',
       name: 'Tags',
       component: () => import('@/views/Tags'),
@@ -71,19 +93,6 @@ export default new Router({
       },
       props: function (route) {
         return { owner: route.params.owner }
-      }
-    },
-    {
-      path: '/r/:owner/:repo',
-      component: () => import('@/views/Integration'),
-      meta: {
-        hasSearch: true
-      },
-      props: function (route) {
-        return {
-          owner: route.params.owner,
-          repo: route.params.repo
-        }
       }
     },
     {

@@ -1,7 +1,7 @@
 <template>
   <div class="section index">
     <div class="container">
-      <div class="columns is-centered">
+      <div class="columns is-centered is-multiline">
         <div class="column is-one-fifth sidebar">
           <slot name="sidebar"/>
         </div>

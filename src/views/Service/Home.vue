@@ -4,7 +4,7 @@
       <div class="sidebar-info">
         <ul class="section sidebar-stick list-scroll-spy" v-scroll-spy-active v-scroll-spy-link>
           <li><a href="#readme">Description</a></li>
-          <li><a href="#commands">Commands</a></li>
+          <li><a href="#actions">Actions</a></li>
           <!-- <li><a href="#similars">Similar apps</a></li> -->
           <li><a href="#versions">Versions</a></li>
         </ul>
@@ -13,13 +13,18 @@
     <div slot="body" class="body" v-scroll-spy="{ offset: 100 }">
       <div class="body-section">
         <h3 class="heading-title title is-3 text-dark" id="readme">Description</h3>
-        <div class="readme-md info" v-if="$parent.tags && $parent.tags.length > 0 && $parent.tags[0].readme === false">
-          <h3>No Readme file found for this microservice</h3>
+        <div class="readme-container" :class="{ full: showMore }">
+          <div class="readme-md info" v-if="$parent.tags && $parent.tags.length > 0 && $parent.tags[0].readme === false">
+            <h3>No Readme file found for this microservice</h3>
+          </div>
+          <vue-markdown v-else-if="$parent.tags && $parent.tags.length > 0 && $parent.tags[0].readme" class="readme-md">{{ $parent.tags[0].readme }}</vue-markdown>
+          <div v-if="!showMore" class="readme-more">
+            <a-button state="secondary" outline @click="showMore = true">Show more</a-button>
+          </div>
         </div>
-        <vue-markdown v-else-if="$parent.tags && $parent.tags.length > 0 && $parent.tags[0].readme" class="readme-md">{{ $parent.tags[0].readme }}</vue-markdown>
       </div>
       <div class="body-section">
-        <h3 class="heading-title title is-3 text-dark" id="commands">Commands ({{ $parent.numCommands }})</h3>
+        <h3 class="heading-title title is-3 text-dark" id="actions">Actions ({{ $parent.numCommands }})</h3>
         <div class="command" v-if="$parent.numCommands <= 0 && !$parent.serviceName">
           <div class="loading-shimmer name"></div>
         </div>
@@ -78,6 +83,7 @@
 <script>
 export default {
   name: 'ServiceHome',
+  data: () => ({ showMore: false }),
   watch: {
     '$parent.tags': {
       deep: true,
@@ -88,16 +94,59 @@ export default {
         }
       }
     }
+  },
+  mounted: function () {
+    this.$nextTick(Prism.highlightAll)
   }
 }
 </script>
 
 <style lang="scss">
 .readme-md {
-  border-left: .5rem solid gray(200);
-  padding-left: 3rem;
+  padding: 0 2rem;
+  max-width: 100%;
+  overflow: hidden;
+  @include breakpoint(m) {
+    border-left: .5rem solid gray(200);
+    padding-left: 3rem;
+  }
   &:not(.info) {
     padding-bottom: 2rem;
+  }
+  pre {
+    overflow: auto;
+    @include breakpoint(max m) {
+      white-space: pre-wrap;
+      word-wrap: break-word;
+    }
+    code {
+      @include breakpoint(max m) {
+        tab-size: 2;
+        white-space: pre-wrap;
+        word-wrap: break-word;
+        text-align: justify;
+      }
+    }
+  }
+}
+
+.readme-container {
+  max-height: 300px;
+  overflow: hidden;
+  position: relative;
+  &.full {
+    max-height: unset;
+  }
+  .readme-more {
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%,rgba(255,255,255,0.5) 25%,rgba(255,255,255,1) 100%);
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
   }
 }
 

@@ -12,7 +12,7 @@ export default {
     particlesJS('stars-particles', {
       'particles': {
         'number': {
-          'value': 155,
+          'value': 100,
           'density': {
             'enable': true,
             'value_area': 789.1476416322727
