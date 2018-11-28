@@ -10,18 +10,9 @@
         <search-bar :value="search" ref="searchBar" />
       </div>
       <div>
-        {{ results }}
         <transition name="fade">
           <div class="level is-mobile service-result-title-container" v-if="!isLoading && totalItems > 0">
             <div class="level-left"><h2 class="is-marginless">{{totalItems}} service results</h2></div>
-  <!--           <div class="level-right">
-              <div class="select is-small">
-                <select v-model="orderBy" aria-label="Sort by">
-                  <option selected value="NATURAL">Sort</option>
-                  <option value="ALIAS_ASC">Name</option>
-                </select>
-              </div>
-            </div> -->
           </div>
         </transition>
 

@@ -13,7 +13,7 @@
     <div slot="body" class="body" v-scroll-spy="{ offset: 100 }">
       <div class="body-section">
         <h3 class="heading-title title is-3 text-dark" id="readme">Description</h3>
-        <div class="readme-container" :class="{ full: showMore }">
+        <div ref="readmeContainer" class="readme-container" :class="{ full: showMore }">
           <div class="readme-md info" v-if="$parent.tags && $parent.tags.length > 0 && $parent.tags[0].readme === false">
             <h3>No Readme file found for this microservice</h3>
           </div>
@@ -91,6 +91,9 @@ export default {
         if (value.length > 0 && value[0].readme) {
           /* global Prism */
           this.$nextTick(Prism.highlightAll)
+          this.$nextTick(() => {
+            this.showMore = (this.$refs.readmeContainer.clientHeight < 300)
+          })
         }
       }
     }
