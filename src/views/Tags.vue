@@ -1,7 +1,7 @@
 <template>
-  <div class="index">
-    <div class="columns">
-      <div class="column is-12 body">
+  <div class="index section">
+    <div class="container columns">
+      <div class="column is-full body">
         <div class="breadcrumb" v-if="prevPage.name === 'hub'"><router-link :to="prevPage.path">{{prevPage.name | capitalize }}</router-link> / {{topic | from-topic}}</div>
 
         <div class="level name-container is-mobile">

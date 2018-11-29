@@ -6,7 +6,7 @@
           <stars-particles />
           <div class="title-container">
             <div class="columns">
-              <div class="column is-one-fifth">
+              <div class="column is-one-fifth avatar-container">
                 <div class="avatar">
                   <img src="@/assets/slack.png" alt="Slack"/>
                 </div>
@@ -88,7 +88,8 @@
                   <li><router-link :to="{ name: 'services' }">Services</router-link></li>
                   <li v-if="$route.name.includes('service')" class="is-active"><a href="#" @click.stop="" :aria-current="serviceName">{{ serviceName | capitalize }}</a></li>
                   <template v-else>
-                    <li><router-link :to="{ name: `service${$route.name === 'service' ? '' : '_repo'}`, params: ($route.name === 'service' ? { alias } : { owner, repo }), hash: '' }">{{ serviceName | capitalize }}</router-link></li>
+                    <li><router-link :to="{ name: `service${$route.name === 'guide' ? '' : '_repo'}`, params: ($route.name === 'guide' ? { alias } : { owner, repo }), hash: '' }">{{ serviceName | capitalize }}</router-link></li>
+                    <li><router-link :to="{ name: `service${$route.name === 'guide' ? '' : '_repo'}`, params: ($route.name === 'guide' ? { alias } : { owner, repo }), hash: '#actions' }">Actions</router-link></li>
                     <li v-for="(cat, idx) of getHashArray" :key="`breadcrumbs-${cat}`" :class="{ 'is-active': idx === getHashArray.length - 1 }">
                       <a :href="`#${getHash(idx)}`" @click.stop="$router.push({name: $route.name, params: $route.params, hash: `#${getHash(idx)}` })" :aria-current="`${serviceName} guide ${cat}`">{{ cat }}</a>
                     </li>
@@ -355,6 +356,9 @@ export default {
     z-index: 1;
     box-shadow: 0 .3rem 2rem .1rem rgba(darken(color(dark), 15%), .5);
     overflow: hidden;
+    img {
+      padding: 1rem;
+    }
     .picture {
       border: .3rem solid $white;
       border-radius: 100%;

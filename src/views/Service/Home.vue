@@ -23,8 +23,8 @@
           </div>
         </div>
       </div>
-      <div class="body-section">
-        <h3 class="heading-title title is-3 text-dark" id="actions">Actions ({{ $parent.numCommands }})</h3>
+      <div class="body-section" id="actions">
+        <h3 class="heading-title title is-3 text-dark">Actions ({{ $parent.numCommands }})</h3>
         <div class="command" v-if="$parent.numCommands <= 0 && !$parent.serviceName">
           <div class="loading-shimmer name"></div>
         </div>
@@ -155,7 +155,8 @@ export default {
 
 .body-section {
   &:not(:first-child) {
-    margin: 5rem 0 !important;
+    margin: 0 !important;
+    padding-top: 5rem !important;
   }
 }
 .list-scroll-spy {
