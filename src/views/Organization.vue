@@ -1,13 +1,31 @@
 <template>
-  <two-column-sidebar>
-    <div slot="sidebar">
-      <transition name="fade">
-        <organization-infos :title="serviceName" :username="serviceUserName" />
-      </transition>
-    </div>
-    <div slot="body" class="body">
-
-      <div>
+  <div class="index">
+    <section class="hero bg--dark is-medium">
+      <div class="hero-body">
+        <div class="container">
+          <stars-particles />
+          <div class="title-container">
+            <div class="columns">
+              <div class="column is-one-fifth avatar-container">
+                <div class="avatar">
+                  <div class="picture" :style="`background-image: url(https://avatars.githubusercontent.com/${serviceUserName}?s=128`" />
+                </div>
+              </div>
+              <div class="column is-four-fifths main-head">
+                <h1 class="title is-1 text--light" v-if="serviceUserName">{{ serviceUserName | capitalize }}</h1>
+                <h1 class="title is-1 text--light" v-else>...</h1>
+                <transition name="fade">
+                  <h3 v-if="serviceName" class="subtitle is-4 text--light">{{ serviceName }}</h3>
+                  <h3 v-else class="subtitle is-4 description">...</h3>
+                </transition>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="section">
+      <div class="container">
         <transition name="fade">
           <div class="level is-mobile service-result-title-container" v-if="results.length > 0">
             <div class="level-left">
@@ -32,7 +50,7 @@
         </div>
       </div>
     </div>
-  </two-column-sidebar>
+  </div>
 </template>
 
 <script>
@@ -59,15 +77,12 @@ export default {
         if (data.allOwners.nodes.length > 0) {
           this.serviceName = data.allOwners.nodes[0].name
           this.serviceUserName = data.allOwners.nodes[0].username
-          this.totalItems = data.allOwners.nodes[0].repos.totalCount
+          this.totalItems = data.allOwners.nodes[0].services.totalCount
         }
         return (
           data.allOwners.nodes.length > 0 &&
-          data.allOwners.nodes[0].repos.nodes.length > 0 &&
-          data.allOwners.nodes[0].repos.nodes.reduce(
-            (r, c) => [...r, c.services.nodes[0]],
-            []
-          )
+          data.allOwners.nodes[0].services.nodes.length > 0 &&
+          data.allOwners.nodes[0].services.nodes
         )
       }
     }

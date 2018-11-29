@@ -5,26 +5,21 @@ export default gql`query ServiceByOwner($owner: Username!) {
     nodes {
       username
       name
-      repos {
+      services {
         totalCount
         nodes {
-          services {
+          uuid
+          name
+          alias
+          description
+          topics
+          owner {
+            username
+          }
+          serviceTags {
             nodes {
-              uuid
-              name
-              alias
-              description
-              topics
-              owner {
-                username
-              }
-              serviceTags {
-                nodes {
-                  tag
-                  state
-                  configuration
-                }
-              }
+              tag
+              state
             }
           }
         }

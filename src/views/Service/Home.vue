@@ -40,7 +40,7 @@
             <table class="table toc-commands">
               <tbody>
                 <tr v-for="(command, name) in $parent.commands" :key="name">
-                  <td><router-link :to="{ name: 'guide', params: { repo: $parent.repo }, hash: `#${name}` }" :href="`#${name}`">{{name}}</router-link></td>
+                  <td><router-link :to="{ name: `guide${$route.name === 'service' ? '' : '_repo'}`, params: ($route.name === 'service' ? { alias: $parent.alias } : { owner: $parent.owner, repo: $parent.repo }), hash: `#${name}` }" :href="`#${name}`">{{name}}</router-link></td>
                   <td>{{command.help}}</td>
                 </tr>
               </tbody>

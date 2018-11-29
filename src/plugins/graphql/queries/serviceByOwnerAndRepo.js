@@ -1,27 +1,24 @@
 import gql from 'graphql-tag'
 
-export default gql`query ServiceByOwnerAndRepo($owner: Username!, $repo: Username!) {
+export default gql`query ServiceByOwnerAndRepo($owner: Username!, $repo: Alias!) {
   allOwners(condition: { username: $owner }) {
     nodes {
-      repos(condition:{ name: $repo }) {
+      services(condition:{ name: $repo}) {
         nodes {
-          services {
+          uuid
+          name
+          alias
+          description
+          topics
+          owner {
+            username
+          }
+          serviceTags {
             nodes {
-              uuid
-              name
-              alias
-              description
-              topics
-              owner {
-                username
-              }
-              serviceTags {
-                nodes {
-                  tag
-                  state
-                  configuration
-                }
-              }
+              readme
+              tag
+              state
+              configuration
             }
           }
         }

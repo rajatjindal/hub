@@ -52,7 +52,7 @@ export default {
     getActionName: function () {
       return this.getHashArray[this.getHashArray.length - 1]
     },
-    getExampleFromAction: function () {
+    getExampleFromAction: function () { // generating example content
       let action = this.getActionFromHash
       let ret = ''
       if (this.getHashArray.length === 2) { // it's an event
@@ -102,6 +102,7 @@ export default {
     },
     checkHash: function () {
       this.loaded = true
+      if (!this.$route.name.includes('guide')) return
       let hash = this.$route.hash || ''
       if (this.$route.hash.length < 2) {
         hash = `#${Object.keys(this.$parent.commands)[0]}`

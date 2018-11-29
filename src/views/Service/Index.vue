@@ -86,9 +86,9 @@
                 <ul>
                   <li><router-link :to="{ name: 'hub' }">Hub</router-link></li>
                   <li><router-link :to="{ name: 'services' }">Services</router-link></li>
-                  <li v-if="$route.name === 'service'" class="is-active"><a href="#" @click.stop="" :aria-current="serviceName">{{ serviceName | capitalize }}</a></li>
+                  <li v-if="$route.name.includes('service')" class="is-active"><a href="#" @click.stop="" :aria-current="serviceName">{{ serviceName | capitalize }}</a></li>
                   <template v-else>
-                    <li><router-link :to="{ name: 'service', params: { repo } }">{{ serviceName | capitalize }}</router-link></li>
+                    <li><router-link :to="{ name: `service${$route.name === 'service' ? '' : '_repo'}`, params: ($route.name === 'service' ? { alias } : { owner, repo }), hash: '' }">{{ serviceName | capitalize }}</router-link></li>
                     <li v-for="(cat, idx) of getHashArray" :key="`breadcrumbs-${cat}`" :class="{ 'is-active': idx === getHashArray.length - 1 }">
                       <a :href="`#${getHash(idx)}`" @click.stop="$router.push({name: $route.name, params: $route.params, hash: `#${getHash(idx)}` })" :aria-current="`${serviceName} guide ${cat}`">{{ cat }}</a>
                     </li>
@@ -142,9 +142,8 @@ export default {
       update: function(data) {
         return (
           data.allOwners.nodes.length > 0 &&
-          data.allOwners.nodes[0].repos.nodes.length > 0 &&
-          data.allOwners.nodes[0].repos.nodes[0].services.nodes.length > 0 &&
-          data.allOwners.nodes[0].repos.nodes[0].services.nodes[0]
+          data.allOwners.nodes[0].services.nodes.length > 0 &&
+          data.allOwners.nodes[0].services.nodes[0]
         )
       }
     }
@@ -156,6 +155,9 @@ export default {
     endDate: new Date()
   }),
   watch: {
+    '$route': function () {
+      this.$nextTick(this.onReady)
+    },
     serviceByAlias: function (newValue) {
       if (!newValue) this.$router.push('/404')
       else this.onReady()
@@ -166,9 +168,6 @@ export default {
     }
   },
   methods: {
-    redirect: function () {
-      this.$router.push({ name: 'guide', params: { repo: this.repo } })
-    },
     onReady: function (callback) {
       if (callback) {
         this.onReadyCallback = callback
@@ -179,7 +178,7 @@ export default {
       }
     },
     getHash: function (idx) {
-      let hash = this.$route.hash.split('#')[1].split('-')
+      let hash = ((this.$route.hash || '').split('#') || ['', ''])[1].split('-')
       hash.splice(idx + 1)
       return hash.join('-')
     }
@@ -189,7 +188,7 @@ export default {
       return this.serviceByAlias || this.serviceByOwnerAndRepo || {}
     },
     getHashArray: function () {
-      return this.$route.hash.split('#')[1].split('-')
+      return ((this.$route.hash || '').split('#') || ['', ''])[1].split('-')
     },
     serviceName: function() {
       if (
@@ -337,18 +336,34 @@ export default {
     }
   }
 
+  .avatar-container {
+    display: flex !important;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
   .avatar {
     width: 100%;
-    max-width: 200px;
-    height: auto;
+    max-width: 128px;
+    height: 128px;
     border-radius: 100%;
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: $white;
-    padding: 1rem;
+    padding: 0;
     z-index: 1;
     box-shadow: 0 .3rem 2rem .1rem rgba(darken(color(dark), 15%), .5);
+    overflow: hidden;
+    .picture {
+      border: .3rem solid $white;
+      border-radius: 100%;
+      margin: 0;
+      width: 128px;
+      height: 128px;
+      background-size: cover;
+      background-position: center center;
+    }
   }
 }
 
