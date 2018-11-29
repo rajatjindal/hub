@@ -7,7 +7,6 @@ import '@/plugins/prism'
 import '@/plugins/chart'
 import '@/plugins/scrollspy'
 import '@/plugins/fontawesome'
-import '@/plugins/scrollto'
 import '@/plugins/scrollbar'
 import '@/plugins/markdown'
 
