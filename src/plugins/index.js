@@ -9,5 +9,6 @@ import '@/plugins/scrollspy'
 import '@/plugins/fontawesome'
 import '@/plugins/scrollbar'
 import '@/plugins/markdown'
+import '@/plugins/api'
 
 export { createProvider, Raven }

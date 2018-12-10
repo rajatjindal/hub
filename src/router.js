@@ -103,6 +103,16 @@ export default new Router({
       }
     },
     {
+      path: '/new-service',
+      name: 'new-service',
+      component: () => import('@/views/NewService')
+    },
+    {
+      path: '/dashboard',
+      name: 'dashboard',
+      component: () => import('@/views/Dashboard')
+    },
+    {
       path: '*',
       component: () => import('@/views/PageNotFound')
     }

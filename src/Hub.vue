@@ -19,12 +19,22 @@
 <script>
 import SubmitServiceModal from '@/components/SubmitAServiceModal'
 import AHeader from '@/components/Header'
+import { mapGetters } from 'vuex'
 
 export default {
   name: 'app',
   components: {
     SubmitServiceModal,
     AHeader
+  },
+  computed: mapGetters(['getUser', 'isUserLoggedIn']),
+  watch: {
+    'isUserLoggedIn': function (value) {
+      console.log('is logged in:', value)
+    }
+  },
+  mounted: function () {
+    this.$api.dummyUser()
   },
   methods: {
     openSubmitAServiceModal: function() {

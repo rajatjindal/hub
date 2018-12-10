@@ -22,7 +22,8 @@
       }, {
         name: 'More',
         children: [{
-          name: 'Publish'
+          name: 'Publish',
+          link: '/new-service'
         }, {
           name: 'Pricing'
         }, {
@@ -31,13 +32,9 @@
           name: 'Support'
         }]
       }, {
-        name: 'Login',
-        button: 'secondary',
-        emit: 'signin'
-      }, {
-        name: 'Signup',
+        name: 'Signin with Github',
         button: 'primary',
-        emit: 'signup'
+        emit: 'signin'
       }]" />
 </template>
 
@@ -57,7 +54,7 @@ export default {
       console.log('signup clicked', e)
     },
     signin: function (e) {
-      console.log('signin clicked', e)
+      this.$router.push({ name: 'dashboard' })
     }
   }
 }

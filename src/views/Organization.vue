@@ -30,9 +30,12 @@
           <div class="level is-mobile service-result-title-container" v-if="results.length > 0">
             <div class="level-left">
               <transition name="fade">
-                <h2 v-if="serviceName" class="is-marginless">{{ totalItems || '' }} services</h2>
-                <h2 v-else class="loading-shimmer tag"></h2>
+                <span v-if="serviceName" class="title is-4">{{ totalItems || '' }} services</span>
+                <div v-else class="loading-shimmer title tag"></div>
               </transition>
+            </div>
+            <div class="level-right" v-if="isUser">
+              <a-button state="primary" @click="$router.push({ name: 'new-service' })"><font-awesome-icon icon="plus" /> New microservice</a-button>
             </div>
           </div>
         </transition>
@@ -55,6 +58,7 @@
 
 <script>
 import { ServiceByOwnerQuery } from '@/plugins/graphql'
+import { mapGetters } from 'vuex'
 
 import ServiceSummary from '@/components/ServiceSummary'
 import OrganizationInfos from '@/components/OrganizationInfos'
@@ -102,6 +106,10 @@ export default {
     }
   },
   computed: {
+    ...mapGetters(['isUserLoggedIn', 'getUser']),
+    isUser: function () {
+      return this.isUserLoggedIn && this.getUser.username === this.serviceUserName
+    },
     topics: function() {
       return this.results.map(r => r.topics)
     },
