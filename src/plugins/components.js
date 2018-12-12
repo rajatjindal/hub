@@ -8,10 +8,12 @@ import TopicTag from '@/components/TopicTag'
 import TopicsList from '@/components/TopicsList'
 import Stars from '@/components/Stars'
 import Window from '@/components/Window'
+import vSelect from 'vue-select'
 import '@asyncy/vue/dist/asyncy-vue.css'
 
 Vue.use(AsyncyVue)
 
+Vue.component('v-select', vSelect)
 Vue.component('two-column-sidebar', TwoColumnSidebar)
 Vue.component('three-column-sidebar', ThreeColumnSidebar)
 Vue.component('topic-tag', TopicTag)

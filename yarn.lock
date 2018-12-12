@@ -23,10 +23,10 @@
   resolved "https://registry.yarnpkg.com/@apollographql/graphql-playground-html/-/graphql-playground-html-1.6.6.tgz#022209e28a2b547dcde15b219f0c50f47aa5beb3"
   integrity sha512-lqK94b+caNtmKFs5oUVXlSpN3sm5IXZ+KfhMxOtr0LR2SqErzkoJilitjDvJ1WbjHlxLI7WtCjRmOLdOGJqtMQ==
 
-"@asyncy/vue@^0.1.21":
-  version "0.1.21"
-  resolved "https://registry.yarnpkg.com/@asyncy/vue/-/vue-0.1.21.tgz#fb83f9cd698e09bb1677d82c3a5c20277f2557c8"
-  integrity sha512-PjnirJ7D4C1iir04d6OKEgfrTdydaIbCUC9wTzK9puy6hBQ8rY6rV7d7IH08VyV4z1F9oxyedhRxYePqfj5jdA==
+"@asyncy/vue@^0.2.1":
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/@asyncy/vue/-/vue-0.2.1.tgz#3ce96e88b072474c514da9c826003e40f773a6c0"
+  integrity sha512-3ibMMhoj3bAcQdBb5A2CtDOb1+GETtF4pqq7zcvCEti1INzGkfzUDSEv3T+SKjrUdyDxMLHC6ZuAI73oBc+2SQ==
   dependencies:
     asyncy-player "^0.0.1"
     nouislider "^12.0.0"
@@ -10836,6 +10836,11 @@ vue-router@^3.0.1, vue-router@^3.0.2:
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/vue-router/-/vue-router-3.0.2.tgz#dedc67afe6c4e2bc25682c8b1c2a8c0d7c7e56be"
   integrity sha512-opKtsxjp9eOcFWdp6xLQPLmRGgfM932Tl56U9chYTnoWqKxQ8M20N7AkdEbM5beUh6wICoFGYugAX9vQjyJLFg==
+
+vue-select@^2.5.1:
+  version "2.5.1"
+  resolved "https://registry.yarnpkg.com/vue-select/-/vue-select-2.5.1.tgz#9886e7123150a52dc8dbfe3202d0387268835aaa"
+  integrity sha512-Hs+arh7+0gLJoYiM3r9V/5CRn5XsAT8tVkouTkpDAWb923KFgraWrKDLSqz3ROedZUkuVIwkFuYq8+baHUf+bg==
 
 vue-style-loader@^4.1.0:
   version "4.1.2"
