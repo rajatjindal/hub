@@ -23,16 +23,17 @@
   resolved "https://registry.yarnpkg.com/@apollographql/graphql-playground-html/-/graphql-playground-html-1.6.6.tgz#022209e28a2b547dcde15b219f0c50f47aa5beb3"
   integrity sha512-lqK94b+caNtmKFs5oUVXlSpN3sm5IXZ+KfhMxOtr0LR2SqErzkoJilitjDvJ1WbjHlxLI7WtCjRmOLdOGJqtMQ==
 
-"@asyncy/vue@^0.2.1":
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/@asyncy/vue/-/vue-0.2.1.tgz#3ce96e88b072474c514da9c826003e40f773a6c0"
-  integrity sha512-3ibMMhoj3bAcQdBb5A2CtDOb1+GETtF4pqq7zcvCEti1INzGkfzUDSEv3T+SKjrUdyDxMLHC6ZuAI73oBc+2SQ==
+"@asyncy/vue@^0.2.9":
+  version "0.2.9"
+  resolved "https://registry.yarnpkg.com/@asyncy/vue/-/vue-0.2.9.tgz#1ca9e941aec8caac5b39f92966b478eac76e58e8"
+  integrity sha512-VrDlv13zwL4PxuEHFWwXp/26kemt8Pezv9D6j2UEb3s7/320mBOf1+qXWwtARuLGENfJz65kO3ZvcvHYqT7fJA==
   dependencies:
     asyncy-player "^0.0.1"
     nouislider "^12.0.0"
     vue "^2.5.17"
     vue-clipboard2 "^0.2.1"
     vue-router "^3.0.1"
+    vue-select "^2.5.1"
     vue2-transitions "^0.2.3"
 
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.0.0-beta.35":
@@ -691,6 +692,11 @@
     lodash "^4.17.10"
     to-fast-properties "^2.0.0"
 
+"@fortawesome/fontawesome-common-types@^0.2.10":
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.10.tgz#ae0e6858daf6f9ff1e2396f9fbea87b244628343"
+  integrity sha512-FbrzSgFDzoC6Dm8w7gCWxgdffFbYV7O/4THOtYDQEplZVOpYIA3vjgnxCXApY49YaIQ91mxIGROS3d7wS+fO3A==
+
 "@fortawesome/fontawesome-common-types@^0.2.8":
   version "0.2.8"
   resolved "https://registry.yarnpkg.com/@fortawesome/fontawesome-common-types/-/fontawesome-common-types-0.2.8.tgz#8cacd1efd1aa956e1ef173f0abcf2ce1b7a0c66f"
@@ -702,6 +708,13 @@
   integrity sha512-cvcMQZ5F8WSNSGMk9uWlkmZNfDzmdsWLRrTMrNwwihHcEmWRlIuSbDt+PQ/rXsnGmJnmLQJLFBT1cse/3swxbg==
   dependencies:
     "@fortawesome/fontawesome-common-types" "^0.2.8"
+
+"@fortawesome/free-brands-svg-icons@^5.6.1":
+  version "5.6.1"
+  resolved "https://registry.yarnpkg.com/@fortawesome/free-brands-svg-icons/-/free-brands-svg-icons-5.6.1.tgz#5f96bb8eb17cc62f962546e7d0e76086bfcec696"
+  integrity sha512-rrlucemW9+Az26+faQ9O7D50PPrBD+0ATi86yufqnyy44HapoWPuu/0AJhdUCV4hDEWMrAVAvGUEVg9oxHoTHQ==
+  dependencies:
+    "@fortawesome/fontawesome-common-types" "^0.2.10"
 
 "@fortawesome/free-solid-svg-icons@^5.5.0":
   version "5.5.0"

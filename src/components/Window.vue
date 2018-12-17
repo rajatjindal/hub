@@ -22,7 +22,10 @@
     <div class="content">
       <v-scrollbar class="scrollable">
         <pre
-          v-if="type !== 'browser'"
+          v-if="type !== 'browser' && code && !updateCode"
+          :class="[`language-${lang}`, {'line-numbers': type === 'code'}]"><code :class="`language-${lang}`">{{ code }}</code></pre>
+        <pre
+          v-if="type !== 'browser' && !code && !updateCode"
           :class="[`language-${lang}`, {'line-numbers': type === 'code'}]"><code :class="`language-${lang}`"><slot /></code></pre>
         <slot v-else />
       </v-scrollbar>
@@ -49,6 +52,11 @@ export default {
       default: undefined,
       description: 'The window title name (default: none)'
     },
+    code: {
+      type: String,
+      default: '',
+      description: 'The terminal code'
+    },
     type: {
       type: String,
       default: 'code',
@@ -66,18 +74,29 @@ export default {
       description: 'Whether to show or not the copy button (default: true)'
     }
   },
+  watch: {
+    code: 'update'
+  },
   data: () => ({
-    copied: false
+    copied: false,
+    updateCode: false
   }),
   mounted: function () {
     /* global Prism */
     this.$nextTick(Prism.highlightAll)
   },
   methods: {
+    update: function () {
+      this.updateCode = true
+      this.$nextTick(() => {
+        this.updateCode = false
+        this.$nextTick(Prism.highlightAll)
+      })
+    },
     clipboard: function () {
       if (!this.copied) {
         this.copied = true
-        this.$copyText(this.$slots.default[0].text)
+        this.$copyText(this.code ? this.code : this.$slots.default[0].text)
         setTimeout(() => {
           this.copied = false
         }, 1500)

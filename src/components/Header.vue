@@ -24,15 +24,21 @@
       </a>
       <transition name="navbar-dropdown">
         <div
-          class="dropdown-menu dropdown-menu-right"
+          class="dropdown-menu dropdown-menu-right dark profile-drop"
           aria-labelledby="profile_dropdown"
           v-show="toggled">
           <a
             class="dropdown-item"
             href="#"
-            target="_blank"
+            @click.stop="$router.push({ name: 'organization', params: { owner: getUser.username } })"
+            title="Profile">
+            Profile
+          </a>
+          <a
+            class="dropdown-item"
+            href="#"
+            @click.stop="logout"
             title="Logout">
-            <font-awesome-icon icon="arrow-right" />
             Logout
           </a>
         </div>
@@ -94,8 +100,13 @@ export default {
     support: function () {
       console.log('clicked support')
     },
+    logout: function () {
+      this.$api.logout()
+      this.toggled = false
+    },
     signin: function (e) {
-      this.$router.push({ name: 'dashboard' })
+      this.$api.dummyUser()
+      // this.$router.push({ name: 'hub' })
     },
     close: function () {
       this.toggled = false
@@ -120,6 +131,10 @@ export default {
       border-radius: 1rem;
       border: .2rem solid $white;
     }
+  }
+
+  .profile-drop {
+    min-width: 100px;
   }
 }
 

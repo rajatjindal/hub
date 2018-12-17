@@ -76,7 +76,7 @@ export default new Router({
     },
     {
       path: '/tags/:topic',
-      name: 'Tags',
+      name: 'tags',
       component: () => import('@/views/Tags'),
       meta: {
         hasSearch: true
@@ -88,6 +88,7 @@ export default new Router({
     {
       path: '/r/:owner',
       component: () => import('@/views/Organization'),
+      name: 'organization',
       meta: {
         hasSearch: true
       },

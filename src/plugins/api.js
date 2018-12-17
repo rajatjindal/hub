@@ -46,13 +46,21 @@ export class Api {
     store.commit('setUserRefreshing', false)
   }
 
+  logout () {
+    store.commit('setUserRefreshing', true)
+    store.commit('logout')
+    setTimeout(() => {
+      store.commit('setUserRefreshing', false)
+    }, 100)
+  }
+
   dummyUser () {
     store.commit('setUserRefreshing', true)
     setTimeout(() => {
       store.commit('setUserLoggedIn', true)
       store.commit('setUser', { name: 'microservices', username: 'microservice', email: 'hello@asyncy.com' })
       store.commit('setUserRefreshing', false)
-    }, 1000)
+    }, 100)
   }
 }
 

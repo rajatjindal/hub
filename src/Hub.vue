@@ -30,11 +30,11 @@ export default {
   computed: mapGetters(['getUser', 'isUserLoggedIn']),
   watch: {
     'isUserLoggedIn': function (value) {
-      console.log('is logged in:', value)
+      // console.log('is logged in:', value)
     }
   },
   mounted: function () {
-    this.$api.dummyUser()
+    // this.$api.dummyUser()
   },
   methods: {
     openSubmitAServiceModal: function() {

@@ -1,11 +1,11 @@
 <template>
-  <div class="service-new" v-if="!isUserRefreshing">
+  <div class="service-new">
     <div class="section">
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-four-fifths">
             <a-steps ref="steps" lock-headers>
-              <div class="column is-full" slot-scope="stepsProps">
+              <form class="column is-full" slot-scope="stepsProps" @submit.prevent="submitSteps" action="">
                 <a-step class="column is-full">
                   <span slot="header">
                       1. <span><font-awesome-icon :icon="['fab', 'github']" /> Connect to Github</span>
@@ -13,14 +13,14 @@
                   <a-card>
                     <h2 class="title is-3">Continuous Deployment</h2>
                     <p class="subtitle">Connect to Github where your sources are hosted. When you push to Git, we'll update your service on our servers and deploy the result.</p>
-                    <a-button state="neutral" @click="stepsProps.next()"><font-awesome-icon :icon="['fab', 'github']" /> Signin with Github</a-button>
+                    <a-button type="button" state="neutral" @click="login"><font-awesome-icon :icon="['fab', 'github']" /> Signin with Github</a-button>
                   </a-card>
                 </a-step>
                 <a-step>
                   <span slot="header">
                       2. <span><font-awesome-icon icon="code-branch" /> Choose a repository</span>
                   </span>
-                  <div class="tile is-parent is-vertical">
+                  <div class="tile is-parent is-vertical" v-if="getUser">
                     <div class="search level">
                       <div class="level-left">
                         <h3><img class="avatar" :src="`https://avatars.githubusercontent.com/${getUser.username}?s=64`" alt="user" /> {{ getUser.username }}</h3>
@@ -36,8 +36,8 @@
                             <service-summary :title="r.name" :is-alias="false" :description="emojify(r.description)" :tags="r.topics" />
                           </div>
                           <div class="level-right">
-                            <a-button v-if="r.microservice" @click="choose(r)" state="primary">Choose</a-button>
-                            <a-button v-else state="secondary" outline disabled>Choose</a-button>
+                            <a-button type="button" v-if="r.microservice" @click="choose(r)" state="primary">Choose</a-button>
+                            <a-button v-else type="button" state="secondary" outline disabled>Choose</a-button>
                           </div>
                         </div>
                       </div>
@@ -53,23 +53,40 @@
                   <span slot="header">
                       3. <span><font-awesome-icon icon="file-signature" /> Additional informations</span>
                   </span>
-                  <div class="form" v-if="service.repo">
-                    <div class="inputs">
-                      <a-input disabled v-model="service.serviceName" label="Service name" />
-                      <a-input v-model="service.name" label="Name*" />
-                      <a-input v-model="service.description" label="Description*" />
-                      <div class="select-group">
-                        <label>Branch*</label>
-                        <v-select v-model="service.branch" label="Select" :options="service.branches" />
+                  <div class="form" v-if="service.repo && getUser">
+                    <div class="form-section">
+                      <h2>Repository</h2>
+                      <div class="inputs">
+                        <a-input label="Owner" disabled :value="getUser.username" :options="[]">
+                          <small slot="infoBlock">Teams and Organizations coming soon</small>
+                        </a-input>
+                        <a-input :valid="/^[\w[\-]*]*\w+$/g.test(service.name)" error="The name can only contains letters, numbers, underscores and dashes. It can't end with a dash" v-model="service.name" label="Service name" />
+                        <div class="select-group">
+                          <a-window :copy="false" :code="serviceCodeContent" />
+                        </div>
+                      </div>
+                      <h2>Hub search informations</h2>
+                      <div class="inputs">
+                        <a-input label="Title" :valid="service.title.length > 2 && service.title.length < 70" error="Title length must be between 3 and 70 characters" v-model="service.title" />
+                        <a-input label="Description" textarea :valid="service.description.length > 0" error=" " area v-model="service.description" />
+                        <a-input label="Category" v-model="service.category" :options="categoriesList" />
+                        <a-input label="Tags" multiple v-model="service.tags" :options="tagsbyCategoryList" />
+                      </div>
+                      <h2>Container location</h2>
+                      <div class="inputs">
+                        <a-input label="Provider" v-model="service.containerProvider" :options="['Docker', 'Custom']" />
+                        <a-input label="Pull url" :placeholder="service.containerProvider === 'Docker' ? 'owner/microservice' : 'https://registry.domain.tld/pull/microservice'" @blur="pullCheck" :valid="validPull" error="Please, provide a valid pull URL" v-model="service.pullUrl">
+                          <span slot="addonLeft" v-if="service.containerProvider === 'Docker'" class="text--dark"><font-awesome-icon :icon="['fab', 'docker']" /></span>
+                        </a-input>
                       </div>
                     </div>
                     <div class="submit">
-                      <a-button state="neutral" outline size="l" @click="stepsProps.prev()">Change repository</a-button>
-                      <a-button state="primary" size="l">Submit service</a-button>
+                      <a-button type="button" state="neutral" outline size="l" @click="stepsProps.prev()">Change repository</a-button>
+                      <a-button type="submit" state="primary" size="l" :disabled="!validPull">Submit service</a-button>
                     </div>
                   </div>
                 </a-step>
-              </div>
+              </form>
             </a-steps>
           </div>
         </div>
@@ -84,11 +101,15 @@ import axios from 'axios'
 import emoji from 'node-emoji'
 import { mapGetters } from 'vuex'
 import ServiceSummary from '@/components/ServiceSummary'
+const tagsList = {
+  'Service': ['Authentication', 'CMS', 'Database', 'Logging', 'Memory Store', 'Messaging', 'Monitoring', 'Optimization', 'Search', 'Social Media', 'Video Processing', 'Image Processing', 'Text Processing', 'Machine Learning', 'Programming Languages', 'Developer Tools', 'IoT', 'Worker'],
+  'Function': ['Sorting', 'Filtering', 'Strings']
+}
 
 export default {
   name: 'NewService',
   components: { ServiceSummary },
-  data: () => ({ repos: [], serviceRepo: undefined, search: '', service: { repo: undefined, branches: [], name: '', version: '', icon: '', branch: 'master', serviceName: '', description: '', public: true } }),
+  data: () => ({ tagsList, repos: [], validPull: undefined, serviceRepo: undefined, search: '', service: { repo: undefined, branches: [], name: '', version: '', icon: '', containerProvider: 'Docker', pullUrl: '', tags: '', category: 'Service', branch: 'master', title: '', description: '', public: true } }),
   filters: {
     spliceSearch: function (arr) {
       return arr.splice().filter(a => a.name.includes(this.search))
@@ -98,17 +119,42 @@ export default {
     ...mapGetters(['getUser', 'isUserLoggedIn', 'isUserRefreshing']),
     searchedRepos: function () {
       return this.repos.filter(r => r.name.toLowerCase().includes(this.search.toLowerCase()) || (r.description && r.description.toLowerCase().includes(this.search.toLowerCase())))
+    },
+    serviceCodeContent: function () {
+      return `output = ${this.getUser.username}/${this.service.name || this.service.repo.name} action param:value ...`
+    },
+    categoriesList: function () {
+      return Object.keys(this.tagsList)
+    },
+    tagsbyCategoryList: function () {
+      return ['Service', 'Function'].includes(this.service.category) ? this.tagsList[this.service.category] : []
     }
   },
   watch: {
     'isUserRefreshing': function (refreshing) {
-      if (!refreshing && !this.isUserLoggedIn) {
-        this.$router.push({ name: 'hub' })
+      if (!refreshing && this.isUserLoggedIn && this.$refs.steps.steps[0].active) {
+        this.$nextTick(this.$refs.steps.nextStep)
+      } else if (!refreshing && !this.isUserLoggedIn) {
+        this.$nextTick(() => {
+          this.$refs.steps.goToStepIndex(0)
+          // this.$refs.steps.prevStep()
+        })
       }
+    },
+    'service.containerProvider': function (value) {
+      this.service.pullUrl = value === 'Docker' ? this.service.repo.full_name : ''
+    },
+    'service.category': function (value) {
+      this.service.tags = []
     }
   },
   mounted: function () {
     this.repos = repos
+    this.$nextTick(() => {
+      if (this.isUserLoggedIn) {
+        this.$refs.steps.nextStep()
+      }
+    })
     for (let repo of this.repos) {
       if (['jwt', 'twitter', 'slack'].includes(repo.name)) {
         const idx = this.repos.indexOf(repo)
@@ -128,8 +174,24 @@ export default {
     emojify: function (description) {
       return emoji.emojify(description, () => '🐙')
     },
+    login: function () {
+      this.$api.dummyUser()
+    },
+    pullCheck: function () {
+      const url = this.service.containerProvider === 'Docker' ? `https://hub.docker.com/v2/repositories/${this.service.pullUrl}/tags/latest` : this.service.pullUrl
+      axios.head(`https://cors-anywhere.herokuapp.com/${url}/`, { crossdomain: true }).then((res) => {
+        this.validPull = true
+      }).catch(() => {
+        this.validPull = false
+      })
+    },
+    submitSteps: function (e) {
+      console.log('submitting', e)
+    },
     choose: function (r) {
       this.service.serviceName = r.full_name
+      this.service.name = r.name
+      this.service.pullUrl = r.full_name
       this.service.branches = [r.default_branch]
       this.service.repo = r
       axios.get(`https://api.github.com/repos/${this.service.repo.full_name}/branches`).then((res) => {
@@ -174,7 +236,7 @@ export default {
 }
 
 .select-group {
-  margin-top: 1rem;
+  margin: 1rem 0;
 }
 
 .form {
@@ -182,38 +244,6 @@ export default {
     margin-left: auto;
     float: right;
     margin-top: 2rem;
-  }
-}
-
-.v-select.searchable {
-  .dropdown-toggle {
-    border-radius: 0.5rem;
-    border-color: gray(300);
-    .vs__selected-options {
-      padding: 0.4rem 1rem;
-
-      .selected-tag {
-        font-size: 1rem;
-      }
-      input {
-        font-size: 1rem;
-      }
-    }
-    .vs__actions {
-      padding: 0 1rem 0 1rem;
-      .clear {
-        span {
-          position: absolute;
-          top: 0.9rem;
-          right: 2.5rem;
-        }
-      }
-    }
-  }
-  .dropdown-menu {
-    width: 100%;
-    top: 2.5rem;
-    border-color: gray(300);
   }
 }
 </style>
