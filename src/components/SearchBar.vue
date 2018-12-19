@@ -1,6 +1,6 @@
 <template>
   <form @submit.prevent="search">
-    <a-input addon-left-icon="search" placeholder="Search Hub" v-model="input" aria-label="Search Hub" />
+    <a-input addon-left-icon="search" placeholder="Search a service" v-model="input" @change="search" aria-label="Search a service" />
   </form>
 </template>
 
@@ -13,9 +13,18 @@ export default {
       input: this.value || ''
     }
   },
+  watch: {
+    input: function (value) {
+      if (value.trim().length === 0) {
+        this.$router.push({ name: 'services' })
+      }
+    }
+  },
   methods: {
     search: function() {
-      this.$router.push({ name: 'search', query: { q: this.input } })
+      if (this.input.trim().length > 0) {
+        this.$router.push({ name: 'services', query: { search: this.input.trim() } })
+      }
     }
   }
 }

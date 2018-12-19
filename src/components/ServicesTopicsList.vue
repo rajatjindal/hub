@@ -2,9 +2,10 @@
   <div class="sticky topics">
     <h5 class="title">Topics</h5>
       <transition-group name="fade" tag="ul" class="topics-list">
-        <li v-for="topic in topics" :key="topic.name" class="topic-item" :class="{ active: topic.icon === active }" @click="active = topic.icon">
-          <services-icon :type="topic.icon" :active="topic.icon === active" />
+        <li v-for="topic in topics" :key="topic.name" class="topic-item" :class="{ active: topic.name === active }" @click="active = topic.name">
+          <services-icon :type="topic.icon" :active="topic.name === active" />
           {{ topic.name }}
+          <span class="close" @click.stop="active = ''"><font-awesome-icon icon="times" /></span>
           <!-- <topic-tag>{{topic}}</topic-tag> -->
         </li>
       </transition-group>
@@ -27,21 +28,25 @@
 import ServicesIcon from '@/components/ServicesIcon'
 
 export default {
-  props: ['value'],
+  props: ['category'],
   components: { ServicesIcon },
   data: () => ({
-    isLoading: true,
-    active: 'all'
+    isLoading: false,
+    active: ''
   }),
   mounted: function() {
-    // currently should only happen when data is loaded via cache
-    if (this.value && this.value.length <= 0) {
-      this.isLoading = false
+    if (this.topics.reduce((arr, v) => [...arr, v.name], []).includes(this.category)) {
+      this.active = this.category
+    } else {
+      this.$emit('select', '')
     }
+    // if (this.value && this.value.length <= 0) {
+    //   this.isLoading = false
+    // }
   },
   watch: {
-    value: function() {
-      this.isLoading = false
+    active: function (value) {
+      this.$emit('select', value)
     }
   },
   computed: {
@@ -80,8 +85,41 @@ export default {
         name: 'Search',
         icon: 'search'
       }, {
+        name: 'Social Media',
+        icon: 'social'
+      }, {
+        name: 'Video Processing',
+        icon: 'videop'
+      }, {
+        name: 'Image Processing',
+        icon: 'imagep'
+      }, {
+        name: 'Text Processing',
+        icon: 'textp'
+      }, {
+        name: 'Machine Learning',
+        icon: 'ml'
+      }, {
+        name: 'Programming Language',
+        icon: 'lang'
+      }, {
+        name: 'Developer Tools',
+        icon: 'devtool'
+      }, {
+        name: 'IoT',
+        icon: 'iot'
+      }, {
         name: 'Worker',
         icon: 'worker'
+      }, {
+        name: 'Sorting',
+        icon: 'sorting'
+      }, {
+        name: 'Filtering',
+        icon: 'filtering'
+      }, {
+        name: 'Strings',
+        icon: 'strings'
       }]
       // const inputTopics = this.value || []
       // const allTopics = inputTopics.reduce(
@@ -121,6 +159,10 @@ export default {
   &.topics {
     top: 4rem + 1.5rem;
     margin-bottom: 3rem;
+
+    .title {
+      padding-top: 0 !important;
+    }
   }
 }
 
@@ -138,12 +180,28 @@ export default {
     align-items: center;
     height: 2rem;
     cursor: pointer;
+    .close {
+      display: none;
+    }
     & + .topic-item {
       margin-top: .5rem;
     }
     &.active {
       color: state(primary);
       font-weight: bold;
+
+      .close {
+        display: flex;
+        margin-left: auto;
+        border-radius: 1rem;
+        height: 2rem;
+        width: 2rem;
+        background-color: gray(100);
+        color: gray(300);
+        align-items: center;
+        justify-content: center;
+        svg { margin-right: 0; }
+      }
     }
 
     &:hover:not(.active) {

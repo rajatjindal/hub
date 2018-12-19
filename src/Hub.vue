@@ -89,9 +89,15 @@ export default {
   background: color(dark);
 }
 
+html {
+  min-height: 100%;
+  overflow: auto !important;
+}
+
 #hub {
   background-color: color(dark);
   position: relative;
+  min-height: calc(100vh - 72px);
   // color: black;
 }
 

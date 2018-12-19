@@ -21,6 +21,11 @@ export default new Router({
       component: Index
     },
     {
+      path: '/sitemap.xml',
+      name: 'sitemap',
+      component: () => import('@/views/Sitemap')
+    },
+    {
       path: '/search',
       name: 'search',
       component: () => import('@/views/SearchResults'),
@@ -31,7 +36,10 @@ export default new Router({
     {
       path: '/services',
       name: 'services',
-      component: () => import('@/views/Services')
+      component: () => import('@/views/Services'),
+      props: function (route) {
+        return { search: route.query.search, category: route.query.c }
+      }
     },
     {
       path: '/service/:alias',
