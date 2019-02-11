@@ -1,14 +1,24 @@
 <template>
   <form @submit.prevent="search">
-    <a-input addon-left-icon="search" placeholder="Search a service" v-model="input" @change="search" aria-label="Search a service" />
+    <a-input
+      v-model="input"
+      addon-left-icon="search"
+      placeholder="Search a service"
+      aria-label="Search a service"
+      @change="search" />
   </form>
 </template>
 
 <script>
 export default {
   name: 'SearchBar',
-  props: ['value'],
-  data: function() {
+  props: {
+    value: {
+      type: String,
+      default: ''
+    }
+  },
+  data: function () {
     return {
       input: this.value || ''
     }
@@ -21,7 +31,7 @@ export default {
     }
   },
   methods: {
-    search: function() {
+    search: function () {
       if (this.input.trim().length > 0) {
         this.$router.push({ name: 'services', query: { search: this.input.trim() } })
       }

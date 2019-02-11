@@ -1,0 +1,20 @@
+@import "~@asyncy/vue/dist/asyncy-vue.css";
+
+@import "~@asyncy/vue/src/scss/variables/index";
+@import "~bulma/sass/utilities/mixins";
+@import "~@/assets/loading-shimmer";
+
+#asyncy {
+  min-height: 100vh;
+  height: auto;
+}
+
+html {
+  overflow-y: auto;
+}
+
+.container {
+  @include touch {
+    padding: 1rem;
+  }
+}

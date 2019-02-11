@@ -6,24 +6,26 @@
     <div class="step">
       <p>1. Navigate to your repository in Github, and go to the <span class="highlight">Settings</span>.</p>
 
-      <img :src="faq1" />
+      <img :src="faq1" >
     </div>
 
     <div class="step">
       <p>2. Under settings, navigate to the <span class="highlight">Webhooks</span> section in the left nav bar. Click <span class="highlight">Add Webhook</span>.</p>
 
-      <img :src="faq2" />
+      <img :src="faq2" >
     </div>
 
     <div class="step">
       <p>3. Put <code>https://sync.asyncy.com/service/sync</code> as the payload URL. Set the Content type to <code>application/json</code>. Leave everything else as the default. Click <span class="highlight">Add Webhook</span> at the bottom of the page.</p>
 
-      <img :src="faq3" />
+      <img :src="faq3" >
     </div>
 
     <div class="step">
       <p>4. You're done!</p>
-      <url-link to="/"><a-button class="final-button" color="white">Return to homepage</a-button></url-link>
+      <url-link to="/"><a-button
+        class="final-button"
+        color="white">Return to homepage</a-button></url-link>
     </div>
   </div>
 </template>
@@ -34,7 +36,7 @@ import faq2 from '@/assets/faq/faq_2.jpg'
 import faq3 from '@/assets/faq/faq_3.jpg'
 
 export default {
-  name: 'faq',
+  name: 'Faq',
   data: () => ({
     faq1,
     faq2,

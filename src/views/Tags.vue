@@ -2,7 +2,9 @@
   <div class="index section">
     <div class="container columns">
       <div class="column is-full body">
-        <div class="breadcrumb" v-if="prevPage.name === 'hub'"><router-link :to="prevPage.path">{{prevPage.name | capitalize }}</router-link> / {{topic | from-topic}}</div>
+        <div
+          v-if="prevPage.name === 'hub'"
+          class="breadcrumb"><router-link :to="prevPage.path">{{ prevPage.name | capitalize }}</router-link> / {{ topic | from-topic }}</div>
 
         <div class="level name-container is-mobile">
           <div class="level-left">
@@ -11,13 +13,29 @@
         </div>
         <div class="results-container">
           <div class="tile is-ancestor">
-            <transition-group class="tile is-parent is-vertical" tag="div" name="fade">
-              <div v-for="(r, index) in results" class="tile is-parent" :key="index">
+            <transition-group
+              class="tile is-parent is-vertical"
+              tag="div"
+              name="fade">
+              <div
+                v-for="(r, index) in results"
+                :key="`tags-list-${_uid}-${index}`"
+                class="tile is-parent">
                 <div class="tile is-child is-6">
-                  <service-summary :title="getTitle(r[0])" :is-alias="r[0].alias ? true: false" :description="r[0].description" :tags="r[0].topics"></service-summary>
+                  <service-summary
+                    :title="getTitle(r[0])"
+                    :is-alias="r[0].alias ? true: false"
+                    :description="r[0].description"
+                    :tags="r[0].topics"/>
                 </div>
-                <div class="tile is-child is-6" v-if="r.length > 1">
-                  <service-summary :title="getTitle(r[1])" :is-alias="r[1].alias ? true: false" :description="r[1].description" :tags="r[1].topics"></service-summary>
+                <div
+                  v-if="r.length > 1"
+                  class="tile is-child is-6">
+                  <service-summary
+                    :title="getTitle(r[1])"
+                    :is-alias="r[1].alias ? true: false"
+                    :description="r[1].description"
+                    :tags="r[1].topics"/>
                 </div>
               </div>
             </transition-group>
@@ -37,7 +55,15 @@ import { SearchQuery } from '@/plugins/graphql'
 import ServiceSummary from '@/components/ServiceSummary'
 
 export default {
-  props: ['topic'],
+  components: {
+    ServiceSummary
+  },
+  props: {
+    topic: {
+      type: String,
+      default: undefined
+    }
+  },
   data: () => ({
     totalItems: 0,
     results: [[{}, {}], [{}, {}]],
@@ -49,12 +75,12 @@ export default {
   apollo: {
     results: {
       query: SearchQuery,
-      variables: function() {
+      variables: function () {
         return {
           searchTerm: this.topic || 'microservice'
         }
       },
-      update: function(data) {
+      update: function (data) {
         this.totalItems = data.searchServices.totalCount
         return chunk(data.searchServices.edges.map(e => e.node))
       }
@@ -69,15 +95,12 @@ export default {
     })
   },
   methods: {
-    getTitle: function(r) {
+    getTitle: function (r) {
       if (!r.alias && (!r.owner || !r.owner.username)) {
         return ''
       }
       return r.alias || `${r.owner.username}/${r.name}`
     }
-  },
-  components: {
-    ServiceSummary
   }
 }
 </script>

@@ -2,20 +2,30 @@
   <div>
     <h2 class="command-header">
       <span class="command-name title is-1">
-        <template v-if="getEvent"><span class="command-name-link" @click="$router.replace({ name: $route.name, params: $route.params, hash: `#${getCommand}`})">{{ getCommand }}</span> - </template>
+        <template v-if="getEvent"><span
+          class="command-name-link"
+          @click="$router.replace({ name: $route.name, params: $route.params, hash: `#${getCommand}`})">{{ getCommand }}</span> - </template>
         <span v-else>{{ getCommand }}</span>
-        <template v-if="getAction"><span class="command-name-link" @click="$router.replace({ name: $route.name, params: $route.params, hash: `#${getCommand}-${getEvent}`})">{{ getEvent }}</span> - </template>
+        <template v-if="getAction"><span
+          class="command-name-link"
+          @click="$router.replace({ name: $route.name, params: $route.params, hash: `#${getCommand}-${getEvent}`})">{{ getEvent }}</span> - </template>
         <span v-else>{{ getEvent }}</span>
         <span v-if="getAction">{{ getAction }}</span>
       </span>
-      <a-badge :state="getTagColor" class="text--light command-tag">{{ getTagName }}</a-badge>
+      <a-badge
+        :state="getTagColor"
+        class="text--light command-tag">{{ getTagName }}</a-badge>
     </h2>
     <h3 v-if="action.help">Description</h3>
     <span v-if="action.help">{{ action.help }}</span>
     <h3 v-if="example">Example</h3>
-    <a-window v-if="example" lang="coffeescript">{{ example }}</a-window>
+    <a-window
+      v-if="example"
+      lang="coffeescript">{{ example }}</a-window>
     <h3 v-if="action.arguments">Arguments</h3>
-    <div v-if="action.arguments" class="arguments-table-container">
+    <div
+      v-if="action.arguments"
+      class="arguments-table-container">
       <table class="table is-bordered">
         <thead>
           <tr>
@@ -25,11 +35,15 @@
           </tr>
         </thead>
         <tbody>
-          <tr v-for="(arg, name) in action.arguments" :key="`${getHash}-arguments-${name}`">
+          <tr
+            v-for="(arg, name) in action.arguments"
+            :key="`${getHash}-arguments-${name}`">
             <td><code class="arg">{{ name }}</code></td>
             <td class="type"><code>{{ arg.type }}</code></td>
             <td class="description">
-              <span v-if="arg.required" class="required">Required. </span>
+              <span
+                v-if="arg.required"
+                class="required">Required. </span>
               <span v-if="arg.default">(Default: <code class="arg">{{ arg.default }}</code>) </span>
               <span v-if="arg.help">{{ arg.help }}</span>
             </td>
@@ -40,8 +54,13 @@
     <template v-if="action.events">
       <h3>Events</h3>
       <ul>
-        <li v-for="(event, name) in action.events" :key="`${getHash}-events-${name}`">
-          <a-button state="neutral" outline @click.stop="$router.push({ name: $route.name, params: $route.params, hash: `#${getHash}-${name}`})">{{ name }}</a-button>
+        <li
+          v-for="(event, name) in action.events"
+          :key="`${getHash}-events-${name}`">
+          <a-button
+            state="neutral"
+            outline
+            @click.stop="$router.push({ name: $route.name, params: $route.params, hash: `#${getHash}-${name}`})">{{ name }}</a-button>
         </li>
       </ul>
     </template>
@@ -51,12 +70,19 @@
       <p v-if="action.output.type">Returns output of type <code>{{ action.output.type }}</code>.</p>
       <h3 v-if="action.output.commands">Commands</h3>
       <ul v-if="action.output.commands">
-        <li v-for="(command, name) in action.output.commands" :key="`${getHash}-commands-${name}`">
-          <a-button state="neutral" outline @click.stop="$router.push({ name: $route.name, params: $route.params, hash: `#${getHash}-${name}`})">{{ name }}</a-button>
+        <li
+          v-for="(command, name) in action.output.commands"
+          :key="`${getHash}-commands-${name}`">
+          <a-button
+            state="neutral"
+            outline
+            @click.stop="$router.push({ name: $route.name, params: $route.params, hash: `#${getHash}-${name}`})">{{ name }}</a-button>
         </li>
       </ul>
       <h3 v-if="action.output.properties">Properties</h3>
-      <div v-if="action.output.properties" class="arguments-table-container">
+      <div
+        v-if="action.output.properties"
+        class="arguments-table-container">
         <table class="table is-bordered">
           <thead>
             <tr>
@@ -66,11 +92,15 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(property, name) in action.output.properties" :key="`${getHash}-properties-${name}`">
+            <tr
+              v-for="(property, name) in action.output.properties"
+              :key="`${getHash}-properties-${name}`">
               <td><code class="arg">{{ name }}</code></td>
               <td class="type"><code>{{ property.type }}</code></td>
               <td class="description">
-                <span v-if="property.required" class="required">Required. </span>
+                <span
+                  v-if="property.required"
+                  class="required">Required. </span>
                 <span v-if="property.default">(Default: <code class="arg">{{ property.default }}</code>) </span>
                 <span v-if="property.help">{{ property.help }}</span>
               </td>

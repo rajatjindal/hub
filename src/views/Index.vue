@@ -69,11 +69,24 @@
           <div class="column is-half">
             <h2 class="title head-link is-3">
               Featured Services
-              <a-link state="primary" class="link" @click.stop="$router.push({ name: 'services' })">View all <font-awesome-icon icon="arrow-right" /></a-link>
+              <a-link
+                state="primary"
+                class="link"
+                @click.stop="$router.push({ name: 'services' })">View all <font-awesome-icon icon="arrow-right" /></a-link>
             </h2>
-            <transition-group name="fade" tag="div" class="tile is-parent is-vertical">
-              <div v-for="(r, index) in data.recentServices.slice(0, 3)" class="tile is-child" :key="r.alias || index">
-                <service-summary :title="getTitle(r)" :is-alias="r.alias ? true : false" :description="r.description" :tags="r.topics"></service-summary>
+            <transition-group
+              name="fade"
+              tag="div"
+              class="tile is-parent is-vertical">
+              <div
+                v-for="(r, index) in data.recentServices.slice(0, 3)"
+                :key="r.alias || index"
+                class="tile is-child">
+                <service-summary
+                  :title="getTitle(r)"
+                  :is-alias="r.alias ? true : false"
+                  :description="r.description"
+                  :tags="r.topics"/>
               </div>
             </transition-group>
             <p class="helper">Want to see your service in our marketplace ?</p>
@@ -82,11 +95,21 @@
           <div class="column is-half">
             <h2 class="title head-link is-3">
               Community
-              <a-link state="primary" class="link">Visit <font-awesome-icon icon="arrow-right" /></a-link>
+              <a-link
+                state="primary"
+                class="link">Visit <font-awesome-icon icon="arrow-right" /></a-link>
             </h2>
-            <transition-group name="fade" tag="div" class="tile is-parent is-vertical">
-              <div v-for="(r, index) in data.recentServices.slice(0, 3)" class="tile is-child" :key="r.alias || index">
-                <article-summary :title="getTitle(r)" :description="r.description" />
+            <transition-group
+              name="fade"
+              tag="div"
+              class="tile is-parent is-vertical">
+              <div
+                v-for="(r, index) in data.recentServices.slice(0, 3)"
+                :key="r.alias || index"
+                class="tile is-child">
+                <article-summary
+                  :title="getTitle(r)"
+                  :description="r.description" />
               </div>
             </transition-group>
           </div>
@@ -102,7 +125,7 @@ import ServiceSummary from '@/components/ServiceSummary'
 import ArticleSummary from '@/components/ArticleSummary'
 
 export default {
-  name: 'index',
+  name: 'Index',
   apollo: {
     data: {
       query: IndexQuery,
@@ -111,27 +134,27 @@ export default {
       })
     }
   },
+  components: {
+    ServiceSummary,
+    ArticleSummary
+  },
   data: () => ({
     data: {
       recentServices: [{}, {}, {}, {}, {}, {}]
     }
   }),
   computed: {
-    topics: function() {
+    topics: function () {
       return this.data.recentServices.map(s => s.topics)
     }
   },
   methods: {
-    getTitle: function(r) {
+    getTitle: function (r) {
       if (!r.alias && (!r.organization || !r.organization.username)) {
         return ''
       }
       return r.alias || `${r.organization.username}/${r.name}`
     }
-  },
-  components: {
-    ServiceSummary,
-    ArticleSummary
   }
 }
 </script>
@@ -166,7 +189,7 @@ svg {
         .column {
           padding: 0 3rem;
           & + .column {
-            border-left: 1px solid rgba(color(dark), 0.125);
+            border-left: 1px solid rgba($dark, 0.125);
           }
         }
       }
@@ -179,7 +202,7 @@ svg {
   position: relative;
   .container {
     &:before {
-      @include breakpoint(max m) { display: none }
+      @include touch { display: none }
       content: '';
       width: 100%;
       height: 100%;
@@ -214,7 +237,7 @@ svg {
 
 .badge {
   &.dot {
-    background: linear-gradient(180deg, darken(state(primary), 0%), lighten(state(primary), 10%)) repeat-x;
+    background: linear-gradient(180deg, darken($primary, 0%), lighten($primary, 10%)) repeat-x;
     border-radius: 50%;
     width: 3rem;
     height: 3rem;
@@ -240,8 +263,8 @@ svg {
     left: calc(50% - 400px);
     top: -150px;
     margin: 0;
-    box-shadow: 0 0 2.25rem .5rem rgba(darken(color(dark), 15%), .5);
-    background-color: darken(state(primary), 10%);
+    box-shadow: 0 0 2.25rem .5rem rgba(darken($dark, 15%), .5);
+    background-color: darken($primary, 10%);
     align-items: center;
     justify-content: center;
     display: flex;

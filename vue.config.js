@@ -4,8 +4,7 @@ module.exports = {
   css: {
     loaderOptions: {
       sass: {
-        data: fs.readFileSync('./src/styles/index.scss'),
-        includePaths: ['./src/styles']
+        data: fs.readFileSync('./src/assets/base.scss')
       }
     }
   },

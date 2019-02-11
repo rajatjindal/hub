@@ -3,8 +3,10 @@
     <!-- <a-cookie /> -->
     <a-header @open-service-modal="openSubmitAServiceModal" />
     <div class="main-container">
-      <transition name="view-fade" mode="out-in">
-        <router-view @open-submit-service-modal="openSubmitAServiceModal"></router-view>
+      <transition
+        name="view-fade"
+        mode="out-in">
+        <router-view @open-submit-service-modal="openSubmitAServiceModal"/>
       </transition>
     </div>
     <div class="section bg--dark">
@@ -22,7 +24,7 @@ import AHeader from '@/components/Header'
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'app',
+  name: 'Hub',
   components: {
     SubmitServiceModal,
     AHeader
@@ -37,10 +39,10 @@ export default {
     // this.$api.dummyUser()
   },
   methods: {
-    openSubmitAServiceModal: function() {
+    openSubmitAServiceModal: function () {
       this.$refs.submitAServiceModal.show = true
     },
-    closeSubmitAServiceModal: function() {
+    closeSubmitAServiceModal: function () {
       this.$refs.submitAServiceModal.show = false
     }
   }
@@ -55,13 +57,13 @@ export default {
 }
 
 .main-container {
-  @include breakpoint(max m) { margin-top: 54px }
+  @include touch { margin-top: 54px }
   margin-top: 72px;
   min-height: calc(100% - 72px - 406px);
 }
 
 .section {
-  color: color(dark);
+  color: $dark;
   z-index: 2;
   display: block;
   height: auto;
@@ -86,7 +88,7 @@ export default {
 }
 
 .footer-container {
-  background: color(dark);
+  background: $dark;
 }
 
 html {
@@ -95,7 +97,7 @@ html {
 }
 
 #hub {
-  background-color: color(dark);
+  background-color: $dark;
   position: relative;
   min-height: calc(100vh - 72px);
   // color: black;
@@ -156,7 +158,7 @@ a {
     left: 0 !important;
     right: 0 !important;
     opacity: 1 !important;
-    background-color: color(light) !important;
+    background-color: $light !important;
   }
 }
 

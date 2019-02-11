@@ -74,13 +74,13 @@ export default {
       description: 'Whether to show or not the copy button (default: true)'
     }
   },
-  watch: {
-    code: 'update'
-  },
   data: () => ({
     copied: false,
     updateCode: false
   }),
+  watch: {
+    code: 'update'
+  },
   mounted: function () {
     /* global Prism */
     this.$nextTick(Prism.highlightAll)
@@ -108,7 +108,7 @@ export default {
 
 <style lang="scss">
 .window {
-  background-color: darken(color(dark), 8%);
+  background-color: darken($dark, 8%);
   border-radius: 0.25rem;
   overflow: hidden;
   padding: 0;
@@ -157,8 +157,8 @@ export default {
     }
     .content {
       padding: 0;
-      background-color: color(light);
-      color: color(dark);
+      background-color: $light;
+      color: $dark;
       height: 100%;
     }
     border: 1px solid gray(400);
@@ -188,22 +188,22 @@ export default {
       margin-left: auto;
       margin-right: auto;
       padding-right: 4.25rem;
-      color: color(light);
+      color: $light;
     }
     span.menu {
       width: .75rem;
       height: .75rem;
       border-radius: 1rem;
-      background-color: lighten(color(yellow), 7%);
+      background-color: lighten($warning, 7%);
       margin-left: .75rem;
       & + .menu {
         margin-left: .5rem;
       }
       &:first-child {
-        background-color: lighten(color(red), 7%)
+        background-color: lighten($danger, 7%)
       }
       &:last-child {
-        background-color: lighten(color(green), 7%)
+        background-color: lighten($success, 7%)
       }
     }
   }
@@ -211,7 +211,7 @@ export default {
     margin: 0;
     position: relative;
     padding: 0;
-    background-color: darken(color(dark), 5.5%);
+    background-color: darken($dark, 5.5%);
     overflow: hidden;
     display: block;
     max-width: 100%;

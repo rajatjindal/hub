@@ -1,44 +1,50 @@
 <template>
   <a-nav
+    :has-search="hasSearch"
+    :items="getItems"
     logo="light"
     tag="Beta"
     type="dark"
     effect="dark"
     class="navbar"
-    :hasSearch="hasSearch"
     @search="onSearch"
     @brand-click="$router.push({ name: 'hub' })"
     @support="support"
-    @signin="signin"
-    :items="getItems">
-    <li class="nav-item dropdown" v-if="isUserLoggedIn" id="profile_dropdown" v-click-outside="close">
+    @signin="signin">
+    <li
+      v-click-outside="close"
+      v-if="isUserLoggedIn"
+      id="profile_dropdown"
+      class="nav-item dropdown">
       <a
+        :aria-expanded="toggled"
         href="#"
         class="nav-link profile"
         role="button"
         data-toggle="dropdown"
         aria-haspopup="true"
-        :aria-expanded="toggled"
         @click.stop="toggled = !toggled">
-        <img :src="`https://avatars.githubusercontent.com/${getUser.username}?s=64`" alt="user" />
+        <img
+          :src="`https://avatars.githubusercontent.com/${getUser.username}?s=64`"
+          alt="user" >
       </a>
       <transition name="navbar-dropdown">
         <div
+          v-show="toggled"
           class="dropdown-menu dropdown-menu-right dark profile-drop"
-          aria-labelledby="profile_dropdown"
-          v-show="toggled">
+          aria-labelledby="profile_dropdown">
           <a
             class="dropdown-item"
             href="#"
-            @click.stop="$router.push({ name: 'organization', params: { owner: getUser.username } })"
-            title="Profile">
+            title="Profile"
+            @click.stop="$router.push({ name: 'organization', params: { owner: getUser.username } })">
             Profile
           </a>
           <a
             class="dropdown-item"
             href="#"
-            @click.stop="logout"
-            title="Logout">
+            title="Logout"
+            @click.stop="logout">
             Logout
           </a>
         </div>
@@ -51,7 +57,8 @@
 import { mapGetters } from 'vuex'
 
 export default {
-  name: 'a-header',
+  name: 'AHeader',
+  data: () => ({ toggled: false }),
   computed: {
     ...mapGetters(['isUserLoggedIn', 'getUser']),
     hasSearch: function () {
@@ -89,7 +96,6 @@ export default {
       return ret
     }
   },
-  data: () => ({ toggled: false }),
   methods: {
     onSearch: function (q) {
       this.$router.push({ name: 'search', query: { q } })
@@ -121,7 +127,7 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-  // background-color: color(dark);
+  // background-color: $dark;
 
   .profile {
     padding: .75rem 0;

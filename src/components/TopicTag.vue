@@ -1,9 +1,9 @@
 <template>
-<url-link :to="linkTo">
-  <span class="tag">
-    <slot></slot>
-  </span>
-</url-link>
+  <url-link :to="linkTo">
+    <span class="tag">
+      <slot/>
+    </span>
+  </url-link>
 </template>
 
 <script>
@@ -12,11 +12,11 @@ export default {
     text: ''
   }),
   computed: {
-    linkTo: function() {
+    linkTo: function () {
       return `/tags/${this.text}`
     }
   },
-  mounted: function() {
+  mounted: function () {
     this.text =
       this.$slots.default &&
       this.$slots.default.length > 0 &&

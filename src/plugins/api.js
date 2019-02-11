@@ -3,7 +3,7 @@ import axios from 'axios'
 import store from '@/store'
 
 export class Api {
-  constructor(baseURL = process.env.VUE_APP_API_BASEURL, timeout = process.env.VUE_APP_API_TIMEOUT, refresh = (process.env.NODE_ENV === 'production')) {
+  constructor (baseURL = process.env.VUE_APP_API_BASEURL, timeout = process.env.VUE_APP_API_TIMEOUT, refresh = (process.env.NODE_ENV === 'production')) {
     this.log(`[HUB][service::Api] initializing...`)
     this.http = axios.create({ baseURL, timeout })
     store.commit('setUserLoggedIn', false)

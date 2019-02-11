@@ -1,22 +1,44 @@
 <template>
   <two-column-sidebar>
-    <div slot="sidebar" class="sidebar sticky-sidebar">
+    <div
+      slot="sidebar"
+      class="sidebar sticky-sidebar">
       <div class="sidebar-info">
         <ul class="section sidebar-stick list-scroll-spy">
           <template v-for="(command, name) in $parent.commands">
-            <li :key="`list-command-${name}`" :class="{ active: $route.hash === `#${name}`}">
-              <a :href="`#${name}`" :title="name">{{ name }}</a>
+            <li
+              :key="`list-command-${name}`"
+              :class="{ active: $route.hash === `#${name}`}">
+              <a
+                :href="`#${name}`"
+                :title="name">{{ name }}</a>
             </li>
-            <li v-if="command.events" v-for="(event, ename) in command.events" :key="`list-subcommand-${ename}`" :class="{ 'sub': true, active: $route.hash.includes(`#${name}-${ename}`) }">
-              <a :href="`#${name}-${ename}`" :title="ename">{{ ename }}</a>
-            </li>
+            <template v-if="command.events">
+              <li
+                v-for="(event, ename) in command.events"
+                :key="`list-subcommand-${ename}`"
+                :class="{ 'sub': true, active: $route.hash.includes(`#${name}-${ename}`) }">
+                <a
+                  :href="`#${name}-${ename}`"
+                  :title="ename">{{ ename }}</a>
+              </li>
+            </template>
           </template>
         </ul>
       </div>
     </div>
-    <div slot="body" class="body">
-      <transition-group name="fade" tag="div" class="command body-section">
-        <service-content v-if="loaded" :key="`container-${getHash}`" :action="getActionFromHash" :example="getExampleFromAction" />
+    <div
+      slot="body"
+      class="body">
+      <transition-group
+        name="fade"
+        tag="div"
+        class="command body-section">
+        <service-content
+          v-if="loaded"
+          :key="`container-${getHash}`"
+          :action="getActionFromHash"
+          :example="getExampleFromAction" />
       </transition-group>
     </div>
   </two-column-sidebar>
@@ -96,6 +118,12 @@ export default {
       return ret
     }
   },
+  watch: {
+    '$route': 'checkHash'
+  },
+  created: function () {
+    this.$parent.onReady(this.checkHash)
+  },
   methods: {
     openRepo: function () {
       window.open(`//github.com/${this.$parent.service.pullUrl}`, '_blank')
@@ -128,12 +156,6 @@ export default {
         }
       }
     }
-  },
-  watch: {
-    '$route': 'checkHash'
-  },
-  created: function () {
-    this.$parent.onReady(this.checkHash)
   }
 }
 </script>
@@ -170,7 +192,7 @@ export default {
   }
   margin-top: -3.75rem;
   padding-top: 4.25rem;
-  background-color: lighten(color(dark), 2.5%);
+  background-color: lighten($dark, 2.5%);
   box-shadow: .25rem 0 .5rem inset rgba(0, 0, 0, .4);
   padding-left: 2rem;
   padding-right: 2rem;
@@ -219,7 +241,7 @@ export default {
 }
 
 .guide-main-content {
-  @include breakpoint(max l) {
+  @include fullhd {
     padding-left: 3rem !important;
     padding-right: 3rem !important;
   }
@@ -319,7 +341,7 @@ h3#commands {
     overflow: auto;
     margin-bottom: 48px;
 
-    @include breakpoint(max m) {
+    @include touch {
       width: calc(100vw - 24px);
     }
   }
@@ -359,7 +381,7 @@ h3#commands {
     overflow: auto;
     padding-top: 0.4em;
 
-    @include breakpoint(max m) {
+    @include touch {
       width: 100%;
     }
 

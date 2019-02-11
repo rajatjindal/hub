@@ -1,26 +1,42 @@
 <template>
   <div class="sticky topics">
     <h5 class="title">Topics</h5>
-      <transition-group name="fade" tag="ul" class="topics-list">
-        <li v-for="topic in topics" :key="topic.name" class="topic-item" :class="{ active: topic.name === active }" @click="active = topic.name">
-          <services-icon :type="topic.icon" :active="topic.name === active" />
-          {{ topic.name }}
-          <span class="close" @click.stop="active = ''"><font-awesome-icon icon="times" /></span>
+    <transition-group
+      name="fade"
+      tag="ul"
+      class="topics-list">
+      <li
+        v-for="topic in topics"
+        :key="topic.name"
+        :class="{ active: topic.name === active }"
+        class="topic-item"
+        @click="active = topic.name">
+        <services-icon
+          :type="topic.icon"
+          :active="topic.name === active" />
+        {{ topic.name }}
+        <span
+          class="close"
+          @click.stop="active = ''"><font-awesome-icon icon="times" /></span>
           <!-- <topic-tag>{{topic}}</topic-tag> -->
-        </li>
-      </transition-group>
-      <ul class="topics-list" v-if="topics.length <= 0 && isLoading">
-        <li class="topic-item">
-          <div class="loading-shimmer"></div>
-        </li>
-        <li class="topic-item">
-          <div class="loading-shimmer"></div>
-        </li>
-        <li class="topic-item">
-          <div class="loading-shimmer"></div>
-        </li>
-      </ul>
-      <p v-else-if="topics.length <= 0 && !isLoading" class="no-topics">No topics found.</p>
+      </li>
+    </transition-group>
+    <ul
+      v-if="topics.length <= 0 && isLoading"
+      class="topics-list">
+      <li class="topic-item">
+        <div class="loading-shimmer"/>
+      </li>
+      <li class="topic-item">
+        <div class="loading-shimmer"/>
+      </li>
+      <li class="topic-item">
+        <div class="loading-shimmer"/>
+      </li>
+    </ul>
+    <p
+      v-else-if="topics.length <= 0 && !isLoading"
+      class="no-topics">No topics found.</p>
   </div>
 </template>
 
@@ -28,29 +44,19 @@
 import ServicesIcon from '@/components/ServicesIcon'
 
 export default {
-  props: ['category'],
   components: { ServicesIcon },
+  props: {
+    category: {
+      type: String,
+      default: undefined
+    }
+  },
   data: () => ({
     isLoading: false,
     active: ''
   }),
-  mounted: function() {
-    if (this.topics.reduce((arr, v) => [...arr, v.name], []).includes(this.category)) {
-      this.active = this.category
-    } else {
-      this.$emit('select', '')
-    }
-    // if (this.value && this.value.length <= 0) {
-    //   this.isLoading = false
-    // }
-  },
-  watch: {
-    active: function (value) {
-      this.$emit('select', value)
-    }
-  },
   computed: {
-    topics: function() {
+    topics: function () {
       return [{
         name: 'All Services',
         icon: 'all'
@@ -141,12 +147,27 @@ export default {
 
       // return uniqueTopics.filter(t => t !== undefined)
     }
+  },
+  watch: {
+    active: function (value) {
+      this.$emit('select', value)
+    }
+  },
+  mounted: function () {
+    if (this.topics.reduce((arr, v) => [...arr, v.name], []).includes(this.category)) {
+      this.active = this.category
+    } else {
+      this.$emit('select', '')
+    }
+    // if (this.value && this.value.length <= 0) {
+    //   this.isLoading = false
+    // }
   }
 }
 </script>
 
 <style lang="scss">
-@include breakpoint(max m) {
+@include touch {
   .topic-item {
     display: inline-block;
     margin-right: 0.3em;
@@ -187,7 +208,7 @@ export default {
       margin-top: .5rem;
     }
     &.active {
-      color: state(primary);
+      color: $primary;
       font-weight: bold;
 
       .close {
@@ -205,13 +226,13 @@ export default {
     }
 
     &:hover:not(.active) {
-      color: lighten(state(primary), 25%);
+      color: lighten($primary, 25%);
       svg {
         .service-icon.filled {
-          fill: lighten(state(primary), 25%) !important;
+          fill: lighten($primary, 25%) !important;
         }
         .service-icon.stroked {
-          stroke: lighten(state(primary), 25%) !important;
+          stroke: lighten($primary, 25%) !important;
         }
       }
     }
@@ -221,7 +242,7 @@ export default {
     }
   }
 
-  @include breakpoint(m) {
+  @include desktop {
     .topic-item {
       width: 100%;
     }

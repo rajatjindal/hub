@@ -1,23 +1,36 @@
 <template>
-<div class="code-container">
-  <prism class="snippet" :language="lang"><slot></slot></prism>
-  <button class="clippy-btn" @click="copyText"><img class="clippy" width="13" :src="clippy" alt="Copy to clipboard"></button>
-  <div class="copied"></div>
-</div>
+  <div class="code-container">
+    <prism
+      :language="lang"
+      class="snippet"><slot/></prism>
+    <button
+      class="clippy-btn"
+      @click="copyText"><img
+        :src="clippy"
+        class="clippy"
+        width="13"
+        alt="Copy to clipboard"></button>
+    <div class="copied"/>
+  </div>
 </template>
 
 <script>
 import clippy from '@/assets/clippy.svg'
 
 export default {
-  props: ['lang'],
-  data: function() {
+  props: {
+    lang: {
+      type: String,
+      default: 'coffeescript'
+    }
+  },
+  data: function () {
     return {
       clippy
     }
   },
   methods: {
-    copyText: function(e) {
+    copyText: function (e) {
       this.$copyText(
         e.srcElement.parentElement && e.srcElement.parentElement.textContent
       )

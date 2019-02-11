@@ -8,21 +8,39 @@
             <div class="columns">
               <div class="column is-one-fifth avatar-container">
                 <div class="avatar">
-                  <img src="@/assets/slack.png" alt="Slack"/>
+                  <img
+                    src="@/assets/slack.png"
+                    alt="Slack">
                 </div>
               </div>
               <div class="column is-four-fifths main-head">
-                <h1 class="title is-1 text--light" v-if="serviceName">{{ serviceName | capitalize }} service</h1>
-                <h1 class="title is-1 text--light" v-else>...</h1>
+                <h1
+                  v-if="serviceName"
+                  class="title is-1 text--light">{{ serviceName | capitalize }} service</h1>
+                <h1
+                  v-else
+                  class="title is-1 text--light">...</h1>
                 <transition name="fade">
-                  <h3 v-if="service.description" class="subtitle is-4 text--light">{{service.description | emoji}}</h3>
-                  <h3 v-else-if="!service.description && serviceName" class="subtitle is-4 none-found text--light">This service has no description.</h3>
-                  <h3 v-else class="subtitle is-4 description">...</h3>
+                  <h3
+                    v-if="service.description"
+                    class="subtitle is-4 text--light">{{ service.description | emoji }}</h3>
+                  <h3
+                    v-else-if="!service.description && serviceName"
+                    class="subtitle is-4 none-found text--light">This service has no description.</h3>
+                  <h3
+                    v-else
+                    class="subtitle is-4 description">...</h3>
                 </transition>
                 <div class="service-categories">
-                  <services-icon type="popular" light />
-                  <services-icon type="messaging" light />
-                  <services-icon type="worker" light />
+                  <services-icon
+                    type="popular"
+                    light />
+                  <services-icon
+                    type="messaging"
+                    light />
+                  <services-icon
+                    type="worker"
+                    light />
                 </div>
               </div>
             </div>
@@ -39,39 +57,90 @@
             <div class="column is-one-third">
               <h5>Monthly usage<span class="float-right">153 users</span></h5>
               <div class="trend">
-                <la-cartesian autoresize :width="300" :height="150" :bound="[0]" :data="[{ v: 1 }, { v: 1 }, { v: 1 }, { v: 3 }, { v: 1 }, { v: 3 }, { v: 5 }, { v: 9 }, { v: 5 }, { v: 10 }, { v: 3 }, { v: 5 }]" :padding="0">
+                <la-cartesian
+                  :width="300"
+                  :height="150"
+                  :bound="[0]"
+                  :data="[{ v: 1 }, { v: 1 }, { v: 1 }, { v: 3 }, { v: 1 }, { v: 3 }, { v: 5 }, { v: 9 }, { v: 5 }, { v: 10 }, { v: 3 }, { v: 5 }]"
+                  :padding="0"
+                  autoresize>
                   <defs>
-                    <linearGradient id="colorm-fill" x1="0" y1="0" x2="0" y2="1">
-                      <stop stop-color="#a100ff" offset="0%" />
-                      <stop stop-color="#efefef" offset="100%" />
+                    <linearGradient
+                      id="colorm-fill"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1">
+                      <stop
+                        stop-color="#a100ff"
+                        offset="0%" />
+                      <stop
+                        stop-color="#efefef"
+                        offset="100%" />
                     </linearGradient>
                   </defs>
-                  <la-line curve :width="2" prop="v" color="url(#colorm-fill)" />
+                  <la-line
+                    :width="2"
+                    curve
+                    prop="v"
+                    color="url(#colorm-fill)" />
                 </la-cartesian>
               </div>
             </div>
             <div class="column is-one-third">
               <h5>Successful builds<span class="float-right">2,567 builds</span></h5>
               <div class="trend">
-                <la-cartesian autoresize :width="300" :height="150" :bound="[0]" :data="[{ v: 10 }, { v: 5 }, { v: 7 }, { v: 6 }, { v: 20 }, { v: 15 }, { v: 30 }]" :padding="0">
+                <la-cartesian
+                  :width="300"
+                  :height="150"
+                  :bound="[0]"
+                  :data="[{ v: 10 }, { v: 5 }, { v: 7 }, { v: 6 }, { v: 20 }, { v: 15 }, { v: 30 }]"
+                  :padding="0"
+                  autoresize>
                   <defs>
-                    <linearGradient id="area-fill" x1="0" y1="0" x2="0" y2="1">
-                      <stop stop-color="#0e0f12" offset="0%" stop-opacity="0.8" />
-                      <stop stop-color="#0e0f12" offset="100%" stop-opacity="0.4" />
+                    <linearGradient
+                      id="area-fill"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1">
+                      <stop
+                        stop-color="#0e0f12"
+                        offset="0%"
+                        stop-opacity="0.8" />
+                      <stop
+                        stop-color="#0e0f12"
+                        offset="100%"
+                        stop-opacity="0.4" />
                     </linearGradient>
                   </defs>
                   <defs>
-                    <linearGradient id="color-fill" x1="0" y1="0" x2="0" y2="1">
-                      <stop stop-color="#f72d2d" offset="0%" />
-                      <stop stop-color="#ff7900" offset="100%" />
+                    <linearGradient
+                      id="color-fill"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1">
+                      <stop
+                        stop-color="#f72d2d"
+                        offset="0%" />
+                      <stop
+                        stop-color="#ff7900"
+                        offset="100%" />
                     </linearGradient>
                   </defs>
-                  <la-area fill-color="url(#area-fill)" :width="2" line color="url(#color-fill)" curve prop="v"></la-area>
+                  <la-area
+                    :width="2"
+                    fill-color="url(#area-fill)"
+                    line
+                    color="url(#color-fill)"
+                    curve
+                    prop="v"/>
                 </la-cartesian>
               </div>
             </div>
             <div class="column is-one-third">
-                <!-- <div id="heatmap" /> -->
+              <!-- <div id="heatmap" /> -->
             </div>
           </div>
         </div>
@@ -82,16 +151,29 @@
         <div class="columns">
           <div class="column is-full">
             <transition name="fade">
-              <nav class="breadcrumb" aria-label="breadcrumbs">
+              <nav
+                class="breadcrumb"
+                aria-label="breadcrumbs">
                 <ul>
                   <li><router-link :to="{ name: 'hub' }">Hub</router-link></li>
                   <li><router-link :to="{ name: 'services' }">Services</router-link></li>
-                  <li v-if="$route.name.includes('service')" class="is-active"><a href="#" @click.stop="" :aria-current="serviceName">{{ serviceName | capitalize }}</a></li>
+                  <li
+                    v-if="$route.name.includes('service')"
+                    class="is-active"><a
+                      :aria-current="serviceName"
+                      href="#"
+                      @click.stop="">{{ serviceName | capitalize }}</a></li>
                   <template v-else>
                     <li><router-link :to="{ name: `service${$route.name === 'guide' ? '' : '_repo'}`, params: ($route.name === 'guide' ? { alias } : { owner, repo }), hash: '' }">{{ serviceName | capitalize }}</router-link></li>
                     <li><router-link :to="{ name: `service${$route.name === 'guide' ? '' : '_repo'}`, params: ($route.name === 'guide' ? { alias } : { owner, repo }), hash: '#actions' }">Actions</router-link></li>
-                    <li v-for="(cat, idx) of getHashArray" :key="`breadcrumbs-${cat}`" :class="{ 'is-active': idx === getHashArray.length - 1 }">
-                      <a :href="`#${getHash(idx)}`" @click.stop="$router.push({name: $route.name, params: $route.params, hash: `#${getHash(idx)}` })" :aria-current="`${serviceName} guide ${cat}`">{{ cat }}</a>
+                    <li
+                      v-for="(cat, idx) of getHashArray"
+                      :key="`breadcrumbs-${cat}`"
+                      :class="{ 'is-active': idx === getHashArray.length - 1 }">
+                      <a
+                        :href="`#${getHash(idx)}`"
+                        :aria-current="`${serviceName} guide ${cat}`"
+                        @click.stop="$router.push({name: $route.name, params: $route.params, hash: `#${getHash(idx)}` })">{{ cat }}</a>
                     </li>
                   </template>
                 </ul>
@@ -113,34 +195,50 @@ import ServicesIcon from '@/components/ServicesIcon'
 
 export default {
   name: 'Integration',
-  props: ['repo', 'alias', 'owner'],
+  components: {
+    ServicesIcon
+  },
+  props: {
+    repo: {
+      type: String,
+      default: undefined
+    },
+    alias: {
+      type: String,
+      default: undefined
+    },
+    owner: {
+      type: String,
+      default: undefined
+    }
+  },
   apollo: {
     serviceByAlias: {
       query: ServiceQuery,
-      skip: function() {
+      skip: function () {
         return !this.alias
       },
-      variables: function() {
+      variables: function () {
         return {
           where: this.alias
         }
       },
-      update: function(data) {
+      update: function (data) {
         return data.serviceByAlias
       }
     },
     serviceByOwnerAndRepo: {
       query: ServiceByOwnerAndRepoQuery,
-      skip: function() {
+      skip: function () {
         return !this.owner && !this.repo
       },
-      variables: function() {
+      variables: function () {
         return {
           owner: this.owner,
           repo: this.repo
         }
       },
-      update: function(data) {
+      update: function (data) {
         return (
           data.allOwners.nodes.length > 0 &&
           data.allOwners.nodes[0].services.nodes.length > 0 &&
@@ -155,43 +253,14 @@ export default {
     startDate: new Date('2018-05-30T12:10:30.407+05:30'),
     endDate: new Date()
   }),
-  watch: {
-    '$route': function () {
-      this.$nextTick(this.onReady)
-    },
-    serviceByAlias: function (newValue) {
-      if (!newValue) this.$router.push('/404')
-      else this.onReady()
-    },
-    serviceByOwnerAndRepo: function(newValue) {
-      if (!newValue) this.$router.push('/404')
-      else this.onReady()
-    }
-  },
-  methods: {
-    onReady: function (callback) {
-      if (callback) {
-        this.onReadyCallback = callback
-      } else {
-        if (this.onReadyCallback) {
-          this.onReadyCallback()
-        }
-      }
-    },
-    getHash: function (idx) {
-      let hash = ((this.$route.hash || '').split('#') || ['', ''])[1].split('-')
-      hash.splice(idx + 1)
-      return hash.join('-')
-    }
-  },
   computed: {
-    service: function() {
+    service: function () {
       return this.serviceByAlias || this.serviceByOwnerAndRepo || {}
     },
     getHashArray: function () {
       return ((this.$route.hash || '').split('#') || ['', ''])[1].split('-')
     },
-    serviceName: function() {
+    serviceName: function () {
       if (
         !this.service.alias &&
         (!this.service || !this.service.owner)
@@ -203,10 +272,10 @@ export default {
         `${this.service.owner.username}/${this.service.name}`
       )
     },
-    numCommands: function() {
+    numCommands: function () {
       return Object.keys(this.commands).length
     },
-    commands: function() {
+    commands: function () {
       return (
         (this.service &&
           this.service.serviceTags &&
@@ -216,7 +285,7 @@ export default {
         {}
       )
     },
-    tags: function() {
+    tags: function () {
       return (
         (this.service &&
           this.service.serviceTags &&
@@ -236,6 +305,19 @@ export default {
           this.tags[0].configuration &&
           this.tags[0].configuration.info &&
           this.tags[0].configuration.info.version) || undefined)
+    }
+  },
+  watch: {
+    '$route': function () {
+      this.$nextTick(this.onReady)
+    },
+    serviceByAlias: function (newValue) {
+      if (!newValue) this.$router.push('/404')
+      else this.onReady()
+    },
+    serviceByOwnerAndRepo: function (newValue) {
+      if (!newValue) this.$router.push('/404')
+      else this.onReady()
     }
   },
   mounted: function () {
@@ -258,8 +340,21 @@ export default {
     //   colors: ['#ebccff', '#d799ff', '#c466ff', '#b032ff', '#a100ff']
     // })
   },
-  components: {
-    ServicesIcon
+  methods: {
+    onReady: function (callback) {
+      if (callback) {
+        this.onReadyCallback = callback
+      } else {
+        if (this.onReadyCallback) {
+          this.onReadyCallback()
+        }
+      }
+    },
+    getHash: function (idx) {
+      let hash = ((this.$route.hash || '').split('#') || ['', ''])[1].split('-')
+      hash.splice(idx + 1)
+      return hash.join('-')
+    }
   }
 }
 </script>
@@ -279,7 +374,7 @@ export default {
 }
 
 .bg--darker {
-  background-color: rgba(darken(color(dark), 10%), .5);
+  background-color: rgba(darken($dark, 10%), .5);
 }
 
 .info-container {
@@ -304,7 +399,7 @@ export default {
 }
 
 .breadcrumb-container {
-  @include breakpoint(m) { height: 3rem }
+  @include desktop { height: 3rem }
   padding-top: 1.5rem !important;
   padding-bottom: 0 !important;
 }
@@ -314,7 +409,7 @@ export default {
     border: 1px solid gray(800);
     border-radius: .25rem;
     padding: 0;
-    background-color: rgba(darken(color(dark), 5%), 1);
+    background-color: rgba(darken($dark, 5%), 1);
   }
 }
 
@@ -354,7 +449,7 @@ export default {
     background-color: $white;
     padding: 0;
     z-index: 1;
-    box-shadow: 0 .3rem 2rem .1rem rgba(darken(color(dark), 15%), .5);
+    box-shadow: 0 .3rem 2rem .1rem rgba(darken($dark, 15%), .5);
     overflow: hidden;
     img {
       padding: 1rem;
@@ -384,10 +479,10 @@ export default {
         }
         padding: 1rem 2rem 1rem 0 !important;
         max-width: 20rem;
-        @include breakpoint(max s) {
+        @include mobile {
           max-width: 130px;
         }
-        @include breakpoint(max m) {
+        @include touch {
           max-width: 15rem;
         }
         text-overflow: ellipsis;

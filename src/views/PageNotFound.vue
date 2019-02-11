@@ -5,7 +5,7 @@
       <h2>Oops. The page you were looking for doesn't exist.</h2>
       <p>You may have mistyped the address or the page may have moved</p>
 
-      <router-link to='/'><a-button color="white">Go to homepage</a-button></router-link>
+      <router-link to="/"><a-button color="white">Go to homepage</a-button></router-link>
     </div>
   </div>
 </template>

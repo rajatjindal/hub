@@ -8,15 +8,25 @@
             <div class="columns">
               <div class="column is-one-fifth avatar-container">
                 <div class="avatar">
-                  <div class="picture" :style="`background-image: url(https://avatars.githubusercontent.com/${serviceUserName}?s=128`" />
+                  <div
+                    :style="`background-image: url(https://avatars.githubusercontent.com/${serviceUserName}?s=128`"
+                    class="picture" />
                 </div>
               </div>
               <div class="column is-four-fifths main-head">
-                <h1 class="title is-1 text--light" v-if="serviceUserName">{{ serviceUserName | capitalize }}</h1>
-                <h1 class="title is-1 text--light" v-else>...</h1>
+                <h1
+                  v-if="serviceUserName"
+                  class="title is-1 text--light">{{ serviceUserName | capitalize }}</h1>
+                <h1
+                  v-else
+                  class="title is-1 text--light">...</h1>
                 <transition name="fade">
-                  <h3 v-if="serviceName" class="subtitle is-4 text--light">{{ serviceName }}</h3>
-                  <h3 v-else class="subtitle is-4 description">...</h3>
+                  <h3
+                    v-if="serviceName"
+                    class="subtitle is-4 text--light">{{ serviceName }}</h3>
+                  <h3
+                    v-else
+                    class="subtitle is-4 description">...</h3>
                 </transition>
               </div>
             </div>
@@ -27,15 +37,25 @@
     <div class="section">
       <div class="container">
         <transition name="fade">
-          <div class="level is-mobile service-result-title-container" v-if="results.length > 0">
+          <div
+            v-if="results.length > 0"
+            class="level is-mobile service-result-title-container">
             <div class="level-left">
               <transition name="fade">
-                <span v-if="serviceName" class="title is-4">{{ totalItems || '' }} services</span>
-                <div v-else class="loading-shimmer title tag"></div>
+                <span
+                  v-if="serviceName"
+                  class="title is-4">{{ totalItems || '' }} services</span>
+                <div
+                  v-else
+                  class="loading-shimmer title tag"/>
               </transition>
             </div>
-            <div class="level-right" v-if="isUser">
-              <a-button state="primary" @click="$router.push({ name: 'new-service' })"><font-awesome-icon icon="plus" /> New microservice</a-button>
+            <div
+              v-if="isUser"
+              class="level-right">
+              <a-button
+                state="primary"
+                @click="$router.push({ name: 'new-service' })"><font-awesome-icon icon="plus" /> New microservice</a-button>
             </div>
           </div>
         </transition>
@@ -43,9 +63,18 @@
         <div>
           <div class="tile is-ancestor">
             <div class="tile is-parent is-vertical">
-              <transition-group tag="div" name="fade">
-                <div v-for="(r, index) in results" :key="`organization-list-item-${index}`" class="tile is-child search-result">
-                  <service-summary :title="getTitle(r)" :is-alias="r.alias ? true : false" :description="r.description" :tags="r.topics"></service-summary>
+              <transition-group
+                tag="div"
+                name="fade">
+                <div
+                  v-for="(r, index) in results"
+                  :key="`organization-list-item-${index}`"
+                  class="tile is-child search-result">
+                  <service-summary
+                    :title="getTitle(r)"
+                    :is-alias="r.alias ? true : false"
+                    :description="r.description"
+                    :tags="r.topics"/>
                 </div>
               </transition-group>
             </div>
@@ -65,19 +94,28 @@ import OrganizationInfos from '@/components/OrganizationInfos'
 
 export default {
   name: 'SearchResults',
-  props: ['owner'],
+  components: {
+    ServiceSummary,
+    OrganizationInfos
+  },
+  props: {
+    owner: {
+      type: String,
+      default: undefined
+    }
+  },
   apollo: {
     results: {
       query: ServiceByOwnerQuery,
-      skip: function() {
+      skip: function () {
         return !this.owner
       },
-      variables: function() {
+      variables: function () {
         return {
           owner: this.owner
         }
       },
-      update: function(data) {
+      update: function (data) {
         if (data.allOwners.nodes.length > 0) {
           this.serviceName = data.allOwners.nodes[0].name
           this.serviceUserName = data.allOwners.nodes[0].username
@@ -100,34 +138,30 @@ export default {
     results: [{}, {}, {}],
     serviceByOwner: undefined
   }),
-  watch: {
-    results: function(newValue) {
-      if (!newValue) this.$router.push('/404')
-    }
-  },
   computed: {
     ...mapGetters(['isUserLoggedIn', 'getUser']),
     isUser: function () {
       return this.isUserLoggedIn && this.getUser.username === this.serviceUserName
     },
-    topics: function() {
+    topics: function () {
       return this.results.map(r => r.topics)
     },
-    service: function() {
+    service: function () {
       return this.serviceByOwner || {}
     }
   },
+  watch: {
+    results: function (newValue) {
+      if (!newValue) this.$router.push('/404')
+    }
+  },
   methods: {
-    getTitle: function(r) {
+    getTitle: function (r) {
       if (!r.alias && (!r.owner || !r.owner.username)) {
         return ''
       }
       return r.alias || `${r.owner.username}/${r.name}`
     }
-  },
-  components: {
-    ServiceSummary,
-    OrganizationInfos
   }
 }
 </script>

@@ -4,44 +4,82 @@
       <div class="container">
         <div class="columns is-centered">
           <div class="column is-four-fifths">
-            <a-steps ref="steps" lock-headers>
-              <form class="column is-full" slot-scope="stepsProps" @submit.prevent="submitSteps" action="">
+            <a-steps
+              ref="steps"
+              lock-headers>
+              <form
+                slot-scope="stepsProps"
+                class="column is-full"
+                action=""
+                @submit.prevent="submitSteps">
                 <a-step class="column is-full">
                   <span slot="header">
-                      1. <span><font-awesome-icon :icon="['fab', 'github']" /> Connect to Github</span>
+                    1. <span><font-awesome-icon :icon="['fab', 'github']" /> Connect to Github</span>
                   </span>
                   <a-card>
                     <h2 class="title is-3">Continuous Deployment</h2>
                     <p class="subtitle">Connect to Github where your sources are hosted. When you push to Git, we'll update your service on our servers and deploy the result.</p>
-                    <a-button type="button" state="neutral" @click="login"><font-awesome-icon :icon="['fab', 'github']" /> Signin with Github</a-button>
+                    <a-button
+                      type="button"
+                      state="neutral"
+                      @click="login"><font-awesome-icon :icon="['fab', 'github']" /> Signin with Github</a-button>
                   </a-card>
                 </a-step>
                 <a-step>
                   <span slot="header">
-                      2. <span><font-awesome-icon icon="code-branch" /> Choose a repository</span>
+                    2. <span><font-awesome-icon icon="code-branch" /> Choose a repository</span>
                   </span>
-                  <div class="tile is-parent is-vertical" v-if="getUser">
+                  <div
+                    v-if="getUser"
+                    class="tile is-parent is-vertical">
                     <div class="search level">
                       <div class="level-left">
-                        <h3><img class="avatar" :src="`https://avatars.githubusercontent.com/${getUser.username}?s=64`" alt="user" /> {{ getUser.username }}</h3>
+                        <h3><img
+                          :src="`https://avatars.githubusercontent.com/${getUser.username}?s=64`"
+                          class="avatar"
+                          alt="user" > {{ getUser.username }}</h3>
                       </div>
                       <div class="level-right">
-                        <a-input addon-left-icon="search" placeholder="Search a repository" v-model="search" />
+                        <a-input
+                          v-model="search"
+                          addon-left-icon="search"
+                          placeholder="Search a repository" />
                       </div>
                     </div>
-                    <transition-group tag="div" name="fade">
-                      <div v-for="(r, index) in searchedRepos" :key="`repos-on-list-item-${index}`" class="tile is-child repo">
+                    <transition-group
+                      tag="div"
+                      name="fade">
+                      <div
+                        v-for="(r, index) in searchedRepos"
+                        :key="`repos-on-list-item-${index}`"
+                        class="tile is-child repo">
                         <div class="level">
                           <div class="level-left">
-                            <service-summary :title="r.name" :is-alias="false" :description="emojify(r.description)" :tags="r.topics" />
+                            <service-summary
+                              :title="r.name"
+                              :is-alias="false"
+                              :description="emojify(r.description)"
+                              :tags="r.topics" />
                           </div>
                           <div class="level-right">
-                            <a-button type="button" v-if="r.microservice" @click="choose(r)" state="primary">Choose</a-button>
-                            <a-button v-else type="button" state="secondary" outline disabled>Choose</a-button>
+                            <a-button
+                              v-if="r.microservice"
+                              type="button"
+                              state="primary"
+                              @click="choose(r)">Choose</a-button>
+                            <a-button
+                              v-else
+                              type="button"
+                              state="secondary"
+                              outline
+                              disabled>Choose</a-button>
                           </div>
                         </div>
                       </div>
-                      <div key="repos-on-list-no-items" v-show="searchedRepos.length === 0" class="repo">
+                      <div
+                        v-show="searchedRepos.length === 0"
+                        key="repos-on-list-no-items"
+                        class="repo">
                         <div class="text--center">
                           <h3 class="subtitle is-4">No repositories found</h3>
                         </div>
@@ -51,38 +89,88 @@
                 </a-step>
                 <a-step>
                   <span slot="header">
-                      3. <span><font-awesome-icon icon="file-signature" /> Additional informations</span>
+                    3. <span><font-awesome-icon icon="file-signature" /> Additional informations</span>
                   </span>
-                  <div class="form" v-if="service.repo && getUser">
+                  <div
+                    v-if="service.repo && getUser"
+                    class="form">
                     <div class="form-section">
                       <h2>Repository</h2>
                       <div class="inputs">
-                        <a-input label="Owner" disabled :value="getUser.username" :options="[]">
+                        <a-input
+                          :value="getUser.username"
+                          :options="[]"
+                          label="Owner"
+                          disabled>
                           <small slot="infoBlock">Teams and Organizations coming soon</small>
                         </a-input>
-                        <a-input :valid="/^[\w[\-]*]*\w+$/g.test(service.name)" error="The name can only contains letters, numbers, underscores and dashes. It can't end with a dash" v-model="service.name" label="Service name" />
+                        <a-input
+                          :valid="/^[\w[\-]*]*\w+$/g.test(service.name)"
+                          v-model="service.name"
+                          error="The name can only contains letters, numbers, underscores and dashes. It can't end with a dash"
+                          label="Service name" />
                         <div class="select-group">
-                          <a-window :copy="false" :code="serviceCodeContent" />
+                          <a-window
+                            :copy="false"
+                            :code="serviceCodeContent" />
                         </div>
                       </div>
                       <h2>Hub search informations</h2>
                       <div class="inputs">
-                        <a-input label="Title" :valid="service.title.length > 2 && service.title.length < 70" error="Title length must be between 3 and 70 characters" v-model="service.title" />
-                        <a-input label="Description" textarea :valid="service.description.length > 0" error=" " area v-model="service.description" />
-                        <a-input label="Category" v-model="service.category" :options="categoriesList" />
-                        <a-input label="Tags" multiple v-model="service.tags" :options="tagsbyCategoryList" />
+                        <a-input
+                          :valid="service.title.length > 2 && service.title.length < 70"
+                          v-model="service.title"
+                          label="Title"
+                          error="Title length must be between 3 and 70 characters" />
+                        <a-input
+                          :valid="service.description.length > 0"
+                          v-model="service.description"
+                          label="Description"
+                          textarea
+                          error=" "
+                          area />
+                        <a-input
+                          v-model="service.category"
+                          :options="categoriesList"
+                          label="Category" />
+                        <a-input
+                          v-model="service.tags"
+                          :options="tagsbyCategoryList"
+                          label="Tags"
+                          multiple />
                       </div>
                       <h2>Container location</h2>
                       <div class="inputs">
-                        <a-input label="Provider" v-model="service.containerProvider" :options="['Docker', 'Custom']" />
-                        <a-input label="Pull url" :placeholder="service.containerProvider === 'Docker' ? 'owner/microservice' : 'https://registry.domain.tld/pull/microservice'" @blur="pullCheck" :valid="validPull" error="Please, provide a valid pull URL" v-model="service.pullUrl">
-                          <span slot="addonLeft" v-if="service.containerProvider === 'Docker'" class="text--dark"><font-awesome-icon :icon="['fab', 'docker']" /></span>
+                        <a-input
+                          v-model="service.containerProvider"
+                          :options="['Docker', 'Custom']"
+                          label="Provider" />
+                        <a-input
+                          :placeholder="service.containerProvider === 'Docker' ? 'owner/microservice' : 'https://registry.domain.tld/pull/microservice'"
+                          :valid="validPull"
+                          v-model="service.pullUrl"
+                          label="Pull url"
+                          error="Please, provide a valid pull URL"
+                          @blur="pullCheck">
+                          <span
+                            v-if="service.containerProvider === 'Docker'"
+                            slot="addonLeft"
+                            class="text--dark"><font-awesome-icon :icon="['fab', 'docker']" /></span>
                         </a-input>
                       </div>
                     </div>
                     <div class="submit">
-                      <a-button type="button" state="neutral" outline size="l" @click="stepsProps.prev()">Change repository</a-button>
-                      <a-button type="submit" state="primary" size="l" :disabled="!validPull">Submit service</a-button>
+                      <a-button
+                        type="button"
+                        state="neutral"
+                        outline
+                        size="l"
+                        @click="stepsProps.prev()">Change repository</a-button>
+                      <a-button
+                        :disabled="!validPull"
+                        type="submit"
+                        state="primary"
+                        size="l">Submit service</a-button>
                     </div>
                   </div>
                 </a-step>
@@ -109,12 +197,12 @@ const tagsList = {
 export default {
   name: 'NewService',
   components: { ServiceSummary },
-  data: () => ({ tagsList, repos: [], validPull: undefined, serviceRepo: undefined, search: '', service: { repo: undefined, branches: [], name: '', version: '', icon: '', containerProvider: 'Docker', pullUrl: '', tags: '', category: 'Service', branch: 'master', title: '', description: '', public: true } }),
   filters: {
     spliceSearch: function (arr) {
       return arr.splice().filter(a => a.name.includes(this.search))
     }
   },
+  data: () => ({ tagsList, repos: [], validPull: undefined, serviceRepo: undefined, search: '', service: { repo: undefined, branches: [], name: '', version: '', icon: '', containerProvider: 'Docker', pullUrl: '', tags: '', category: 'Service', branch: 'master', title: '', description: '', public: true } }),
   computed: {
     ...mapGetters(['getUser', 'isUserLoggedIn', 'isUserRefreshing']),
     searchedRepos: function () {

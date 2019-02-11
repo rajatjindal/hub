@@ -10,7 +10,11 @@
       </div>
     </section>
     <two-column-sidebar>
-      <services-topics-list v-model="topics" slot="sidebar" @select="selectCategory" :category="category" />
+      <services-topics-list
+        slot="sidebar"
+        v-model="topics"
+        :category="category"
+        @select="selectCategory" />
       <div slot="body">
         <section class="section">
           <div class="search-bar-container">
@@ -21,7 +25,9 @@
             </div>
           </div>
         </section>
-        <section class="section" v-if="!search && !category">
+        <section
+          v-if="!search && !category"
+          class="section">
           <h2 class="title is-3">Featured services</h2>
           <div class="featured-services section-body">
             <div class="tile is-ancestor">
@@ -29,7 +35,9 @@
                 <router-link :to="`/service/slack`">
                   <div class="feature tile is-child">
                     <div class="avatar">
-                      <img src="@/assets/slack.png" alt="Slack"/>
+                      <img
+                        src="@/assets/slack.png"
+                        alt="Slack">
                     </div>
                     <div class="content slack-service">
                       <h4>Slack Service</h4>
@@ -43,7 +51,9 @@
                 <router-link :to="`/service/twitter`">
                   <div class="feature tile is-child">
                     <div class="avatar">
-                      <img src="@/assets/twitter.png" alt="Twitter"/>
+                      <img
+                        src="@/assets/twitter.png"
+                        alt="Twitter">
                     </div>
                     <div class="content twitter-service">
                       <h4>Twitter Service</h4>
@@ -57,7 +67,9 @@
                 <router-link :to="`/service/twilio`">
                   <div class="feature tile is-child">
                     <div class="avatar">
-                      <img src="@/assets/twilio.svg" alt="Twilio"/>
+                      <img
+                        src="@/assets/twilio.svg"
+                        alt="Twilio">
                     </div>
                     <div class="content twilio-service">
                       <h4>Twilio Service</h4>
@@ -70,68 +82,134 @@
           </div>
         </section>
 
-        <section class="section" v-if="!search && !category">
+        <section
+          v-if="!search && !category"
+          class="section">
           <h2 class="title is-3">Recently added</h2>
           <div class="section-body">
             <div class="tile is-ancestor">
-              <transition-group name="fade" tag="div" class="tile is-parent is-vertical">
-                <div v-for="(r, index) in data.recentServices.slice(0, 3)" class="tile is-child" :key="r.alias || index">
-                  <service-summary :title="getTitle(r)" :is-alias="r.alias ? true : false" :description="r.description" :tags="r.topics"></service-summary>
+              <transition-group
+                name="fade"
+                tag="div"
+                class="tile is-parent is-vertical">
+                <div
+                  v-for="(r, index) in data.recentServices.slice(0, 3)"
+                  :key="r.alias || index"
+                  class="tile is-child">
+                  <service-summary
+                    :title="getTitle(r)"
+                    :is-alias="r.alias ? true : false"
+                    :description="r.description"
+                    :tags="r.topics"/>
                 </div>
               </transition-group>
-              <transition-group name="fade" tag="div" class="tile is-parent is-vertical">
-                <div v-for="(r, index) in data.recentServices.slice(3, 6)" class="tile is-child" :key="r.alias || index">
-                  <service-summary :title="getTitle(r)" :is-alias="r.alias ? true : false" :description="r.description" :tags="r.topics"></service-summary>
+              <transition-group
+                name="fade"
+                tag="div"
+                class="tile is-parent is-vertical">
+                <div
+                  v-for="(r, index) in data.recentServices.slice(3, 6)"
+                  :key="r.alias || index"
+                  class="tile is-child">
+                  <service-summary
+                    :title="getTitle(r)"
+                    :is-alias="r.alias ? true : false"
+                    :description="r.description"
+                    :tags="r.topics"/>
                 </div>
               </transition-group>
             </div>
           </div>
         </section>
-        <section class="section" v-if="!search && !category">
+        <section
+          v-if="!search && !category"
+          class="section">
           <h2 class="title is-3">Most used</h2>
           <div class="section-body">
             <div class="tile is-ancestor">
-              <transition-group name="fade" tag="div" class="tile is-parent is-vertical">
-                <div v-for="(r, index) in data.recentServices.slice(0, 3)" class="tile is-child" :key="r.alias || index">
-                  <service-summary :title="getTitle(r)" :is-alias="r.alias ? true : false" :description="r.description" :tags="r.topics"></service-summary>
+              <transition-group
+                name="fade"
+                tag="div"
+                class="tile is-parent is-vertical">
+                <div
+                  v-for="(r, index) in data.recentServices.slice(0, 3)"
+                  :key="r.alias || index"
+                  class="tile is-child">
+                  <service-summary
+                    :title="getTitle(r)"
+                    :is-alias="r.alias ? true : false"
+                    :description="r.description"
+                    :tags="r.topics"/>
                 </div>
               </transition-group>
-              <transition-group name="fade" tag="div" class="tile is-parent is-vertical">
-                <div v-for="(r, index) in data.recentServices.slice(3, 6)" class="tile is-child" :key="r.alias || index">
-                  <service-summary :title="getTitle(r)" :is-alias="r.alias ? true : false" :description="r.description" :tags="r.topics"></service-summary>
+              <transition-group
+                name="fade"
+                tag="div"
+                class="tile is-parent is-vertical">
+                <div
+                  v-for="(r, index) in data.recentServices.slice(3, 6)"
+                  :key="r.alias || index"
+                  class="tile is-child">
+                  <service-summary
+                    :title="getTitle(r)"
+                    :is-alias="r.alias ? true : false"
+                    :description="r.description"
+                    :tags="r.topics"/>
                 </div>
               </transition-group>
             </div>
           </div>
         </section>
-        <section class="section" v-else-if="!category">
-          <transition-group tag="div" name="fade" v-if="!isSearchLoading">
-            <div key="results" v-if="searchTotalItems > 0">
-              <h2 class="title is-3">{{searchTotalItems}} service results</h2>
+        <section
+          v-else-if="!category"
+          class="section">
+          <transition-group
+            v-if="!isSearchLoading"
+            tag="div"
+            name="fade">
+            <div
+              v-if="searchTotalItems > 0"
+              key="results">
+              <h2 class="title is-3">{{ searchTotalItems }} service results</h2>
             </div>
-            <div key="no-results" v-else>
-              <h3 class="subtitle is-4"><font-awesome-icon icon="search" /> We couldn't find any services matching `{{search}}`</h3>
+            <div
+              v-else
+              key="no-results">
+              <h3 class="subtitle is-4"><font-awesome-icon icon="search" /> We couldn't find any services matching `{{ search }}`</h3>
             </div>
           </transition-group>
           <div>
             <div class="tile is-ancestor">
               <div class="tile is-parent is-vertical">
-                <transition-group tag="div" name="fade">
-                  <div v-for="(r, index) in searchResults" :key="r.alias || index" class="tile is-child search-result">
-                    <service-summary :title="getTitle(r)" :is-alias="r.alias ? true : false" :description="r.description" :tags="r.topics"></service-summary>
+                <transition-group
+                  tag="div"
+                  name="fade">
+                  <div
+                    v-for="(r, index) in searchResults"
+                    :key="r.alias || index"
+                    class="tile is-child search-result">
+                    <service-summary
+                      :title="getTitle(r)"
+                      :is-alias="r.alias ? true : false"
+                      :description="r.description"
+                      :tags="r.topics"/>
                   </div>
                 </transition-group>
               </div>
             </div>
           </div>
         </section>
-        <section v-else class="section">
-          <transition-group tag="div" name="fade">
+        <section
+          v-else
+          class="section">
+          <transition-group
+            tag="div"
+            name="fade">
             <!-- <div key="results" v-if="searchCatTotalItems > 0">
               <h2 class="title is-3">{{searchCatTotalItems}} service results</h2>
             </div> -->
             <div key="no-results">
-              <h3 class="subtitle is-4"><font-awesome-icon icon="search" /> We couldn't find any service containing the topic `{{category}}`</h3>
+              <h3 class="subtitle is-4"><font-awesome-icon icon="search" /> We couldn't find any service containing the topic `{{ category }}`</h3>
             </div>
           </transition-group>
           <!-- <div>
@@ -148,18 +226,20 @@
         </section>
       </div>
     </two-column-sidebar>
-    <section class="section bg--light" v-if="!search && !category">
-        <div class="container">
-          <div class="columns is-centered">
-            <div class="column is-half">
-              <h2 class="title is-2">List your service on Asyncy Hub</h2>
-              <a-button
-                state="primary"
-                size="l">Submit a Service</a-button>
-            </div>
+    <section
+      v-if="!search && !category"
+      class="section bg--light">
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-half">
+            <h2 class="title is-2">List your service on Asyncy Hub</h2>
+            <a-button
+              state="primary"
+              size="l">Submit a Service</a-button>
           </div>
         </div>
-      </section>
+      </div>
+    </section>
   </div>
 </template>
 
@@ -173,8 +253,22 @@ import ServicesTopicsList from '@/components/ServicesTopicsList'
 // import headerRight from 'asyncy-ui-components/assets/images/home_header_right.svg'
 
 export default {
-  name: 'index',
-  props: ['search', 'category'],
+  name: 'Index',
+  components: {
+    ServicesTopicsList,
+    ServiceSummary,
+    SearchBar
+  },
+  props: {
+    search: {
+      type: String,
+      default: ''
+    },
+    category: {
+      type: String,
+      default: undefined
+    }
+  },
   apollo: {
     data: {
       query: IndexQuery,
@@ -202,11 +296,6 @@ export default {
       }
     }
   },
-  watch: {
-    '$route': function () {
-      this.isSearchLoading = true
-    }
-  },
   data: () => ({
     data: {
       recentServices: [{}, {}, {}, {}, {}, {}]
@@ -216,12 +305,17 @@ export default {
     isSearchLoading: true
   }),
   computed: {
-    topics: function() {
+    topics: function () {
       return this.data.recentServices.map(s => s.topics)
     }
   },
+  watch: {
+    '$route': function () {
+      this.isSearchLoading = true
+    }
+  },
   methods: {
-    getTitle: function(r) {
+    getTitle: function (r) {
       if (!r.alias && (!r.owner || !r.owner.username)) {
         return ''
       }
@@ -230,11 +324,6 @@ export default {
     selectCategory: function (cat) {
       this.$router.push({ name: 'services', query: { search: this.search, c: cat } })
     }
-  },
-  components: {
-    ServicesTopicsList,
-    ServiceSummary,
-    SearchBar
   }
 }
 </script>
@@ -262,8 +351,8 @@ export default {
     left: calc(50% - 400px);
     top: -150px;
     margin: 0;
-    box-shadow: 0 0 2.25rem .5rem rgba(darken(color(dark), 15%), .5);
-    background-color: darken(state(primary), 10%);
+    box-shadow: 0 0 2.25rem .5rem rgba(darken($dark, 15%), .5);
+    background-color: darken($primary, 10%);
     align-items: center;
     justify-content: center;
     display: flex;
@@ -357,7 +446,7 @@ ul {
     }
 
     .content {
-      background-color: color(dark);
+      background-color: $dark;
       &.slack-service { background-color: #78d4b6 }
       &.twitter-service { background-color: #1da1f2 }
       &.twilio-service { background-color: #f22f44 }
@@ -372,13 +461,13 @@ ul {
       box-shadow: 0 .1rem .2rem rgba(0,0,0, .25), 0 .01rem .01rem rgba(0,0,0, .22);
       h4 {
         text-align: center;
-        color: color(light);
+        color: $light;
         font-weight: bold;
         padding-bottom: .5rem !important;
       }
       p {
         text-align: center;
-        color: color(light);
+        color: $light;
         font-size: fontSize(s);
       }
     }

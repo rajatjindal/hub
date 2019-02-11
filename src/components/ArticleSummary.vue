@@ -1,9 +1,11 @@
 <template>
   <div :class="[{disabled: !title}, 'article']">
     <router-link :to="`/article/${title}`">
-      <div class="media" v-if="!isLoading && title">
+      <div
+        v-if="!isLoading && title"
+        class="media">
         <div class="media-left">
-          <div class="article-image"></div>
+          <div class="article-image"/>
         </div>
         <div class="media-content">
           <h3>{{ title }}</h3>
@@ -11,9 +13,11 @@
           <!-- <div>{{ (description) | emoji }}</div> -->
         </div>
       </div>
-      <div class="media" v-else-if="isLoading">
+      <div
+        v-else-if="isLoading"
+        class="media">
         <div class="media-left">
-          <div  class="loading-shimmer article-image"></div>
+          <div class="loading-shimmer article-image"/>
         </div>
         <div class="media-content">
           <div class="loading-shimmer title"/>
@@ -27,9 +31,18 @@
 <script scoped>
 export default {
   name: 'ArticleSummary',
-  props: ['title', 'description'],
+  props: {
+    title: {
+      type: String,
+      default: undefined
+    },
+    description: {
+      type: String,
+      default: undefined
+    }
+  },
   computed: {
-    isLoading: function() {
+    isLoading: function () {
       return !this.title
     }
   }
@@ -42,7 +55,7 @@ export default {
 }
 
 a {
-  color: color(dark);
+  color: $dark;
 }
 
 .article-image {
@@ -52,7 +65,7 @@ a {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: color(dark);
+  background-color: $dark;
 }
 
 h4 {
@@ -69,7 +82,7 @@ p {
   border-radius: .25rem;
   padding: .5rem;
   &:hover {
-    background-color: color(light);
+    background-color: $light;
   }
   .media-content {
     height: 125px;
@@ -77,7 +90,7 @@ p {
     flex-direction: column;
     justify-content: center;
     h3 {
-      color: darken(color(dark), 15%);
+      color: darken($dark, 15%);
       padding: 0 !important;
       margin-bottom: .5rem !important;
     }

@@ -3,7 +3,9 @@
     <div class="container">
       <div class="columns">
         <div class="column is-full">
-          <h4 v-for="(page, idx) of pages" :key="`page-${idx}`">{{ page.name }} : {{ page.path }}</h4>
+          <h4
+            v-for="(page, idx) of pages"
+            :key="`page-${idx}`">{{ page.name }} : {{ page.path }}</h4>
         </div>
       </div>
     </div>

@@ -1,13 +1,19 @@
 <template>
   <div class="section index">
     <div class="columns is-centered is-multiline">
-      <div class="column is-one-fifth sidebar" :class="sidebarClass">
+      <div
+        :class="sidebarClass"
+        class="column is-one-fifth sidebar">
         <slot name="sidebar"/>
       </div>
-      <div class="column is-two-fifths main"  :class="mainClass">
+      <div
+        :class="mainClass"
+        class="column is-two-fifths main">
         <slot name="body"/>
       </div>
-      <div class="column is-two-fifths right" :class="rightClass">
+      <div
+        :class="rightClass"
+        class="column is-two-fifths right">
         <slot name="body-right"/>
       </div>
     </div>
@@ -38,7 +44,7 @@ export default {
 </script>
 
 <style lang="scss">
-@include breakpoint(max m) {
+@include touch {
   .sidebar {
     order: 2;
     flex-basis: 100%;

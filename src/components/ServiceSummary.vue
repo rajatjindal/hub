@@ -1,21 +1,32 @@
 <template>
   <div :class="{ disabled: !title, summary: true }">
     <router-link :to="(isAlias ? `/service/` : '/r/') + title">
-      <div class="media" v-if="!isLoading && title">
+      <div
+        v-if="!isLoading && title"
+        class="media">
         <div class="media-left">
-          <div class="service-image" :style="{ backgroundColor: color }">{{ firstLetterCapitalized }}</div>
+          <div
+            :style="{ backgroundColor: color }"
+            class="service-image">{{ firstLetterCapitalized }}</div>
         </div>
         <div class="media-content">
           <h3>{{ title }}</h3>
           <div>{{ (description || title) | emoji }}</div>
-          <div v-if="tags" class="tags-container">
-            <span class="tag-container" v-for="t in tags" :key="t"><topic-tag>{{ t }}</topic-tag></span>
+          <div
+            v-if="tags"
+            class="tags-container">
+            <span
+              v-for="t in tags"
+              :key="t"
+              class="tag-container"><topic-tag>{{ t }}</topic-tag></span>
           </div>
         </div>
       </div>
-      <div class="media" v-else-if="isLoading">
+      <div
+        v-else-if="isLoading"
+        class="media">
         <div class="media-left">
-          <div  class="loading-shimmer service-image"></div>
+          <div class="loading-shimmer service-image"/>
         </div>
         <div class="media-content">
           <div class="loading-shimmer title"/>
@@ -31,18 +42,35 @@
 import md5 from 'crypto-js/md5'
 
 export default {
-  props: ['title', 'description', 'tags', 'isAlias'],
+  props: {
+    title: {
+      type: String,
+      default: undefined
+    },
+    description: {
+      type: String,
+      default: undefined
+    },
+    tags: {
+      type: Array,
+      default: undefined
+    },
+    isAlias: {
+      type: Boolean,
+      default: false
+    }
+  },
   computed: {
-    color: function() {
+    color: function () {
       const randomNumFromTitle = md5(this.title).words[0]
       const numBetweenZeroAndOne = Math.abs(randomNumFromTitle) / 2147483647
       const hue = numBetweenZeroAndOne * 360
       return `hsla(${hue}, 45%, 65%, 1)`
     },
-    firstLetterCapitalized: function() {
+    firstLetterCapitalized: function () {
       return this.title && this.title.slice(0, 1).toUpperCase()
     },
-    isLoading: function() {
+    isLoading: function () {
       return !this.title
     }
   }
@@ -82,7 +110,7 @@ p {
   opacity: 1;
   .media-content {
     h3 {
-      color: state(primary);
+      color: $primary;
       font-weight: lighter;
       padding: 0 !important;
       margin-bottom: .5rem !important;

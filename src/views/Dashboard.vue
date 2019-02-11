@@ -1,5 +1,7 @@
 <template>
-  <div class="dashboard" v-if="!isUserRefreshing">
+  <div
+    v-if="!isUserRefreshing"
+    class="dashboard">
     <div class="section">
       <div class="container">
         <div class="columns is-centered">
