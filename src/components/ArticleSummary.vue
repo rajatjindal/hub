@@ -1,34 +1,41 @@
 <template>
-  <div :class="[{disabled: !title}, 'article']">
-    <router-link :to="`/article/${title}`">
-      <div
-        v-if="!isLoading && title"
-        class="media">
-        <div class="media-left">
-          <div class="article-image"/>
-        </div>
-        <div class="media-content">
-          <h3>{{ title }}</h3>
-          <div>Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae facilis libero nobis aspernatur!</div>
-          <!-- <div>{{ (description) | emoji }}</div> -->
-        </div>
+  <router-link :to="`/article/${title}`">
+    <div class="card article">
+      <div class="card-image">
+        <figure class="image is-4by3">
+          <div
+            v-if="isLoading"
+            class="loading-shimmer article-image"
+          />
+          <img
+            v-else
+            src="https://bulma.io/images/placeholders/480x480.png"
+            alt="Placeholder image"
+          >
+        </figure>
       </div>
-      <div
-        v-else-if="isLoading"
-        class="media">
-        <div class="media-left">
-          <div class="loading-shimmer article-image"/>
-        </div>
-        <div class="media-content">
+      <div class="card-content">
+        <template v-if="isLoading">
           <div class="loading-shimmer title"/>
           <div class="loading-shimmer description"/>
-        </div>
+        </template>
+        <template v-else>
+          <h3 class="is-size-5 title has-text-weight-bold has-text-uppercase has-text-dark">{{ title }}</h3>
+          <p class="is-size-6 has-text-dark">Lorem ipsum dolor sit amet consectetur adipisicing elit. Molestiae facilis libero nobis aspernatur!</p>
+          <a-button
+            state="secondary"
+            size="small"
+            arrow
+          >
+            Read More
+          </a-button>
+        </template>
       </div>
-    </router-link>
-  </div>
+    </div>
+  </router-link>
 </template>
 
-<script scoped>
+<script>
 export default {
   name: 'ArticleSummary',
   props: {
@@ -49,69 +56,23 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-.disabled {
-  pointer-events: none;
-}
+<style lang="scss">
+.card.article {
+  border-radius: .5rem;
+  overflow: hidden;
 
-a {
-  color: $dark;
-}
+  box-shadow: 0 8px 32px -16px rgba(0, 0, 0, 0.4);
+  transition: box-shadow,transform .1s ease-in;
 
-.article-image {
-  min-width: 125px;
-  height: 125px;
-  border-radius: 4px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: $dark;
-}
-
-h4 {
-  margin-top: 0;
-  margin-bottom: 0.3em;
-}
-
-p {
-  margin: 0;
-}
-
-.media {
-  opacity: 1;
-  border-radius: .25rem;
-  padding: .5rem;
   &:hover {
-    background-color: $light;
-  }
-  .media-content {
-    height: 125px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    h3 {
-      color: darken($dark, 15%);
-      padding: 0 !important;
-      margin-bottom: .5rem !important;
+    @include desktop {
+      transform: translateY(-4px);
     }
-  }
-}
-
-.loading-shimmer {
-  margin-bottom: 0.8em;
-
-  &.service-image {
-    border-color: transparent;
+    box-shadow: 0 8px 32px -16px rgba(0, 0, 0, 0.8);
   }
 
-  &.title {
-    width: 200px;
-    height: 16px;
-  }
-
-  &.description {
-    width: 250px;
-    height: 11px;
+  .button {
+    margin-top: 2rem;
   }
 }
 </style>

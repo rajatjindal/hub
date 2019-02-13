@@ -68,7 +68,7 @@
           </div>
         </transition-group>
       </div>
-      <div class="section has-background-gray-5">
+      <div class="section has-background-light">
         <div class="container">
           <div class="level">
             <div class="level-left">

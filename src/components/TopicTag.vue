@@ -1,8 +1,8 @@
 <template>
-  <url-link :to="linkTo">
-    <span class="tag">
-      <slot/>
-    </span>
+  <url-link
+    :to="linkTo"
+    class="tag">
+    <slot/>
   </url-link>
 </template>
 
@@ -27,10 +27,12 @@ export default {
 
 <style scoped lang="scss">
 .tag {
-  font-size: 0.8em;
+  font-weight: 600;
+  color: nth($grays, 3);
   transition: all 0.3s;
 
   &:hover {
+    text-decoration: none;
     filter: brightness(0.95);
   }
 }

@@ -10,15 +10,14 @@
             class="service-image">{{ firstLetterCapitalized }}</div>
         </div>
         <div class="media-content">
-          <h3>{{ title }}</h3>
-          <div>{{ (description || title) | emoji }}</div>
+          <h3 class="is-size-6 has-text-weight-bold has-text-dark">{{ title }}</h3>
+          <p class="is-size-8 has-text-gray-3 description">{{ (description || title) | emoji }}</p>
           <div
             v-if="tags"
-            class="tags-container">
-            <span
+            class="tags">
+            <topic-tag
               v-for="t in tags"
-              :key="t"
-              class="tag-container"><topic-tag>{{ t }}</topic-tag></span>
+              :key="t">{{ t }}</topic-tag>
           </div>
         </div>
       </div>
@@ -78,18 +77,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.disabled {
-  pointer-events: none;
-}
-
-a {
-  color: black;
-}
-
 .service-image {
-  min-width: 65px;
-  height: 65px;
-  border-radius: 100%;
+  min-width: 4.5rem;
+  height: 4.5rem;
+  border-radius: .5rem;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -97,33 +88,8 @@ a {
   color: white;
 }
 
-h4 {
-  margin-top: 0;
-  margin-bottom: 0.3em;
-}
-
-p {
-  margin: 0;
-}
-
-.media {
-  opacity: 1;
-  .media-content {
-    h3 {
-      color: $primary;
-      font-weight: lighter;
-      padding: 0 !important;
-      margin-bottom: .5rem !important;
-    }
-  }
-}
-
-.tags-container {
-  margin-top: 1em;
-
-  .tag-container {
-    margin-right: 0.4em;
-  }
+.tags {
+  margin-top: .75rem;
 }
 
 .loading-shimmer {
@@ -148,14 +114,5 @@ p {
     width: 100px;
     height: 1em;
   }
-}
-
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.5s;
-}
-
-.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
-  opacity: 0;
 }
 </style>
