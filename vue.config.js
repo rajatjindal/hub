@@ -1,6 +1,7 @@
 const fs = require('fs')
 
 module.exports = {
+  lintOnSave: true,
   css: {
     loaderOptions: {
       sass: {

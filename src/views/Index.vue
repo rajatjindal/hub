@@ -1,121 +1,115 @@
 <template>
-  <div class="index">
-    <section class="hero bg--dark is-large">
-      <div class="hero-body">
-        <div class="container text--center fixed">
-          <stars-particles />
-          <h1 class="title is-1 text--light">Asyncy Hub</h1>
-          <h2 class="subtitle is-4 text--light">Discover awesome services and functions that will help you build awesome apps</h2>
-        </div>
-      </div>
-    </section>
-    <div class="video-section bg--dark">
-      <div class="video">
-        <font-awesome-icon icon="play" />
-      </div>
-    </div>
-    <section class="section steps">
+  <div class="home">
+    <section class="index">
       <div class="container">
-        <div class="columns">
-          <div class="column is-half">
-            <span class="badge dot">1</span>
-            <h2>Find a service</h2>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto placeat ipsa, neque assumenda asperiores eius deserunt atque, repellendus mollitia voluptatibus ea. Voluptatum asperiores amet, recusandae minima suscipit dolores deserunt cupiditate.</p>
-            <a-button state="primary">Get a service <font-awesome-icon icon="arrow-right" /></a-button>
-          </div>
-          <div class="column is-half">
-            <div class="placeholder bg--dark" />
-          </div>
-        </div>
-        <div class="columns">
-          <div class="column">
-            <div class="placeholder bg--dark" />
-          </div>
-          <div class="column is-half">
-            <span class="badge dot">2</span>
-            <h2>Find a service</h2>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto placeat ipsa, neque assumenda asperiores eius deserunt atque, repellendus mollitia voluptatibus ea. Voluptatum asperiores amet, recusandae minima suscipit dolores deserunt cupiditate.</p>
-            <a-button state="primary">Get a service <font-awesome-icon icon="arrow-right" /></a-button>
-          </div>
-        </div>
-        <div class="columns">
-          <div class="column is-half">
-            <span class="badge dot">3</span>
-            <h2>Find a service</h2>
-            <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto placeat ipsa, neque assumenda asperiores eius deserunt atque, repellendus mollitia voluptatibus ea. Voluptatum asperiores amet, recusandae minima suscipit dolores deserunt cupiditate.</p>
-            <a-button state="primary">Get a service <font-awesome-icon icon="arrow-right" /></a-button>
-          </div>
-          <div class="column is-half">
-            <div class="placeholder bg--dark" />
-          </div>
+        <home-description-template
+          v-for="(step, idx) of steps"
+          :key="`step-${idx}`"
+          :idx="idx"
+          :name="step.name"
+          :content="step.content"
+          :link="step.link"
+          :picture="step.picture"
+        />
+      </div>
+      <div class="container">
+        <a-boxed class="has-text-centered">
+          <p class="is-size-8 boxed-top-text">Every application has a story of how data moves</p>
+          <h3 class="is-size-3 has-text-dark">Storytell your next feature with Asyncy.</h3>
+        </a-boxed>
+      </div>
+      <div class="section has-background-dark">
+        <div class="container is-constellation has-text-centered">
+          <h4 class="is-size-4 has-text-weight-bold has-text-white has-text-uppercase">List your service on Asyncy Hub</h4>
+          <a-button
+            class="home-submit-btn"
+            state="secondary"
+            arrow
+          >
+            Submit a service
+          </a-button>
         </div>
       </div>
-    </section>
-    <section class="section bg--light">
       <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-half text--center">
-            <h2 class="title is-2">List your service on Asyncy Hub</h2>
-            <a-button
-              state="primary"
-              size="l">Submit a Service</a-button>
+        <div class="level">
+          <div class="level-left">
+            <div class="level-item">
+              <h2 class="is-size-4 has-text-gray-2">
+                Find a service
+              </h2>
+            </div>
+          </div>
+          <div class="level-right">
+            <div class="level-item">
+              <a-button
+                :route="{ name: 'services' }"
+                state="secondary"
+                arrow
+                size="small"
+              >
+                View More
+              </a-button>
+            </div>
           </div>
         </div>
+        <transition-group
+          name="fade"
+          tag="div"
+          class="columns is-multiline services-container">
+          <div
+            v-for="(r, index) in data.recentServices.slice(0, 6)"
+            :key="r.alias || index"
+            class="column is-one-third">
+            <service-summary
+              :title="getTitle(r)"
+              :is-alias="r.alias ? true : false"
+              :description="r.description"
+              :tags="r.topics"/>
+          </div>
+        </transition-group>
       </div>
-    </section>
-    <section class="section preview">
-      <div class="container">
-        <div class="columns is-centered">
-          <div class="column is-half">
-            <h2 class="title head-link is-3">
-              Featured Services
-              <a-link
-                state="primary"
-                class="link"
-                @click.stop="$router.push({ name: 'services' })">View all <font-awesome-icon icon="arrow-right" /></a-link>
-            </h2>
-            <transition-group
-              name="fade"
-              tag="div"
-              class="tile is-parent is-vertical">
-              <div
-                v-for="(r, index) in data.recentServices.slice(0, 3)"
-                :key="r.alias || index"
-                class="tile is-child">
-                <service-summary
-                  :title="getTitle(r)"
-                  :is-alias="r.alias ? true : false"
-                  :description="r.description"
-                  :tags="r.topics"/>
+      <div class="section has-background-gray-5">
+        <div class="container">
+          <div class="level">
+            <div class="level-left">
+              <div class="level-item">
+                <h2 class="is-size-4 has-text-gray-2">
+                  Community
+                </h2>
               </div>
-            </transition-group>
-            <p class="helper">Want to see your service in our marketplace ?</p>
-            <a-link state="primary">Submit your service <font-awesome-icon icon="arrow-right" /></a-link>
-          </div>
-          <div class="column is-half">
-            <h2 class="title head-link is-3">
-              Community
-              <a-link
-                state="primary"
-                class="link">Visit <font-awesome-icon icon="arrow-right" /></a-link>
-            </h2>
-            <transition-group
-              name="fade"
-              tag="div"
-              class="tile is-parent is-vertical">
-              <div
-                v-for="(r, index) in data.recentServices.slice(0, 3)"
-                :key="r.alias || index"
-                class="tile is-child">
-                <article-summary
-                  :title="getTitle(r)"
-                  :description="r.description" />
+            </div>
+            <div class="level-right">
+              <div class="level-item">
+                <a-button
+                  url="//asyncy.com/blog"
+                  state="secondary"
+                  arrow
+                  size="small"
+                >
+                  View More
+                </a-button>
               </div>
-            </transition-group>
+            </div>
           </div>
+          <transition-group
+            name="fade"
+            tag="div"
+            class="columns articles-container">
+            <div
+              v-for="(r, index) in data.recentServices.slice(0, 3)"
+              :key="r.alias || index"
+              class="column is-one-third">
+              <article-summary
+                :title="getTitle(r)"
+                :description="r.description" />
+            </div>
+          </transition-group>
         </div>
       </div>
     </section>
+    <a-join
+      is-paddingless
+      footer />
   </div>
 </template>
 
@@ -123,6 +117,11 @@
 import { IndexQuery } from '@/plugins/graphql'
 import ServiceSummary from '@/components/ServiceSummary'
 import ArticleSummary from '@/components/ArticleSummary'
+import HomeDescriptionTemplate from '@/components/templates/HomeDescription'
+import Picture1 from '@/assets/img/home/1.svg'
+import Picture2 from '@/assets/img/home/2.svg'
+import Picture3 from '@/assets/img/home/3.svg'
+import Picture4 from '@/assets/img/home/4.svg'
 
 export default {
   name: 'Index',
@@ -136,12 +135,33 @@ export default {
   },
   components: {
     ServiceSummary,
-    ArticleSummary
+    ArticleSummary,
+    HomeDescriptionTemplate
   },
   data: () => ({
     data: {
       recentServices: [{}, {}, {}, {}, {}, {}]
-    }
+    },
+    steps: [{
+      name: 'Discover it.',
+      content: 'Explore services written in any programming language. From microservices to functions, workflows and API\'s; it\'s all here.',
+      link: { name: 'services' },
+      picture: Picture1
+    }, {
+      name: 'Create it.',
+      content: 'Develop your own unique services and functions in any programming language. Share it, sell it, or keep it secret.',
+      link: { href: '//ayncy.com/blog' },
+      picture: Picture2
+    }, {
+      name: 'Try it.',
+      content: `Test services in a sandbox before putting it into production. AB test new microservices and workflows with ease.`,
+      picture: Picture3
+    }, {
+      name: 'Launch it.',
+      content: 'Write your application that combines many services, harmoniously. We call this microservice cheoreography.',
+      link: { href: '//ayncy.com/blog' },
+      picture: Picture4
+    }]
   }),
   computed: {
     topics: function () {
@@ -159,216 +179,33 @@ export default {
 }
 </script>
 
-<style scoped lang="scss">
-svg {
-  align-items: center;
+<style lang="scss">
+.boxed-top-text {
+  color: nth($grays, 1);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
 }
 
-.helper {
-  margin: .5rem 0;
-}
-
-.section {
-  border-bottom: none !important;
-}
-.head-link {
-  align-items: center;
-  display: flex;
-  justify-content: space-between;
-  .link {
-    svg {
-      margin-left: .5rem;
-    }
+.home {
+  .container + .container,
+  .container + .section,
+  .section + .container {
+    margin-top: 9.25rem;
   }
-}
 
-.section {
-  &.preview {
-    .container {
-      .columns {
-        .column {
-          padding: 0 3rem;
-          & + .column {
-            border-left: 1px solid rgba($dark, 0.125);
-          }
-        }
-      }
-    }
+  .section {
+    padding: 5rem 0;
   }
-}
 
-.section.steps {
-  border-bottom: none;
-  position: relative;
-  .container {
-    &:before {
-      @include touch { display: none }
-      content: '';
-      width: 100%;
-      height: 100%;
-      background-image: url('~@/assets/curvedline.svg');
-      background-repeat: no-repeat;
-      background-size: 80% 85%;
-      background-position: top left;
-      position: absolute;
-      top: 0;
-    }
+  .services-container,
+  .articles-container {
+    padding-top: 3.5rem;
   }
-  .columns {
-    position: relative;
+
+  .home-submit-btn {
     margin-top: 2rem;
-    & + .columns {
-      margin-top: 15rem;
-    }
-    .column {
-      p {
-        margin-bottom: 1rem;
-      }
-    }
-  }
-}
-
-.placeholder {
-  width: 85%;
-  height: 17rem;
-  border-radius: .5rem;
-  margin: 0 auto;
-}
-
-.badge {
-  &.dot {
-    background: linear-gradient(180deg, darken($primary, 0%), lighten($primary, 10%)) repeat-x;
-    border-radius: 50%;
-    width: 3rem;
-    height: 3rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    color: $white;
-    font-weight: bold;
-  }
-}
-
-.video-section {
-  position: relative;
-  min-height: 0;
-  padding: 0 !important;
-  z-index: 1;
-  margin-bottom: calc(150px + 2rem);
-  .video {
-    width: 800px;
-    height: 300px;
-    border-radius: .75rem;
-    position: absolute;
-    left: calc(50% - 400px);
-    top: -150px;
-    margin: 0;
-    box-shadow: 0 0 2.25rem .5rem rgba(darken($dark, 15%), .5);
-    background-color: darken($primary, 10%);
-    align-items: center;
-    justify-content: center;
-    display: flex;
-    svg {
-      cursor: pointer;
-      transition: all 0.1s ease-in-out;
-      font-size: 4rem;
-      position: relative;
-      color: $white;
-      &:hover {
-        font-size: 7rem;
-      }
-    }
-  }
-}
-
-.subtitle {
-  display: block;
-  font-size: 1.15em;
-  margin-top: 1.5em;
-  margin-bottom: 1.5em;
-}
-
-.help-message {
-  font-size: 0.9em;
-  color: #aaa;
-}
-
-ul {
-  list-style: none;
-  padding-left: 0;
-  line-height: 2em;
-}
-
-.index {
-  background-color: #fff;
-}
-
-.section {
-  margin-bottom: 0;
-  padding-top: 2em;
-  padding-bottom: 2em;
-  border-bottom: 1px solid #ccc;
-
-  .section-header {
-    margin-bottom: 1.4em;
-  }
-}
-
-.hero {
-  position: relative;
-  overflow: hidden;
-  // padding: 4em 5em;
-  // background: #eeeeee;
-  z-index: 1;
-
-  .search-bar-container {
-    max-width: 580px;
-    margin: 0 auto;
-  }
-}
-
-.call-to-action {
-  font-size: 1.9em;
-  line-height: 1.4em;
-  margin-bottom: 0.8em;
-}
-
-.featured-services {
-  .featured {
-    height: 150px;
-    border-radius: 5px;
-    padding: 25px;
-    font-size: 0.9;
-    font-weight: 600;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.2s;
-
-    &:hover {
-      transform: scale(1.05, 1.05);
-    }
   }
 
-  .slack-service {
-    background-color: #78d4b6;
-  }
-
-  .twitter-service {
-    background-color: #1da1f2;
-  }
-
-  .twilio-service {
-    background-color: #f22f44;
-  }
-
-  a {
-    width: 100%;
-  }
-}
-
-.getting-started {
-  text-align: center;
 }
 </style>
