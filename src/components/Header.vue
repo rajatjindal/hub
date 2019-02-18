@@ -3,7 +3,8 @@
     :size="current.size"
     :into="current.into"
     :small="current.small"
-    :title="current.title">
+    :title="current.title"
+    class="is-hub">
     <a-navbar
       slot="header"
       :items="menu"
@@ -13,10 +14,19 @@
     <template v-if="current.name === 'home'">
       <p class="is-size-6 has-text-centered has-text-light jumbo-p">Explore, share and create reusable software, together.</p>
     </template>
-    <template v-if="current.name === 'loading'">
+    <template v-else-if="current.name === 'loading'">
       <template slot="title">
         <i class="mdi mdi-spin mdi-loading" />
       </template>
+    </template>
+    <template v-else-if="current.name === 'services'">
+      <div class="columns is-centered">
+        <div class="column is-one-third">
+          <a-input
+            icon-right="magnify"
+            placeholder="SEARCH ON HUB" />
+        </div>
+      </div>
     </template>
   </a-jumbo>
 </template>
@@ -33,19 +43,16 @@ export default {
     }, {
       name: 'apps',
       size: 'medium',
-      into: 'slash',
       title: 'Asyncy Hub',
       small: 'Applications'
     }, {
       name: 'services',
       size: 'medium',
-      into: 'chevron',
       title: 'Asyncy Hub',
-      small: 'Services'
+      small: 'Service Discovery and Marketplace'
     }, {
       name: 'functions',
       size: 'medium',
-      into: 'slash',
       title: 'Asyncy Hub',
       small: 'Functions'
     }],
@@ -91,6 +98,18 @@ export default {
 
 <style lang="scss">
 .jumbo {
+  &.is-hub {
+    background-image: url('~@/assets/img/bg/header-bg.jpg') !important;
+    @media only screen and (min-device-pixel-ratio: 2) {
+      background-image: url('~@/assets/img/bg/header-bg@2x.jpg') !important;
+    }
+    @media only screen and (min-device-pixel-ratio: 3) {
+      background-image: url('~@/assets/img/bg/header-bg@3x.jpg') !important;
+    }
+    background-repeat: no-repeat;
+    background-position: top center;
+    background-size: cover;
+  }
   &, & > * {
     transition: all 0.3s ease-in-out;
   }
