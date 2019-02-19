@@ -14,55 +14,49 @@
           @select="selectCategory" />
       </template>
       <section
-        v-if="!search && !category"
+        v-if="!search && (!category || category === 'All Services')"
         class="section">
-        <h2 class="title is-3">Featured services</h2>
-        <div class="featured-services section-body">
+        <h4 class="title is-size-4 has-text-gray-2">Featured services</h4>
+        <div class="featured-services">
           <div class="tile is-ancestor">
             <div class="tile is-parent">
-              <router-link :to="`/service/slack`">
-                <div class="feature tile is-child">
-                  <div class="avatar">
-                    <img
-                      src="@/assets/slack.png"
-                      alt="Slack">
-                  </div>
-                  <div class="content slack-service">
-                    <h4>Slack Service</h4>
-                    <p>Slack bot microservice</p>
-                  </div>
+              <router-link
+                :to="`/service/slack`"
+                class="feature tile is-child">
+                <div class="image">
+                  <img
+                    src="@/assets/img/services/featured/slack.png"
+                    srcset="@/assets/img/services/featured/slack@2x.png 2x,
+                            @/assets/img/services/featured/slack@3x.png 3x"
+                    alt="Slack">
                 </div>
               </router-link>
             </div>
 
             <div class="tile is-parent">
-              <router-link :to="`/service/twitter`">
-                <div class="feature tile is-child">
-                  <div class="avatar">
-                    <img
-                      src="@/assets/twitter.png"
-                      alt="Twitter">
-                  </div>
-                  <div class="content twitter-service">
-                    <h4>Twitter Service</h4>
-                    <p>Twitter as a microservice</p>
-                  </div>
+              <router-link
+                :to="`/service/twitter`"
+                class="feature tile is-child">
+                <div class="image">
+                  <img
+                    src="@/assets/img/services/featured/twitter.png"
+                    srcset="@/assets/img/services/featured/twitter@2x.png 2x,
+                            @/assets/img/services/featured/twitter@3x.png 3x"
+                    alt="Twitter">
                 </div>
               </router-link>
             </div>
 
             <div class="tile is-parent">
-              <router-link :to="`/service/twilio`">
-                <div class="feature tile is-child">
-                  <div class="avatar">
-                    <img
-                      src="@/assets/twilio.svg"
-                      alt="Twilio">
-                  </div>
-                  <div class="content twilio-service">
-                    <h4>Twilio Service</h4>
-                    <p>Twilio as a microservice</p>
-                  </div>
+              <router-link
+                :to="`/service/twilio`"
+                class="feature tile is-child">
+                <div class="image">
+                  <img
+                    src="@/assets/img/services/featured/twilio.png"
+                    srcset="@/assets/img/services/featured/twilio@2x.png 2x,
+                            @/assets/img/services/featured/twilio@3x.png 3x"
+                    alt="Twilio">
                 </div>
               </router-link>
             </div>
@@ -72,7 +66,7 @@
       <section
         v-if="!search && !category"
         class="section">
-        <h2 class="title is-3">Recently added</h2>
+        <h5 class="is-size-5 has-text-gray-2 title">Recently Added</h5>
         <div class="section-body">
           <div class="tile is-ancestor">
             <transition-group
@@ -111,7 +105,7 @@
       <section
         v-if="!search && !category"
         class="section">
-        <h2 class="title is-3">Most used</h2>
+        <h5 class="is-size-5 has-text-gray-2 title">Most Used</h5>
         <div class="section-body">
           <div class="tile is-ancestor">
             <transition-group
@@ -263,6 +257,7 @@ import ServiceSummary from '@/components/ServiceSummary'
 import ASection from '@/components/ASection'
 import SearchBar from '@/components/SearchBar'
 import ServicesTopicsList from '@/components/ServicesTopicsList'
+import ArticleSummary from '@/components/ArticleSummary'
 
 export default {
   name: 'Index',
@@ -270,7 +265,8 @@ export default {
     ServicesTopicsList,
     ServiceSummary,
     SearchBar,
-    ASection
+    ASection,
+    ArticleSummary
   },
   props: {
     search: {
@@ -340,3 +336,19 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.feature {
+  img {
+    transition: all .2s ease-in;
+    border-radius: .75rem;
+    box-shadow: 0 0 0 0 rgba($black, .6);
+  }
+  &:hover {
+    img {
+      transform: translateY(-.5rem);
+      box-shadow: 0 1.5rem 3.5rem -1rem rgba($black, .6);
+    }
+  }
+}
+</style>

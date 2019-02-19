@@ -1,6 +1,5 @@
 <template>
   <div class="sticky topics">
-    <h5 class="title">Topics</h5>
     <transition-group
       name="fade"
       tag="ul"
@@ -8,17 +7,14 @@
       <li
         v-for="topic in topics"
         :key="topic.name"
-        :class="{ active: topic.name === active }"
+        :class="{ 'active': topic.name === active }"
         class="topic-item"
         @click="active = topic.name">
-        <services-icon
-          :type="topic.icon"
-          :active="topic.name === active" />
         {{ topic.name }}
         <span
-          class="close"
-          @click.stop="active = ''"><font-awesome-icon icon="times" /></span>
-          <!-- <topic-tag>{{topic}}</topic-tag> -->
+          v-if="topic.name === active"
+          class="delete"
+          @click.stop="active = ''" />
       </li>
     </transition-group>
     <ul
@@ -167,96 +163,35 @@ export default {
 </script>
 
 <style lang="scss">
-@include touch {
-  .topic-item {
-    display: inline-block;
-    margin-right: 0.3em;
-  }
-}
-
-.sticky {
-  position: sticky;
-
-  &.topics {
-    top: 4rem + 1.5rem;
-    margin-bottom: 3rem;
-
-    .title {
-      padding-top: 0 !important;
-    }
-  }
-}
-
 .topics-list {
-  display: flex;
-  flex-wrap: wrap;
-  list-style: none;
-  padding-left: 0;
-
+  padding-left: 1rem;
+  position: relative;
   .topic-item {
-    transition: all .1s ease-out;
-    margin-bottom: 0.6em;
-    margin-right: 0.6em;
-    display: flex;
-    align-items: center;
-    height: 2rem;
-    cursor: pointer;
-    .close {
-      display: none;
-    }
-    & + .topic-item {
-      margin-top: .5rem;
-    }
     &.active {
+      position: relative;
       color: $primary;
-      font-weight: bold;
-
-      .close {
-        display: flex;
-        margin-left: auto;
-        border-radius: 1rem;
+      &:before {
+        content: '';
+        display: block;
+        width : .25rem;
         height: 2rem;
-        width: 2rem;
-        background-color: gray(100);
-        color: gray(300);
-        align-items: center;
-        justify-content: center;
-        svg { margin-right: 0; }
+        position: absolute;
+        top: 0;
+        left: -1.75rem;
+        bottom: 0;
+        border-radius: .25rem;
+        background-color: $primary;
       }
     }
-
-    &:hover:not(.active) {
-      color: lighten($primary, 25%);
-      svg {
-        .service-icon.filled {
-          fill: lighten($primary, 25%) !important;
-        }
-        .service-icon.stroked {
-          stroke: lighten($primary, 25%) !important;
-        }
-      }
+    .delete {
+      float: right;
     }
-
-    svg {
-      margin-right: 1rem;
-    }
+    font-size: nth($sizes, 7);
+    color: nth($grays, 2);
+    font-weight: 600;
+    padding: .25rem;
+    margin-top: .75rem;
+    cursor: pointer;
   }
-
-  @include desktop {
-    .topic-item {
-      width: 100%;
-    }
-  }
-}
-
-.no-topics {
-  font-size: 0.9em;
-  color: #aaa;
-}
-
-.loading-shimmer {
-  margin-bottom: 0;
-  height: 1.5em;
-  width: 100px;
 }
 </style>
