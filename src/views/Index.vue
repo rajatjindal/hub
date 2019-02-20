@@ -29,10 +29,26 @@
             </tr>
           </table>
         </template>
-        <p>Dear Fellow Developer,<br><br>
-          Welcome to the developer marketplace. All the services you discover here run in the Microservice Cloud (an open-source platform built atop Kubernetes).<br>
-          With Storyscript, a service-oriented programming language that strings services together, you can focus on what matters most: your business logic. We call this the “the story of data”.<br><br>
-          We have many use cases here and documentation on Storyscript here..<br><br>
+        <p class="has-text-dark">Dear Fellow Developer,<br><br>
+          Welcome to the <b>developer marketplace</b>. All the services you discover here run in the <br>
+          <b>Microservice Cloud</b> (an open-source platform built atop Kubernetes).<br>
+          With <b>Storyscript, a service-oriented programming language</b> that strings services together, <br>
+          you can focus on what matters most: your <b>business logic</b>. We call this the “the story of data”.<br><br>
+          We have many use cases
+          <a
+            href="//docs.asyncy.com/#use-cases"
+            title=""
+            class="has-text-info has-text-weight-bold">
+            here
+          </a>
+          and documentation on Storyscript
+          <a
+            href="//storyscript.org"
+            title="Storyscript"
+            class="has-text-info has-text-weight-bold">
+            here
+          </a>
+          .<br><br>
           We hope you find our product inspiring, as we built it with passion for you, the developer.<br><br>
           With Love,<br>
           The Asyncy Crew<br><br>

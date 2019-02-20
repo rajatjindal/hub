@@ -109,7 +109,8 @@ export default {
 .jumbo {
   &.is-hub {
     background-color: #150D44 !important;
-    background-image: none !important;
+    background: radial-gradient(ellipse at center bottom, rgba(39,25,127,1), rgba(21,13,68,1)) !important;
+    // background-image: none !important;
     background-position: top center;
     background-size: cover;
   }
