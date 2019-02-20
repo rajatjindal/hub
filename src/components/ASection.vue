@@ -1,11 +1,11 @@
 <template>
   <div :class="['container', {'a-section-absolute-header': absoluteHeader}]">
     <div class="a-section">
-      <div class="a-section-header">
-        <div class="level">
-          <div class="level-left"><div class="level-item has-spans"><slot name="header-left" /></div></div>
-          <div class="level-item has-spans"><slot name="header-centered" /></div>
-          <div class="level-right"><div class="level-item has-spans"><slot name="header-right" /></div></div>
+      <div :class="['a-section-header', {'a-section-large-header': largeHeader}]">
+        <div class="media">
+          <div class="media-left"><slot name="header-left" /></div>
+          <div class="media-content has-spans"><slot name="header-centered" /></div>
+          <div class="media-right"><slot name="header-right" /></div>
         </div>
       </div>
       <div class="a-section-body columns">
@@ -14,7 +14,7 @@
           class="a-section-body-sidebar column is-one-quarter">
           <slot name="sidebar" />
         </div>
-        <div class="a-section-body-content column">
+        <div :class="['a-section-body-content', 'column', {'a-section-body-padded': largeHeader}]">
           <slot />
         </div>
       </div>
@@ -29,6 +29,10 @@ export default {
     absoluteHeader: {
       type: Boolean,
       default: false
+    },
+    largeHeader: {
+      type: Boolean,
+      default: false
     }
   }
 }
@@ -38,12 +42,21 @@ export default {
 .a-section {
   border-radius: .75rem;
   padding: 0;
-  margin: 0;
+  padding-bottom: 7.5rem;
   .a-section-header {
     height: 3.5rem;
     padding: 1rem;
     background-color: $white;
     border-bottom: 1px solid nth($grays, 4);
+    &.a-section-large-header {
+      height: 8rem;
+      padding: 1rem 3rem;
+      border-bottom: none;
+      .media {
+        padding: .5rem 0 1rem;
+        border-bottom: 1px solid nth($grays, 4);
+      }
+    }
   }
 
   .a-section-body {
@@ -54,6 +67,12 @@ export default {
     }
     .a-section-body-content {
       background-color: $white;
+      .section:not(.full) {
+        padding-right: 8rem;
+      }
+      &.a-section-body-padded {
+        padding: 1rem 6.5rem;
+      }
     }
   }
 }
@@ -74,6 +93,9 @@ export default {
         border-bottom-left-radius: .75rem;
       }
       .a-section-body-content {
+        &.a-section-body-padded {
+          margin-top: 4.5rem;
+        }
         &:first-child {
           border-bottom-left-radius: .75rem;
         }

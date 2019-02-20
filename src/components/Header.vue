@@ -23,8 +23,11 @@
       <div class="columns is-centered">
         <div class="column is-one-third">
           <a-input
-            icon-right="magnify"
-            placeholder="SEARCH ON HUB" />
+            v-model="search"
+            :icon-right="['a-icon', {icon: 'search'}]"
+            placeholder="SEARCH ON HUB"
+            @keyup.enter.native="$emit('search', { search, submit: true })"
+          />
         </div>
       </div>
     </template>
@@ -35,6 +38,7 @@
 export default {
   name: 'Header',
   data: () => ({
+    search: '',
     jumbos: [{
       name: 'home',
       size: 'medium',
@@ -86,9 +90,14 @@ export default {
   watch: {
     '$route': function () {
       this.visible = true
+      this.search = this.$route.query.search || ''
+    },
+    'search': function () {
+      this.$emit('search', { search: this.search, submit: this.search.trim().length === 0 })
     }
   },
   mounted: function () {
+    this.search = this.$route.query.search || ''
     if (this.$route.name) {
       this.visible = true
     }
@@ -99,14 +108,8 @@ export default {
 <style lang="scss">
 .jumbo {
   &.is-hub {
-    background-image: url('~@/assets/img/bg/header-bg.jpg') !important;
-    @media only screen and (min-device-pixel-ratio: 2) {
-      background-image: url('~@/assets/img/bg/header-bg@2x.jpg') !important;
-    }
-    @media only screen and (min-device-pixel-ratio: 3) {
-      background-image: url('~@/assets/img/bg/header-bg@3x.jpg') !important;
-    }
-    background-repeat: no-repeat;
+    background-color: #150D44 !important;
+    background-image: none !important;
     background-position: top center;
     background-size: cover;
   }

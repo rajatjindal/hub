@@ -1,5 +1,5 @@
 <template>
-  <div class="services has-background-light">
+  <div class="has-background-light">
     <a-section absolute-header>
       <template slot="header-left">
         <span>
@@ -15,7 +15,7 @@
       </template>
       <section
         v-if="!search && (!category || category === 'All Services')"
-        class="section">
+        class="section full">
         <h4 class="title is-size-4 has-text-gray-2">Featured services</h4>
         <div class="featured-services">
           <div class="tile is-ancestor">
@@ -64,7 +64,7 @@
         </div>
       </section>
       <section
-        v-if="!search && !category"
+        v-if="!search && (!category || category === 'All Services')"
         class="section">
         <h5 class="is-size-5 has-text-gray-2 title">Recently Added</h5>
         <div class="section-body">
@@ -103,7 +103,7 @@
         </div>
       </section>
       <section
-        v-if="!search && !category"
+        v-if="!search && (!category || category === 'All Services')"
         class="section">
         <h5 class="is-size-5 has-text-gray-2 title">Most Used</h5>
         <div class="section-body">
@@ -142,7 +142,7 @@
         </div>
       </section>
       <section
-        v-else-if="!category"
+        v-else-if="(!category || category === 'All Services')"
         class="section">
         <transition-group
           v-if="!isSearchLoading"
@@ -151,12 +151,18 @@
           <div
             v-if="searchTotalItems > 0"
             key="results">
-            <h2 class="title is-3">{{ searchTotalItems }} service results</h2>
+            <h2 class="title is-size-4 has-text-gray-2">{{ searchTotalItems }} service results</h2>
           </div>
           <div
             v-else
-            key="no-results">
-            <h3 class="subtitle is-4"><font-awesome-icon icon="search" /> We couldn't find any services matching `{{ search }}`</h3>
+            key="no-results"
+            class="no-results">
+            <div class="columns is-centered">
+              <div class="column is-half has-text-centered">
+                <a-icon icon="file-broken" />
+                <h5 class="is-size-5 has-text-weight-semibold has-text-gray-2">We couldn't find any service matching `{{ search }}`</h5>
+              </div>
+            </div>
           </div>
         </transition-group>
         <div>
@@ -168,7 +174,7 @@
                 <div
                   v-for="(r, index) in searchResults"
                   :key="r.alias || index"
-                  class="tile is-child search-result">
+                  class="tile search-result">
                   <service-summary
                     :title="getTitle(r)"
                     :is-alias="r.alias ? true : false"
@@ -189,8 +195,15 @@
           <!-- <div key="results" v-if="searchCatTotalItems > 0">
             <h2 class="title is-3">{{searchCatTotalItems}} service results</h2>
           </div> -->
-          <div key="no-results">
-            <h3 class="subtitle is-4"><font-awesome-icon icon="search" /> We couldn't find any service containing the topic `{{ category }}`</h3>
+          <div
+            key="no-results"
+            class="no-results">
+            <div class="columns is-centered">
+              <div class="column is-half has-text-centered">
+                <a-icon icon="file-broken" />
+                <h5 class="is-size-5 has-text-weight-semibold has-text-gray-2">We couldn't find any service containing the topic `{{ category }}`</h5>
+              </div>
+            </div>
           </div>
         </transition-group>
         <!-- <div>
@@ -204,6 +217,34 @@
             </div>
           </div>
         </div> -->
+      </section>
+      <section class="section">
+        <div class="columns contribute-services has-background-light">
+          <div class="column is-half">
+            <span class="tag is-danger has-text-weight-semibold">Public</span>
+            <p class="is-size-7 has-text-gray-3 has-text-weight-semibold">Let's go crazy!</p>
+            <h5 class="is-size-5 has-text-gray-2 has-text-weight-bold">Create your service !</h5>
+            <a-button
+              state="secondary"
+              size="small"
+              arrow
+            >
+              Add your service
+            </a-button>
+          </div>
+          <div class="column is-half">
+            <span class="tag is-success has-text-weight-semibold">Public</span>
+            <p class="is-size-7 has-text-gray-3 has-text-weight-semibold">Let's go crazy!</p>
+            <h5 class="is-size-5 has-text-gray-2 has-text-weight-bold">Contribute a service !</h5>
+            <a-button
+              state="secondary"
+              size="small"
+              arrow
+            >
+              Add your service
+            </a-button>
+          </div>
+        </div>
       </section>
     </a-section>
 
@@ -331,7 +372,7 @@ export default {
       return r.alias || `${r.owner.username}/${r.name}`
     },
     selectCategory: function (cat) {
-      this.$router.push({ name: 'services', query: { search: this.search, c: cat } })
+      this.$router.push({ name: 'services', query: { search: this.search !== '' ? this.search : undefined, c: cat !== '' ? cat : undefined } })
     }
   }
 }
@@ -348,6 +389,45 @@ export default {
     img {
       transform: translateY(-.5rem);
       box-shadow: 0 1.5rem 3.5rem -1rem rgba($black, .6);
+    }
+  }
+}
+
+.no-results {
+  margin: 10rem 0;
+  h5 {
+    margin-top: 2rem;
+  }
+}
+
+.search-result {
+  margin: 2rem 0 !important;
+}
+
+.contribute-services {
+  border-radius: 1rem;
+  padding: 2.5rem 0;
+  position: relative;
+  .column {
+    padding: 0 3.25rem;
+
+    p {
+      margin-top: .5rem;
+    }
+
+    .button {
+      margin-top: 1rem;
+    }
+  }
+  .column + .column {
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 50%;
+      bottom: 0;
+      width: .1rem;
+      background-color: darken($light, 10%);
     }
   }
 }

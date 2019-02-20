@@ -1,12 +1,14 @@
 <template>
   <div id="hub">
     <!-- <a-cookie /> -->
-    <a-header />
+    <a-header @search="onSearch" />
     <div class="main-container">
       <transition
         name="view-fade"
         mode="out-in">
-        <router-view @open-submit-service-modal="openSubmitAServiceModal" />
+        <router-view
+          ref="routerView"
+          @open-submit-service-modal="openSubmitAServiceModal" />
       </transition>
     </div>
     <a-footer dark />
@@ -25,6 +27,7 @@ export default {
     // SubmitServiceModal,
     AHeader
   },
+  data: () => ({ search: '', submit: false }),
   computed: mapGetters(['getUser', 'isUserLoggedIn']),
   watch: {
     'isUserLoggedIn': function (value) {
@@ -40,6 +43,15 @@ export default {
     },
     closeSubmitAServiceModal: function () {
       this.$refs.submitAServiceModal.show = false
+    },
+    onSearch: function ({ search, submit }) {
+      this.search = search
+      console.log(submit, this.search)
+      if (submit && this.search.trim().length === 0) {
+        this.$router.push({ name: 'services' })
+      } else if (submit && this.search.trim().length > 0) {
+        this.$router.push({ name: 'services', query: { search: this.search.trim() } })
+      }
     }
   }
 }
