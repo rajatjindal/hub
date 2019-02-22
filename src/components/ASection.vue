@@ -7,6 +7,21 @@
           <div class="media-content has-spans"><slot name="header-centered" /></div>
           <div class="media-right"><slot name="header-right" /></div>
         </div>
+        <div class="columns is-vcentered is-gapless">
+          <div class="column is-narrow">
+            <slot name="header-divider-content-left" />
+          </div>
+          <div class="column">
+            <div
+              :data-content="dividerContent"
+              :data-align="dividerAlign"
+              class="is-divider"
+            />
+          </div>
+          <div class="column is-narrow">
+            <slot name="header-divider-content-right" />
+          </div>
+        </div>
       </div>
       <div class="a-section-body columns">
         <div
@@ -14,7 +29,7 @@
           class="a-section-body-sidebar column is-one-quarter">
           <slot name="sidebar" />
         </div>
-        <div :class="['a-section-body-content', 'column', {'a-section-body-padded': largeHeader}]">
+        <div :class="['a-section-body-content', 'column', {'a-section-body-padded': bodyPadded}]">
           <slot />
         </div>
       </div>
@@ -33,6 +48,18 @@ export default {
     largeHeader: {
       type: Boolean,
       default: false
+    },
+    bodyPadded: {
+      type: Boolean,
+      default: false
+    },
+    dividerContent: {
+      type: String,
+      default: undefined
+    },
+    dividerAlign: {
+      type: String,
+      default: undefined
     }
   }
 }
@@ -47,14 +74,14 @@ export default {
     height: 3.5rem;
     padding: 1rem;
     background-color: $white;
-    border-bottom: 1px solid nth($grays, 4);
+    // border-bottom: 1px solid nth($grays, 4);
     &.a-section-large-header {
       height: 8rem;
       padding: 1rem 3rem;
       border-bottom: none;
       .media {
         padding: .5rem 0 1rem;
-        border-bottom: 1px solid nth($grays, 4);
+        // border-bottom: 1px solid nth($grays, 4);
       }
     }
   }
@@ -67,11 +94,12 @@ export default {
     }
     .a-section-body-content {
       background-color: $white;
+      padding: 2rem 3rem;
       .section:not(.full) {
         padding-right: 8rem;
       }
       &.a-section-body-padded {
-        padding: 1rem 6.5rem;
+        padding: 2rem 6.5rem;
       }
     }
   }

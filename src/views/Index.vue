@@ -3,7 +3,8 @@
     <div class="has-background-light">
       <a-section
         absolute-header
-        large-header>
+        large-header
+        body-padded>
         <template slot="header-left">
           <div class="logo-badge">
             <a-logo icon />

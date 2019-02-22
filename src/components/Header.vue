@@ -1,37 +1,45 @@
 <template>
-  <a-jumbo
-    :size="current.size"
-    :into="current.into"
-    :small="current.small"
-    :title="current.title"
-    class="is-hub">
+  <div :class="['has-background-light', {'section': ['service', 'guide'].includes($route.name)}]">
     <a-navbar
-      slot="header"
+      v-if="['service', 'guide'].includes($route.name)"
       :items="menu"
-      dark
       @logo="$router.push({ name: 'home' })"
     />
-    <template v-if="current.name === 'home'">
-      <p class="is-size-6 has-text-centered has-text-light jumbo-p">Explore, share and create reusable software, together.</p>
-    </template>
-    <template v-else-if="current.name === 'loading'">
-      <template slot="title">
-        <i class="mdi mdi-spin mdi-loading" />
+    <a-jumbo
+      v-else
+      :size="current.size"
+      :into="current.into"
+      :small="current.small"
+      :title="current.title"
+      class="is-hub">
+      <a-navbar
+        slot="header"
+        :items="menu"
+        dark
+        @logo="$router.push({ name: 'home' })"
+      />
+      <template v-if="current.name === 'home'">
+        <p class="is-size-6 has-text-centered has-text-light jumbo-p">Explore, share and create reusable software, together.</p>
       </template>
-    </template>
-    <template v-else-if="current.name === 'services'">
-      <div class="columns is-centered">
-        <div class="column is-one-third">
-          <a-input
-            v-model="search"
-            :icon-right="['a-icon', {icon: 'search'}]"
-            placeholder="SEARCH ON HUB"
-            @keyup.enter.native="$emit('search', { search, submit: true })"
-          />
+      <template v-else-if="current.name === 'loading'">
+        <template slot="title">
+          <i class="mdi mdi-spin mdi-loading" />
+        </template>
+      </template>
+      <template v-else-if="current.name === 'services'">
+        <div class="columns is-centered">
+          <div class="column is-one-third">
+            <a-input
+              v-model="search"
+              :icon-right="['a-icon', {icon: 'search'}]"
+              placeholder="SEARCH ON HUB"
+              @keyup.enter.native="$emit('search', { search, submit: true })"
+            />
+          </div>
         </div>
-      </div>
-    </template>
-  </a-jumbo>
+      </template>
+    </a-jumbo>
+  </div>
 </template>
 
 <script>
