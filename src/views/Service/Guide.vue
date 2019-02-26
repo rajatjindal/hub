@@ -1,47 +1,15 @@
 <template>
-  <two-column-sidebar>
-    <div
-      slot="sidebar"
-      class="sidebar sticky-sidebar">
-      <div class="sidebar-info">
-        <ul class="section sidebar-stick list-scroll-spy">
-          <template v-for="(command, name) in $parent.commands">
-            <li
-              :key="`list-command-${name}`"
-              :class="{ active: $route.hash === `#${name}`}">
-              <a
-                :href="`#${name}`"
-                :title="name">{{ name }}</a>
-            </li>
-            <template v-if="command.events">
-              <li
-                v-for="(event, ename) in command.events"
-                :key="`list-subcommand-${ename}`"
-                :class="{ 'sub': true, active: $route.hash.includes(`#${name}-${ename}`) }">
-                <a
-                  :href="`#${name}-${ename}`"
-                  :title="ename">{{ ename }}</a>
-              </li>
-            </template>
-          </template>
-        </ul>
-      </div>
-    </div>
-    <div
-      slot="body"
-      class="body">
-      <transition-group
-        name="fade"
-        tag="div"
-        class="command body-section">
-        <service-content
-          v-if="loaded"
-          :key="`container-${getHash}`"
-          :action="getActionFromHash"
-          :example="getExampleFromAction" />
-      </transition-group>
-    </div>
-  </two-column-sidebar>
+  <div>
+    <transition-group
+      name="fade"
+      tag="div"
+      class="command">
+      <service-content
+        :key="`container-${getHash}`"
+        :action="getActionFromHash"
+        :example="getExampleFromAction" />
+    </transition-group>
+  </div>
 </template>
 
 <script>
@@ -50,7 +18,7 @@ import ServiceContent from '@/components/ServiceContent'
 export default {
   name: 'ServiceGuide',
   components: { ServiceContent },
-  data: () => ({ loaded: false }),
+  inject: ['commands', 'tags', 'serviceName', 'numCommands', 'alias', 'owner', 'repo'],
   computed: {
     getHash: function () {
       return this.$route.hash.split('#')[1]
@@ -59,17 +27,21 @@ export default {
       return this.$route.hash.split('#')[1].split('-')
     },
     getActionFromHash: function () {
-      let action = this.$parent.commands[this.getHashArray[0]]
-      if (this.getHashArray.length > 1 && action.events) {
+      let action = this.commands()[this.getHashArray[0]]
+      if (action && this.getHashArray.length > 1 && action.events) {
         action = action.events[this.getHashArray[1]]
       }
-      if (this.getHashArray.length > 2 && action.output && action.output.commands) {
+      if (action && this.getHashArray.length > 2 && action.output && action.output.commands) {
         action = action.output.commands[this.getHashArray[2]]
       }
       return action
     },
     getEventFromHash: function () {
-      return this.getHashArray.length > 1 ? this.$parent.commands[this.getHashArray[0]].events[this.getHashArray[1]] : undefined
+      const action = this.commands()[this.getHashArray[0]]
+      if (action && this.getHashArray.length > 1) {
+        return action.events[this.getHashArray[1]]
+      }
+      return undefined
     },
     getActionName: function () {
       return this.getHashArray[this.getHashArray.length - 1]
@@ -77,14 +49,14 @@ export default {
     getExampleFromAction: function () { // generating example content
       let action = this.getActionFromHash
       let ret = ''
-      if (this.getHashArray.length === 2) { // it's an event
-        ret += `${this.$parent.serviceName} ${this.getHashArray[0]} as client\n  when client ${this.getActionName} `
+      if (action && this.getHashArray.length === 2) { // it's an event
+        ret += `${this.serviceName()} ${this.getHashArray[0]} as client\n  when client ${this.getActionName} `
         for (let arg in action.arguments) {
           ret += `${arg}:[${action.arguments[arg].type}] `
         }
         ret += 'as result\n    ...'
-      } else if (this.getHashArray.length === 3) { // it's an action
-        ret += `${this.$parent.serviceName} ${this.getHashArray[0]} as client\n  when client ${this.getHashArray[1]} `
+      } else if (this.getEventFromHash && this.getHashArray.length === 3) { // it's an action
+        ret += `${this.serviceName()} ${this.getHashArray[0]} as client\n  when client ${this.getHashArray[1]} `
         for (let arg in this.getEventFromHash.arguments) {
           ret += `${arg}:[${this.getEventFromHash.arguments[arg].type}] `
         }
@@ -92,11 +64,11 @@ export default {
         for (let arg in action.arguments) {
           ret += `${arg}:[${action.arguments[arg].type}] `
         }
-      } else if (!action.events) { // it's a command
+      } else if (action && !('events' in action)) { // it's a command
         if (!action.run) {
           ret += 'result = '
         }
-        ret += `${this.$parent.serviceName} ${this.getActionName}`
+        ret += `${this.serviceName()} ${this.getActionName}`
         for (let arg in action.arguments) {
           if (action.arguments[arg].required) {
             ret += ` ${arg}:[${action.arguments[arg].type}]`
@@ -105,8 +77,8 @@ export default {
         if (action.run) {
           ret += ' as result\n  ...'
         }
-      } else { // it's an event-based
-        ret += `${this.$parent.serviceName} ${this.getActionName} as client `
+      } else if (action) { // it's an event-based
+        ret += `${this.serviceName()} ${this.getActionName} as client `
         for (let event in action.events) {
           ret += `\n  when client ${event} `
           for (let arg in action.events[event].arguments) {
@@ -121,37 +93,33 @@ export default {
   watch: {
     '$route': 'checkHash'
   },
-  created: function () {
-    this.$parent.onReady(this.checkHash)
-  },
   methods: {
     openRepo: function () {
-      window.open(`//github.com/${this.$parent.service.pullUrl}`, '_blank')
+      window.open(`//github.com/${this.service().pullUrl}`, '_blank')
     },
     checkHash: function () {
-      this.loaded = true
       if (!this.$route.name.includes('guide')) return
       let hash = this.$route.hash || ''
       if (this.$route.hash.length < 2) {
-        hash = `#${Object.keys(this.$parent.commands)[0]}`
+        hash = `#${Object.keys(this.commands())[0]}`
         this.$nextTick(() => {
           this.$router.replace({ name: this.$route.name, params: this.$route.params, hash })
         })
       }
-      for (let name in this.$parent.commands) {
+      for (let name in this.commands()) {
         if (hash === `#${name}`) return
-        if (this.$parent.commands[name].events) {
-          for (let event in this.$parent.commands[name].events) {
+        if (this.commands()[name].events) {
+          for (let event in this.commands()[name].events) {
             if (hash === `#${name}-${event}`) return
-            if (this.$parent.commands[name].events[event].output && this.$parent.commands[name].events[event].output.commands) {
-              for (let command in this.$parent.commands[name].events[event].output.commands) {
+            if (this.commands()[name].events[event].output && this.commands()[name].events[event].output.commands) {
+              for (let command in this.commands()[name].events[event].output.commands) {
                 if (hash === `#${name}-${event}-${command}`) return
               }
             }
           }
         }
-        if (Object.keys(this.$parent.commands).indexOf(name) === (Object.keys(this.$parent.commands).length - 1)) {
-          hash = `#${Object.keys(this.$parent.commands)[0]}`
+        if (Object.keys(this.commands()).indexOf(name) === (Object.keys(this.commands()).length - 1)) {
+          hash = `#${Object.keys(this.commands())[0]}`
           this.$router.replace({ name: this.$route.name, params: this.$route.params, hash })
         }
       }

@@ -11,7 +11,7 @@
       <div
         v-if="type ==='browser'"
         class="browser-title">
-        <font-awesome-icon icon="search" />
+        <a-icon icon="search" />
         <span class="title">{{ title }}</span>
       </div>
       <span
@@ -31,12 +31,11 @@
       </v-scrollbar>
       <a-button
         v-if="copy && type !== 'browser'"
-        state="neutral"
-        size="s"
+        :icon="`clipboard-${copied ? 'check-' : ''}outline`"
+        size="small"
         class="copy-btn"
         title="Copy"
         @click="clipboard">
-        <font-awesome-icon :icon="copied ? 'clipboard-check' : 'clipboard'" />
         {{ copied ? 'Copied !' : 'Copy' }}
       </a-button>
     </div>

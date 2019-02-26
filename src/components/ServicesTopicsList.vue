@@ -161,37 +161,3 @@ export default {
   }
 }
 </script>
-
-<style lang="scss">
-.topics-list {
-  padding-left: 1rem;
-  position: relative;
-  .topic-item {
-    &.active {
-      position: relative;
-      color: $primary;
-      &:before {
-        content: '';
-        display: block;
-        width : .25rem;
-        height: 2rem;
-        position: absolute;
-        top: 0;
-        left: -1.75rem;
-        bottom: 0;
-        border-radius: .25rem;
-        background-color: $primary;
-      }
-    }
-    .delete {
-      float: right;
-    }
-    font-size: nth($sizes, 7);
-    color: nth($grays, 2);
-    font-weight: 600;
-    padding: .25rem;
-    margin-top: .75rem;
-    cursor: pointer;
-  }
-}
-</style>

@@ -12,9 +12,9 @@
         <span v-else>{{ getEvent }}</span>
         <span v-if="getAction">{{ getAction }}</span>
       </span>
-      <a-badge
-        :state="getTagColor"
-        class="text--light command-tag">{{ getTagName }}</a-badge>
+      <span
+        :class="`is-${getTagColor}`"
+        class="has-text-white tag is-large has-text-weight-bold">{{ getTagName }}</span>
     </h2>
     <h3 v-if="action.help">Description</h3>
     <span v-if="action.help">{{ action.help }}</span>
@@ -145,7 +145,7 @@ export default {
       return this.getHashArray.length > 2 ? this.getHashArray[2] : undefined
     },
     getTagColor: function () {
-      return this.getAction ? 'dark' : this.getEvent ? 'blue' : this.action.events ? 'primary' : 'orange'
+      return this.getAction ? 'dark' : this.getEvent ? 'primary' : this.action.events ? 'info' : 'warning'
     },
     getTagName: function () {
       return this.getAction ? 'action' : this.getEvent ? 'event' : this.action.events ? 'event-based' : 'command'
