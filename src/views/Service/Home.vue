@@ -12,7 +12,7 @@
         <div
           v-if="!serviceName()"
           class="readme-md">
-          <h5 class="is-size-5 has-text-centered has-text-gray-4">Loading content</h5>
+          <h5 class="is-size-5 has-text-centered has-text-gray-2">Loading content</h5>
         </div>
         <div
           v-if="tags() && tags().length > 0 && tags()[0].readme === false"
@@ -147,18 +147,21 @@
       <div class="card-bordered">
         <template v-for="(tag, idx) of tags()">
           <template v-if="tag.configuration && tag.configuration.info && tag.configuration.info.version">
-            <h3
+            <div
               :key="`version-${tag.state}`"
-              class="version-head">{{ tag.configuration.info.version }} <a-badge
-                state="warning"
-                outline
-                lower>{{ tag.tag }}</a-badge></h3>
-            <p
-              v-if="tag.changelog"
-              :key="`version-${tag.state}-content`">{{ tag.changelog }}</p>
-            <p
-              v-else
-              :key="`version-${tag.state}-content` ">No logs provided</p>
+              class="columns is-mobile is-multiline is-vcentered"
+            >
+              <div class="column is-half">
+                <h5 class="is-size-7 has-text-dark has-text-uppercase title">{{ tag.configuration.info.version }}</h5>
+              </div>
+              <div
+                class="column is-half has-text-right">
+                <span class="tag is-secondary is-warning">{{ tag.tag }}</span>
+              </div>
+              <div class="column">
+                <p>{{ tag.changelog || 'No logs provided' }}</p>
+              </div>
+            </div>
           </template>
           <div
             v-else
@@ -202,21 +205,20 @@ export default {
     getFirstCommands: function () {
       const keys = Object.keys(this.commands())
       if (keys.length > 0) {
-        return {
-          [keys[0]]: this.commands()[keys[0]],
-          [keys[1]]: this.commands()[keys[1]],
-          [keys[2]]: this.commands()[keys[2]],
-          [keys[3]]: this.commands()[keys[3]]
+        let ret = {}
+        for (let i = 0; i < 4 && i < keys.length; i++) {
+          ret = { ...ret, [keys[i]]: this.commands()[keys[i]] }
         }
+        return ret
       }
       return {}
     }
   },
   watch: {
-    'tags': {
+    'getFirstCommands': {
       deep: true,
       handler: function (value) {
-        if (value.length > 0 && value[0].readme) {
+        if (this.tags().length > 0 && this.tags()[0].readme) {
           /* global Prism */
           this.$nextTick(Prism.highlightAll)
           this.$nextTick(() => {
@@ -224,13 +226,7 @@ export default {
           })
         }
       }
-    },
-    'serviceName': function () {
-      console.log(this.serviceName)
     }
-  },
-  mounted: function () {
-    this.$nextTick(Prism.highlightAll)
   }
 }
 </script>

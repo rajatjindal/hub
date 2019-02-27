@@ -1,31 +1,33 @@
 <template>
-  <div>
-    <h2 class="command-header">
-      <span class="command-name title is-1">
+  <div class="service-content-container">
+    <h2 class="is-size-3 title is-clearfix">
+      <span class="is-pulled-left">
         <template v-if="getEvent"><span
-          class="command-name-link"
           @click="$router.replace({ name: $route.name, params: $route.params, hash: `#${getCommand}`})">{{ getCommand }}</span> - </template>
         <span v-else>{{ getCommand }}</span>
         <template v-if="getAction"><span
-          class="command-name-link"
           @click="$router.replace({ name: $route.name, params: $route.params, hash: `#${getCommand}-${getEvent}`})">{{ getEvent }}</span> - </template>
         <span v-else>{{ getEvent }}</span>
         <span v-if="getAction">{{ getAction }}</span>
       </span>
       <span
         :class="`is-${getTagColor}`"
-        class="has-text-white tag is-large has-text-weight-bold">{{ getTagName }}</span>
+        class="is-pulled-right has-text-white tag is-large has-text-weight-bold">{{ getTagName }}</span>
     </h2>
-    <h3 v-if="action.help">Description</h3>
+    <h3
+      v-if="action.help"
+      class="is-size-5">Description</h3>
     <span v-if="action.help">{{ action.help }}</span>
-    <h3 v-if="example">Example</h3>
+    <h3
+      v-if="example"
+      class="is-size-5">Example</h3>
     <a-window
       v-if="example"
       lang="coffeescript">{{ example }}</a-window>
-    <h3 v-if="action.arguments">Arguments</h3>
-    <div
+    <h3
       v-if="action.arguments"
-      class="arguments-table-container">
+      class="is-size-5">Arguments</h3>
+    <div v-if="action.arguments">
       <table class="table is-bordered">
         <thead>
           <tr>
@@ -40,7 +42,7 @@
             :key="`${getHash}-arguments-${name}`">
             <td><code class="arg">{{ name }}</code></td>
             <td class="type"><code>{{ arg.type }}</code></td>
-            <td class="description">
+            <td>
               <span
                 v-if="arg.required"
                 class="required">Required. </span>
@@ -52,37 +54,39 @@
       </table>
     </div>
     <template v-if="action.events">
-      <h3>Events</h3>
+      <h3 class="is-size-5">Events</h3>
       <ul>
         <li
           v-for="(event, name) in action.events"
           :key="`${getHash}-events-${name}`">
           <a-button
-            state="neutral"
-            outline
+            link
+            arrow
             @click.stop="$router.push({ name: $route.name, params: $route.params, hash: `#${getHash}-${name}`})">{{ name }}</a-button>
         </li>
       </ul>
     </template>
     <template v-if="action.output">
-      <h3>Output</h3>
+      <h3 class="is-size-5">Output</h3>
       <p v-if="action.output.help"> {{ action.output.help }}</p>
       <p v-if="action.output.type">Returns output of type <code>{{ action.output.type }}</code>.</p>
-      <h3 v-if="action.output.commands">Commands</h3>
+      <h3
+        v-if="action.output.commands"
+        class="is-size-5">Commands</h3>
       <ul v-if="action.output.commands">
         <li
           v-for="(command, name) in action.output.commands"
           :key="`${getHash}-commands-${name}`">
           <a-button
-            state="neutral"
-            outline
-            @click.stop="$router.push({ name: $route.name, params: $route.params, hash: `#${getHash}-${name}`})">{{ name }}</a-button>
+            link
+            arrow
+            @click="$router.push({ name: $route.name, params: $route.params, hash: `#${getHash}-${name}`})">{{ name }}</a-button>
         </li>
       </ul>
-      <h3 v-if="action.output.properties">Properties</h3>
-      <div
+      <h3
         v-if="action.output.properties"
-        class="arguments-table-container">
+        class="is-size-5">Properties</h3>
+      <div v-if="action.output.properties">
         <table class="table is-bordered">
           <thead>
             <tr>
@@ -97,7 +101,7 @@
               :key="`${getHash}-properties-${name}`">
               <td><code class="arg">{{ name }}</code></td>
               <td class="type"><code>{{ property.type }}</code></td>
-              <td class="description">
+              <td>
                 <span
                   v-if="property.required"
                   class="required">Required. </span>
@@ -153,3 +157,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+.service-content-container {
+  h3 {
+    margin-top: 1.5rem;
+  }
+}
+</style>

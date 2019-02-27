@@ -296,7 +296,6 @@
 import { IndexQuery, SearchQuery } from '@/plugins/graphql'
 import ServiceSummary from '@/components/ServiceSummary'
 import ASection from '@/components/ASection'
-import SearchBar from '@/components/SearchBar'
 import ServicesTopicsList from '@/components/ServicesTopicsList'
 import ArticleSummary from '@/components/ArticleSummary'
 
@@ -305,7 +304,6 @@ export default {
   components: {
     ServicesTopicsList,
     ServiceSummary,
-    SearchBar,
     ASection,
     ArticleSummary
   },

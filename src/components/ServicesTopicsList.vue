@@ -37,10 +37,7 @@
 </template>
 
 <script>
-import ServicesIcon from '@/components/ServicesIcon'
-
 export default {
-  components: { ServicesIcon },
   props: {
     category: {
       type: String,

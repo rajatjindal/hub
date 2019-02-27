@@ -263,7 +263,6 @@ export default {
       return arr
     },
     getHashArray: function () {
-      console.log('hash', this.$route.hash)
       return (((this.$route.hash[0] === '#' ? this.$route.hash : `#${this.$route.hash}`) || '').split('#') || ['', ''])[1].split('-')
     },
     serviceName: function () {
