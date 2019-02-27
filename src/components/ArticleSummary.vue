@@ -2,7 +2,7 @@
   <router-link :to="`/article/${title}`">
     <div class="card article">
       <div class="card-image">
-        <figure class="image is-4by3">
+        <figure class="image is-5by3">
           <div
             v-if="isLoading"
             class="loading-shimmer article-image"

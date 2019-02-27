@@ -14,10 +14,10 @@
   resolved "https://registry.yarnpkg.com/@apollographql/graphql-playground-html/-/graphql-playground-html-1.6.6.tgz#022209e28a2b547dcde15b219f0c50f47aa5beb3"
   integrity sha512-lqK94b+caNtmKFs5oUVXlSpN3sm5IXZ+KfhMxOtr0LR2SqErzkoJilitjDvJ1WbjHlxLI7WtCjRmOLdOGJqtMQ==
 
-"@asyncy/vue@^1.2.12":
-  version "1.2.12"
-  resolved "https://registry.yarnpkg.com/@asyncy/vue/-/vue-1.2.12.tgz#59de90a5cc03113842340c92a1f7bb2133b02c47"
-  integrity sha512-5Rt9C9kPQQQ6mY6SUsTjY6NuQXgzrWsneLcToXikLw5sWMFpTN82U2T8RmfPp5BnLDowaqeLX84WADhzz5A1Jg==
+"@asyncy/vue@^1.2.13":
+  version "1.2.13"
+  resolved "https://registry.yarnpkg.com/@asyncy/vue/-/vue-1.2.13.tgz#1fba0a6b45459f096d808adcb2be84b5b34e31c9"
+  integrity sha512-uBNahX+QrbekpmYdLwQlnjGFJxxma/sUUT5mWN/jVfjmYq1+iOMdPIXP1PZYAKVFyiCMJH0tG2BcDnADlfMksA==
   dependencies:
     "@mdi/font" "^3.4.93"
     bulma "^0.7.2"

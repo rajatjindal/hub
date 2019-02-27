@@ -26,8 +26,7 @@
           v-if="serviceName() && !showMore"
           class="readme-more">
           <a-button
-            state="secondary"
-            outline
+            link
             @click="showMore = true">Show more</a-button>
         </div>
       </div>
@@ -81,9 +80,9 @@
             v-for="(command, name) in getFirstCommands"
             :key="name"
             class="columns is-vcentered is-variable is-2 is-mobile">
-            <div class="column is-one-fifth">
+            <div class="column is-one-quarter">
               <div class="columns is-paddingless is-variable is-1 is-vcentered is-mobile">
-                <div class="column">
+                <div class="column is-narrow">
                   <span class="tag is-secondary is-medium">
                     {{ name }}
                   </span>
@@ -93,17 +92,17 @@
                 </div>
               </div>
             </div>
-            <div class="column is-two-fifths">
+            <div class="column is-half">
               <p :class="['is-text-ellipsed', {'has-text-gray-4': !command.help }]">
                 {{ command.help || '« No description »' }}
               </p>
             </div>
-            <div class="column is-two-fifthss">
+            <div class="column is-one-quarter">
               <a-button
                 arrow
                 size="small"
                 state="light is-circle"
-                @click="$router.push({ name: `guide${$route.name === 'service' ? '' : '_repo'}`, params: ($route.name === 'service' ? { alias: alias() } : { owner: owner(), repo: repo() }), hash: `#${name}` })"
+                @click="$router.push({ path: `${$route.path}/guide`, hash: `#${name}` })"
               >
                 Try now
               </a-button>
@@ -116,7 +115,7 @@
         >
           <a-button
             link
-            @click="$router.push({ name: `guide${$route.name === 'service' ? '' : '_repo'}`, params: $route.params, hash: `#${Object.keys(commands())[0]}` })"
+            @click="$router.push({ path: `${$route.path}/guide`, hash: `#${Object.keys(commands())[0]}` })"
           >
             More
           </a-button>
@@ -199,7 +198,7 @@
 <script>
 export default {
   name: 'ServiceHome',
-  data: () => ({ showMore: false }),
+  data: () => ({ showMore: true }),
   inject: ['commands', 'tags', 'serviceName', 'numCommands', 'alias', 'owner', 'repo', 'onReady'],
   computed: {
     getFirstCommands: function () {
@@ -212,10 +211,13 @@ export default {
         return ret
       }
       return {}
+    },
+    readme: function () {
+      return this.tags() && this.tags().length > 0 ? this.tags()[0].readme : undefined
     }
   },
   watch: {
-    'getFirstCommands': {
+    'readme': {
       deep: true,
       handler: function (value) {
         if (this.tags().length > 0 && this.tags()[0].readme) {
@@ -227,6 +229,12 @@ export default {
         }
       }
     }
+  },
+  mounted: function () {
+    this.$nextTick(Prism.highlightAll)
+    this.$nextTick(() => {
+      this.showMore = (this.$refs.readmeContainer.clientHeight < 300)
+    })
   }
 }
 </script>
@@ -269,15 +277,15 @@ export default {
     max-height: unset;
   }
   .readme-more {
-    background: linear-gradient(180deg, rgba(255,255,255,0) 0%,rgba(255,255,255,0.5) 25%,rgba(255,255,255,1) 100%);
+    background: linear-gradient(180deg, rgba(255,255,255,0) 0%,rgba(255,255,255,0.5) 10%,rgba(255,255,255,1) 100%);
     position: absolute;
     left: 0;
     right: 0;
     bottom: 0;
     display: flex;
-    align-items: center;
+    align-items: flex-end;
     justify-content: center;
-    height: 100px;
+    height: 150px;
   }
 }
 

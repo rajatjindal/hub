@@ -32,7 +32,9 @@
       <a-button
         v-if="copy && type !== 'browser'"
         :icon="`clipboard-${copied ? 'check-' : ''}outline`"
+        state="light"
         size="small"
+        link
         class="copy-btn"
         title="Copy"
         @click="clipboard">
@@ -234,11 +236,10 @@ export default {
     }
 
     .copy-btn {
-      transition: none;
       position: absolute;
       visibility: hidden;
       right: 0.5rem;
-      top: 0.5rem;
+      top: 0;
     }
     pre {
       overflow: auto;

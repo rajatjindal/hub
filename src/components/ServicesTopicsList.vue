@@ -5,6 +5,18 @@
       tag="ul"
       class="topics-list">
       <li
+        key="topic-all-services"
+        :class="{ 'active': active === '' }"
+        class="topic-item"
+        @click="active = ''">
+        All Services
+        <div class="tags">
+          <topic-tag
+            v-for="t in tags"
+            :key="t">{{ t }}</topic-tag>
+        </div>
+      </li>
+      <li
         v-for="topic in topics"
         :key="topic.name"
         :class="{ 'active': topic.name === active }"
@@ -46,14 +58,12 @@ export default {
   },
   data: () => ({
     isLoading: false,
+    tags: ['microservice', 'cron', 'javascript', 'github'],
     active: ''
   }),
   computed: {
     topics: function () {
       return [{
-        name: 'All Services',
-        icon: 'all'
-      }, {
         name: 'Popular',
         icon: 'popular'
       }, {

@@ -35,6 +35,10 @@ html {
     &.sub {
       padding-left: 1rem;
     }
+
+    .tags {
+      margin-top: .5rem;
+    }
     &.active {
       position: relative;
       color: $primary;
@@ -58,4 +62,8 @@ html {
       float: right;
     }
   }
+}
+
+.articles-container {
+  margin: 7.5rem 0 !important;
 }

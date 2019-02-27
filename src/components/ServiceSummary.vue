@@ -1,6 +1,6 @@
 <template>
   <div :class="{ disabled: !title, summary: true }">
-    <router-link :to="(isAlias ? `/service/` : '/r/') + title">
+    <router-link :to="{ path: (isAlias ? `/service/` : '/r/') + title }">
       <div
         v-if="!isLoading && title"
         class="media">
@@ -11,7 +11,7 @@
         </div>
         <div class="media-content">
           <h3 class="is-size-6 has-text-weight-bold has-text-dark">{{ title }}</h3>
-          <p class="is-size-8 has-text-gray-3 description">{{ (description || title) | emoji }}</p>
+          <p class="is-size-8 has-line-height-7 has-text-gray-3 description">{{ (description || title) | emoji }}</p>
           <div
             v-if="tags"
             class="tags">

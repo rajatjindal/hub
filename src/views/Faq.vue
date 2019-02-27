@@ -1,33 +1,32 @@
 <template>
-  <div class="container">
-    <h1>How do I submit a service?</h1>
-    <p class="subtitle">A step-by-step guide to adding the Asyncy webhook to your repository in Github.</p>
+  <section class="section">
+    <div class="container">
+      <h5 class="is-size-6 title has-text-centered">A step-by-step guide to adding the Asyncy webhook to your repository in Github.</h5>
 
-    <div class="step">
-      <p>1. Navigate to your repository in Github, and go to the <span class="highlight">Settings</span>.</p>
-
-      <img :src="faq1" >
+      <div class="columns is-centered">
+        <div class="column is-three-quarters">
+          <ol type="1">
+            <li>
+              <p class="is-size-6">Navigate to your repository in Github, and go to the <b>Settings</b>.</p>
+              <img :src="faq1">
+            </li>
+            <li>
+              <p>Under settings, navigate to the <b>Webhooks</b> section in the left nav bar. Click <b>Add Webhook</b>.</p>
+              <img :src="faq2">
+            </li>
+            <li>
+              <p>
+                Put <code>https://sync.asyncy.com/service/sync</code> as the payload URL. Set the Content type to <code>application/json</code>. Leave everything else as the default.<br>
+                Click <b>Add Webhook</b> at the bottom of the page.
+              </p>
+              <img :src="faq3">
+            </li>
+            <li><p><b>You're done!</b></p></li>
+          </ol>
+        </div>
+      </div>
     </div>
-
-    <div class="step">
-      <p>2. Under settings, navigate to the <span class="highlight">Webhooks</span> section in the left nav bar. Click <span class="highlight">Add Webhook</span>.</p>
-
-      <img :src="faq2" >
-    </div>
-
-    <div class="step">
-      <p>3. Put <code>https://sync.asyncy.com/service/sync</code> as the payload URL. Set the Content type to <code>application/json</code>. Leave everything else as the default. Click <span class="highlight">Add Webhook</span> at the bottom of the page.</p>
-
-      <img :src="faq3" >
-    </div>
-
-    <div class="step">
-      <p>4. You're done!</p>
-      <url-link to="/"><a-button
-        class="final-button"
-        color="white">Return to homepage</a-button></url-link>
-    </div>
-  </div>
+  </section>
 </template>
 
 <script>
@@ -44,46 +43,3 @@ export default {
   })
 }
 </script>
-
-<style scoped lang="scss">
-h1 {
-  line-height: 3.2rem;
-}
-
-.container {
-  margin: 75px auto;
-  padding: 25px;
-  max-width: 900px;
-  text-align: left;
-}
-
-.subtitle {
-  font-size: 1.3em;
-  color: #555;
-}
-
-.highlight {
-  font-weight: 500;
-}
-
-.step {
-  margin-top: 75px;
-
-  p {
-    font-size: 1.2em;
-    margin-bottom: 1.8em;
-  }
-
-  code {
-    font-size: 1.2em;
-  }
-
-  img {
-    max-width: 800px;
-  }
-}
-
-// .final-button {
-//   font-size: 1.4rem !important;
-// }
-</style>

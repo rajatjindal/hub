@@ -8,7 +8,7 @@
         >
       </div>
     </div>
-    <div :class="['column', 'is-4', {'is-offset-2': idx % 2 === 0}]">
+    <div :class="['column', 'is-4', {'is-offset-2': idx % 2 === 1}]">
       <div class="pin">
         <pin :idx="idx" />
       </div>
@@ -69,7 +69,7 @@ export default {
 
 <style lang="scss">
 .home-description-template {
-  margin: 10rem 0;
+  margin: 5rem 0;
 
   .pin {
     width: 3.75rem;

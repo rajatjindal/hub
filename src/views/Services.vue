@@ -1,259 +1,264 @@
 <template>
   <div class="has-background-light">
-    <a-section absolute-header>
-      <template slot="header-left">
-        <span>
-          <i class="mdi mdi-bookmark-outline" />
-        </span>
-        <span class="is-size-8 has-text-gray-2 has-text-weight-semibold">TOPICS</span>
-      </template>
-      <template slot="sidebar">
-        <services-topics-list
-          v-model="topics"
-          :category="category"
-          @select="selectCategory" />
-      </template>
-      <section
-        v-if="!search && (!category || category === 'All Services')"
-        class="section full">
-        <h4 class="title is-size-4 has-text-gray-2">Featured services</h4>
-        <div class="featured-services">
-          <div class="tile is-ancestor">
-            <div class="tile is-parent">
-              <router-link
-                :to="`/service/slack`"
-                class="feature tile is-child">
-                <div class="image">
-                  <img
-                    src="@/assets/img/services/featured/slack.png"
-                    srcset="@/assets/img/services/featured/slack@2x.png 2x,
-                            @/assets/img/services/featured/slack@3x.png 3x"
-                    alt="Slack">
-                </div>
-              </router-link>
-            </div>
+    <div class="container">
+      <div class="columns is-gapless">
+        <div class="column">
+          <a-section absolute-header>
+            <template slot="header-left">
+              <span>
+                <i class="mdi mdi-bookmark-outline" />
+              </span>
+              <span class="is-size-8 has-text-gray-2 has-text-weight-semibold">TOPICS</span>
+            </template>
+            <template slot="sidebar">
+              <services-topics-list
+                v-model="topics"
+                :category="category"
+                @select="selectCategory" />
+            </template>
+            <section
+              v-if="!search && (!category || category === 'All Services')"
+              class="section full">
+              <h4 class="title is-size-4 has-text-gray-2">Featured services</h4>
+              <div class="featured-services">
+                <div class="tile is-ancestor">
+                  <div class="tile is-parent">
+                    <router-link
+                      :to="`/service/slack`"
+                      class="feature tile is-child">
+                      <div class="image">
+                        <img
+                          src="@/assets/img/services/featured/slack.png"
+                          srcset="@/assets/img/services/featured/slack@2x.png 2x,
+                                  @/assets/img/services/featured/slack@3x.png 3x"
+                          alt="Slack">
+                      </div>
+                    </router-link>
+                  </div>
 
-            <div class="tile is-parent">
-              <router-link
-                :to="`/service/twitter`"
-                class="feature tile is-child">
-                <div class="image">
-                  <img
-                    src="@/assets/img/services/featured/twitter.png"
-                    srcset="@/assets/img/services/featured/twitter@2x.png 2x,
-                            @/assets/img/services/featured/twitter@3x.png 3x"
-                    alt="Twitter">
-                </div>
-              </router-link>
-            </div>
+                  <div class="tile is-parent">
+                    <router-link
+                      :to="`/service/twitter`"
+                      class="feature tile is-child">
+                      <div class="image">
+                        <img
+                          src="@/assets/img/services/featured/twitter.png"
+                          srcset="@/assets/img/services/featured/twitter@2x.png 2x,
+                                  @/assets/img/services/featured/twitter@3x.png 3x"
+                          alt="Twitter">
+                      </div>
+                    </router-link>
+                  </div>
 
-            <div class="tile is-parent">
-              <router-link
-                :to="`/service/twilio`"
-                class="feature tile is-child">
-                <div class="image">
-                  <img
-                    src="@/assets/img/services/featured/twilio.png"
-                    srcset="@/assets/img/services/featured/twilio@2x.png 2x,
-                            @/assets/img/services/featured/twilio@3x.png 3x"
-                    alt="Twilio">
+                  <div class="tile is-parent">
+                    <router-link
+                      :to="`/service/twilio`"
+                      class="feature tile is-child">
+                      <div class="image">
+                        <img
+                          src="@/assets/img/services/featured/twilio.png"
+                          srcset="@/assets/img/services/featured/twilio@2x.png 2x,
+                                  @/assets/img/services/featured/twilio@3x.png 3x"
+                          alt="Twilio">
+                      </div>
+                    </router-link>
+                  </div>
                 </div>
-              </router-link>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section
-        v-if="!search && (!category || category === 'All Services')"
-        class="section">
-        <h5 class="is-size-5 has-text-gray-2 title">Recently Added</h5>
-        <div class="section-body">
-          <div class="tile is-ancestor">
-            <transition-group
-              name="fade"
-              tag="div"
-              class="tile is-parent is-vertical">
-              <div
-                v-for="(r, index) in data.recentServices.slice(0, 3)"
-                :key="r.alias || index"
-                class="tile is-child">
-                <service-summary
-                  :title="getTitle(r)"
-                  :is-alias="r.alias ? true : false"
-                  :description="r.description"
-                  :tags="r.topics"/>
               </div>
-            </transition-group>
-            <transition-group
-              name="fade"
-              tag="div"
-              class="tile is-parent is-vertical">
-              <div
-                v-for="(r, index) in data.recentServices.slice(3, 6)"
-                :key="r.alias || index"
-                class="tile is-child">
-                <service-summary
-                  :title="getTitle(r)"
-                  :is-alias="r.alias ? true : false"
-                  :description="r.description"
-                  :tags="r.topics"/>
+            </section>
+            <section
+              v-if="!search && (!category || category === 'All Services')"
+              class="section">
+              <h5 class="is-size-5 has-text-gray-2 title">Recently Added</h5>
+              <div class="section-body">
+                <div class="tile is-ancestor">
+                  <transition-group
+                    name="fade"
+                    tag="div"
+                    class="tile is-parent is-vertical">
+                    <div
+                      v-for="(r, index) in data.recentServices.slice(0, 3)"
+                      :key="r.alias || index"
+                      class="tile is-child">
+                      <service-summary
+                        :title="getTitle(r)"
+                        :is-alias="r.alias ? true : false"
+                        :description="r.description"
+                        :tags="r.topics"/>
+                    </div>
+                  </transition-group>
+                  <transition-group
+                    name="fade"
+                    tag="div"
+                    class="tile is-parent is-vertical">
+                    <div
+                      v-for="(r, index) in data.recentServices.slice(3, 6)"
+                      :key="r.alias || index"
+                      class="tile is-child">
+                      <service-summary
+                        :title="getTitle(r)"
+                        :is-alias="r.alias ? true : false"
+                        :description="r.description"
+                        :tags="r.topics"/>
+                    </div>
+                  </transition-group>
+                </div>
               </div>
-            </transition-group>
-          </div>
-        </div>
-      </section>
-      <section
-        v-if="!search && (!category || category === 'All Services')"
-        class="section">
-        <h5 class="is-size-5 has-text-gray-2 title">Most Used</h5>
-        <div class="section-body">
-          <div class="tile is-ancestor">
-            <transition-group
-              name="fade"
-              tag="div"
-              class="tile is-parent is-vertical">
-              <div
-                v-for="(r, index) in data.recentServices.slice(0, 3)"
-                :key="r.alias || index"
-                class="tile is-child">
-                <service-summary
-                  :title="getTitle(r)"
-                  :is-alias="r.alias ? true : false"
-                  :description="r.description"
-                  :tags="r.topics"/>
+            </section>
+            <section
+              v-if="!search && (!category || category === 'All Services')"
+              class="section">
+              <h5 class="is-size-5 has-text-gray-2 title">Most Used</h5>
+              <div class="section-body">
+                <div class="tile is-ancestor">
+                  <transition-group
+                    name="fade"
+                    tag="div"
+                    class="tile is-parent is-vertical">
+                    <div
+                      v-for="(r, index) in data.recentServices.slice(0, 3)"
+                      :key="r.alias || index"
+                      class="tile is-child">
+                      <service-summary
+                        :title="getTitle(r)"
+                        :is-alias="r.alias ? true : false"
+                        :description="r.description"
+                        :tags="r.topics"/>
+                    </div>
+                  </transition-group>
+                  <transition-group
+                    name="fade"
+                    tag="div"
+                    class="tile is-parent is-vertical">
+                    <div
+                      v-for="(r, index) in data.recentServices.slice(3, 6)"
+                      :key="r.alias || index"
+                      class="tile is-child">
+                      <service-summary
+                        :title="getTitle(r)"
+                        :is-alias="r.alias ? true : false"
+                        :description="r.description"
+                        :tags="r.topics"/>
+                    </div>
+                  </transition-group>
+                </div>
               </div>
-            </transition-group>
-            <transition-group
-              name="fade"
-              tag="div"
-              class="tile is-parent is-vertical">
-              <div
-                v-for="(r, index) in data.recentServices.slice(3, 6)"
-                :key="r.alias || index"
-                class="tile is-child">
-                <service-summary
-                  :title="getTitle(r)"
-                  :is-alias="r.alias ? true : false"
-                  :description="r.description"
-                  :tags="r.topics"/>
-              </div>
-            </transition-group>
-          </div>
-        </div>
-      </section>
-      <section
-        v-else-if="(!category || category === 'All Services')"
-        class="section">
-        <transition-group
-          v-if="!isSearchLoading"
-          tag="div"
-          name="fade">
-          <div
-            v-if="searchTotalItems > 0"
-            key="results">
-            <h2 class="title is-size-4 has-text-gray-2">{{ searchTotalItems }} service results</h2>
-          </div>
-          <div
-            v-else
-            key="no-results"
-            class="no-results">
-            <div class="columns is-centered">
-              <div class="column is-half has-text-centered">
-                <a-icon icon="file-broken" />
-                <h5 class="is-size-5 has-text-weight-semibold has-text-gray-2">We couldn't find any service matching `{{ search }}`</h5>
-              </div>
-            </div>
-          </div>
-        </transition-group>
-        <div>
-          <div class="tile is-ancestor">
-            <div class="tile is-parent is-vertical">
+            </section>
+            <section
+              v-else-if="(!category || category === 'All Services')"
+              class="section">
               <transition-group
+                v-if="!isSearchLoading"
                 tag="div"
                 name="fade">
                 <div
-                  v-for="(r, index) in searchResults"
-                  :key="r.alias || index"
-                  class="tile search-result">
-                  <service-summary
-                    :title="getTitle(r)"
-                    :is-alias="r.alias ? true : false"
-                    :description="r.description"
-                    :tags="r.topics"/>
+                  v-if="searchTotalItems > 0"
+                  key="results">
+                  <h2 class="title is-size-4 has-text-gray-2">{{ searchTotalItems }} service results</h2>
+                </div>
+                <div
+                  v-else
+                  key="no-results"
+                  class="no-results">
+                  <div class="columns is-centered">
+                    <div class="column is-half has-text-centered">
+                      <a-icon icon="file-broken" />
+                      <h5 class="is-size-5 has-text-weight-semibold has-text-gray-2">We couldn't find any service matching « {{ search }} »</h5>
+                    </div>
+                  </div>
                 </div>
               </transition-group>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section
-        v-else
-        class="section">
-        <transition-group
-          tag="div"
-          name="fade">
-          <!-- <div key="results" v-if="searchCatTotalItems > 0">
-            <h2 class="title is-3">{{searchCatTotalItems}} service results</h2>
-          </div> -->
-          <div
-            key="no-results"
-            class="no-results">
-            <div class="columns is-centered">
-              <div class="column is-half has-text-centered">
-                <a-icon icon="file-broken" />
-                <h5 class="is-size-5 has-text-weight-semibold has-text-gray-2">We couldn't find any service containing the topic `{{ category }}`</h5>
+              <div>
+                <div class="tile is-ancestor">
+                  <div class="tile is-parent is-vertical">
+                    <transition-group
+                      tag="div"
+                      name="fade">
+                      <div
+                        v-for="(r, index) in searchResults"
+                        :key="r.alias || index"
+                        class="tile search-result">
+                        <service-summary
+                          :title="getTitle(r)"
+                          :is-alias="r.alias ? true : false"
+                          :description="r.description"
+                          :tags="r.topics"/>
+                      </div>
+                    </transition-group>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        </transition-group>
-        <!-- <div>
-          <div class="tile is-ancestor">
-            <div class="tile is-parent is-vertical">
-              <transition-group tag="div" name="fade">
-                <div v-for="(r, index) in searchCatResults" :key="r.alias || index" class="tile is-child search-result">
-                  <service-summary :title="getTitle(r)" :is-alias="r.alias ? true : false" :description="r.description" :tags="r.topics"></service-summary>
+            </section>
+            <section
+              v-else
+              class="section">
+              <transition-group
+                tag="div"
+                name="fade">
+                <!-- <div key="results" v-if="searchCatTotalItems > 0">
+                  <h2 class="title is-3">{{searchCatTotalItems}} service results</h2>
+                </div> -->
+                <div
+                  key="no-results"
+                  class="no-results">
+                  <div class="columns is-centered">
+                    <div class="column is-two-thirds has-text-centered">
+                      <a-icon icon="file-broken" />
+                      <h5 class="is-size-5 has-text-weight-semibold has-text-gray-2">We couldn't find any service containing the topic « {{ category }} »</h5>
+                    </div>
+                  </div>
                 </div>
               </transition-group>
-            </div>
-          </div>
-        </div> -->
-      </section>
-      <section class="section">
-        <div class="columns contribute-services has-background-light">
-          <div class="column is-half">
-            <span class="tag is-danger has-text-weight-semibold">Public</span>
-            <p class="is-size-7 has-text-gray-3 has-text-weight-semibold">Let's go crazy!</p>
-            <h5 class="is-size-5 has-text-gray-2 has-text-weight-bold">Create your service !</h5>
-            <a-button
-              state="secondary"
-              size="small"
-              arrow
-            >
-              Add your service
-            </a-button>
-          </div>
-          <div class="column is-half">
-            <span class="tag is-success has-text-weight-semibold">Public</span>
-            <p class="is-size-7 has-text-gray-3 has-text-weight-semibold">Let's go crazy!</p>
-            <h5 class="is-size-5 has-text-gray-2 has-text-weight-bold">Contribute a service !</h5>
-            <a-button
-              state="secondary"
-              size="small"
-              arrow
-            >
-              Add your service
-            </a-button>
-          </div>
+              <!-- <div>
+                <div class="tile is-ancestor">
+                  <div class="tile is-parent is-vertical">
+                    <transition-group tag="div" name="fade">
+                      <div v-for="(r, index) in searchCatResults" :key="r.alias || index" class="tile is-child search-result">
+                        <service-summary :title="getTitle(r)" :is-alias="r.alias ? true : false" :description="r.description" :tags="r.topics"></service-summary>
+                      </div>
+                    </transition-group>
+                  </div>
+                </div>
+              </div> -->
+            </section>
+            <section class="section">
+              <div class="columns contribute-services has-background-light">
+                <div class="column is-half">
+                  <span class="tag is-danger has-text-weight-semibold">Public</span>
+                  <p class="is-size-7 has-text-gray-3 has-text-weight-semibold">Let's go crazy!</p>
+                  <h5 class="is-size-5 has-text-gray-2 has-text-weight-bold">Create your service !</h5>
+                  <a-button
+                    state="secondary"
+                    size="small"
+                    arrow
+                  >
+                    Add your service
+                  </a-button>
+                </div>
+                <div class="column is-half">
+                  <span class="tag is-success has-text-weight-semibold">Public</span>
+                  <p class="is-size-7 has-text-gray-3 has-text-weight-semibold">Let's go crazy!</p>
+                  <h5 class="is-size-5 has-text-gray-2 has-text-weight-bold">Contribute a service !</h5>
+                  <a-button
+                    state="secondary"
+                    size="small"
+                    arrow
+                  >
+                    Add your service
+                  </a-button>
+                </div>
+              </div>
+            </section>
+          </a-section>
         </div>
-      </section>
-    </a-section>
-
+      </div>
+    </div>
     <div class="section has-background-light">
       <div class="container">
         <div class="level">
           <div class="level-left">
             <div class="level-item">
-              <h2 class="is-size-4 has-text-gray-2">
+              <h2 class="is-size-4 has-text-gray-2 title">
                 Community
               </h2>
             </div>

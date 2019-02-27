@@ -1,30 +1,33 @@
 <template>
   <div id="hub">
     <!-- <a-cookie /> -->
-    <a-header @search="onSearch" />
+    <a-header
+      @search="onSearch"
+      @open-modal="openSubmitAServiceModal" />
     <div class="main-container">
       <transition
         name="view-fade"
         mode="out-in">
         <router-view
-          ref="routerView"
-          @open-submit-service-modal="openSubmitAServiceModal" />
+          ref="routerView" />
       </transition>
     </div>
     <a-footer dark />
-    <!-- <submit-service-modal id="submit-service-modal" ref="submitAServiceModal" /> -->
+    <submit-service-modal
+      id="submit-service-modal"
+      ref="submitAServiceModal" />
   </div>
 </template>
 
 <script>
-// import SubmitServiceModal from '@/components/SubmitAServiceModal'
+import SubmitServiceModal from '@/components/SubmitAServiceModal'
 import AHeader from '@/components/Header'
 import { mapGetters } from 'vuex'
 
 export default {
   name: 'Hub',
   components: {
-    // SubmitServiceModal,
+    SubmitServiceModal,
     AHeader
   },
   data: () => ({ search: '', submit: false }),
@@ -39,14 +42,10 @@ export default {
   },
   methods: {
     openSubmitAServiceModal: function () {
-      this.$refs.submitAServiceModal.show = true
-    },
-    closeSubmitAServiceModal: function () {
-      this.$refs.submitAServiceModal.show = false
+      this.$refs.submitAServiceModal.show()
     },
     onSearch: function ({ search, submit }) {
       this.search = search
-      console.log(submit, this.search)
       if (submit && this.search.trim().length === 0) {
         this.$router.push({ name: 'services' })
       } else if (submit && this.search.trim().length > 0) {

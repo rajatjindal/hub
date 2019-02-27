@@ -1,61 +1,67 @@
 <template>
   <div class="home">
     <div class="has-background-light">
-      <a-section
-        absolute-header
-        large-header
-        body-padded>
-        <template slot="header-left">
-          <div class="logo-badge">
-            <a-logo icon />
+      <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-10">
+            <a-section
+              absolute-header
+              large-header
+              body-padded>
+              <template slot="header-left">
+                <div class="logo-badge">
+                  <a-logo icon />
+                </div>
+              </template>
+              <template slot="header-centered">
+                <table>
+                  <tr>
+                    <td class="has-text-right">
+                      <span class="is-size-8 has-text-gray-2">From:</span>
+                    </td>
+                    <td>
+                      <span class="is-size-8 has-text-gray-2 has-text-weight-bold">The Asyncy Crew {{ ':wave:' | emoji }}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="has-text-right">
+                      <span class="is-size-8 has-text-gray-2">To:</span>
+                    </td>
+                    <td>
+                      <span class="is-size-8 has-text-gray-2 has-text-weight-bold">You ! {{ ':rocket:' | emoji }}</span>
+                    </td>
+                  </tr>
+                </table>
+              </template>
+              <p class="has-text-dark">Dear Fellow Developer,<br><br>
+                Welcome to the <b>developer marketplace</b>. All the services you discover here run in the <br>
+                <b>Microservice Cloud</b> (an open-source platform built atop Kubernetes).<br>
+                With <b>Storyscript, a service-oriented programming language</b> that strings services together, <br>
+                you can focus on what matters most: your <b>business logic</b>. We call this the “the story of data”.<br><br>
+                We have many use cases
+                <a
+                  href="//docs.asyncy.com/#use-cases"
+                  title=""
+                  class="has-text-info has-text-weight-bold">
+                  here
+                </a>
+                and documentation on Storyscript
+                <a
+                  href="//storyscript.org"
+                  title="Storyscript"
+                  class="has-text-info has-text-weight-bold">
+                  here
+                </a>
+                .<br><br>
+                We hope you find our product inspiring, as we built it with passion for you, the developer.<br><br>
+                With Love,<br>
+                The Asyncy Crew<br><br>
+              </p>
+              <a-logo icon />
+            </a-section>
           </div>
-        </template>
-        <template slot="header-centered">
-          <table>
-            <tr>
-              <td class="has-text-right">
-                <span class="is-size-8 has-text-gray-2">From:</span>
-              </td>
-              <td>
-                <span class="is-size-8 has-text-gray-2 has-text-weight-bold">The Asyncy Crew {{ ':wave:' | emoji }}</span>
-              </td>
-            </tr>
-            <tr>
-              <td class="has-text-right">
-                <span class="is-size-8 has-text-gray-2">To:</span>
-              </td>
-              <td>
-                <span class="is-size-8 has-text-gray-2 has-text-weight-bold">You ! {{ ':rocket:' | emoji }}</span>
-              </td>
-            </tr>
-          </table>
-        </template>
-        <p class="has-text-dark">Dear Fellow Developer,<br><br>
-          Welcome to the <b>developer marketplace</b>. All the services you discover here run in the <br>
-          <b>Microservice Cloud</b> (an open-source platform built atop Kubernetes).<br>
-          With <b>Storyscript, a service-oriented programming language</b> that strings services together, <br>
-          you can focus on what matters most: your <b>business logic</b>. We call this the “the story of data”.<br><br>
-          We have many use cases
-          <a
-            href="//docs.asyncy.com/#use-cases"
-            title=""
-            class="has-text-info has-text-weight-bold">
-            here
-          </a>
-          and documentation on Storyscript
-          <a
-            href="//storyscript.org"
-            title="Storyscript"
-            class="has-text-info has-text-weight-bold">
-            here
-          </a>
-          .<br><br>
-          We hope you find our product inspiring, as we built it with passion for you, the developer.<br><br>
-          With Love,<br>
-          The Asyncy Crew<br><br>
-        </p>
-        <a-logo icon />
-      </a-section>
+        </div>
+      </div>
     </div>
     <div class="container">
       <home-description-template
@@ -80,7 +86,6 @@
         <a-button
           class="home-submit-btn"
           state="light"
-          arrow="rocket"
         >
           Submit a service
         </a-button>
@@ -90,7 +95,7 @@
       <div class="level">
         <div class="level-left">
           <div class="level-item">
-            <h2 class="is-size-4 has-text-gray-2">
+            <h2 class="is-size-4 has-text-gray-2 title">
               Find a service
             </h2>
           </div>
@@ -129,7 +134,7 @@
         <div class="level">
           <div class="level-left">
             <div class="level-item">
-              <h2 class="is-size-4 has-text-gray-2">
+              <h2 class="is-size-4 has-text-gray-2 title">
                 Community
               </h2>
             </div>
@@ -242,6 +247,7 @@ export default {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 3px;
+  margin-bottoM: .5rem;
 }
 
 .logo-badge {

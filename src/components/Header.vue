@@ -3,6 +3,7 @@
     <a-navbar
       v-if="['service', 'guide'].includes($route.name)"
       :items="menu"
+      @click="$emit('open-modal')"
       @logo="$router.push({ name: 'home' })"
     />
     <a-jumbo
@@ -16,6 +17,7 @@
         slot="header"
         :items="menu"
         dark
+        @click="$emit('open-modal')"
         @logo="$router.push({ name: 'home' })"
       />
       <template v-if="current.name === 'home'">
@@ -28,7 +30,7 @@
       </template>
       <template v-else-if="current.name === 'services'">
         <div class="columns is-centered">
-          <div class="column is-one-third">
+          <div class="column is-two-fifths">
             <a-input
               v-model="search"
               :icon-right="['a-icon', {icon: 'search'}]"
@@ -49,14 +51,9 @@ export default {
     search: '',
     jumbos: [{
       name: 'home',
-      size: 'medium',
+      size: 'large',
       title: 'Asyncy Hub',
       small: 'Unite Developers in One Storyline.'
-    }, {
-      name: 'apps',
-      size: 'medium',
-      title: 'Asyncy Hub',
-      small: 'Applications'
     }, {
       name: 'services',
       size: 'medium',
@@ -64,9 +61,19 @@ export default {
       small: 'Service Discovery and Marketplace'
     }, {
       name: 'functions',
-      size: 'medium',
-      title: 'Asyncy Hub',
+      size: 'large',
+      title: 'Coming soon',
       small: 'Functions'
+    }, {
+      name: 'apps',
+      size: 'large',
+      title: 'Coming soon',
+      small: 'Applications'
+    }, {
+      name: 'faq',
+      size: 'normal',
+      title: 'Service submission',
+      small: 'FAQ'
     }],
     visible: false
   }),
@@ -76,8 +83,8 @@ export default {
         { name: 'Services', route: { name: 'services' }, active: this.$route.name === 'services' },
         { name: 'Functions', route: { name: 'functions' }, active: this.$route.name === 'functions' },
         { name: 'Apps', route: { name: 'apps' }, active: this.$route.name === 'apps' },
-        { name: 'More', children: [{ name: 'contact' }] },
-        { name: 'Sign up', button: {}, icon: 'account-circle' }
+        // { name: 'More', children: [{ name: 'contact' }] },
+        { name: 'Submit a service', button: { rounded: false }, icon: 'pin' }
       ]
     },
     current: function () {
@@ -101,7 +108,7 @@ export default {
       this.search = this.$route.query.search || ''
     },
     'search': function () {
-      this.$emit('search', { search: this.search, submit: this.search.trim().length === 0 })
+      this.$emit('search', { search: this.search, submit: false })
     }
   },
   mounted: function () {
@@ -116,11 +123,8 @@ export default {
 <style lang="scss">
 .jumbo {
   &.is-hub {
-    background-color: #150D44 !important;
-    background: radial-gradient(ellipse at center bottom, rgba(39,25,127,1), rgba(21,13,68,1)) !important;
-    // background-image: none !important;
-    background-position: top center;
-    background-size: cover;
+    background-color: darken($primary, 40%) !important;
+    background: radial-gradient(ellipse at 50% 150%, darken($primary, 20%), darken($primary, 40%)) !important;
   }
   &, & > * {
     transition: all 0.3s ease-in-out;

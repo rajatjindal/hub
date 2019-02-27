@@ -23,12 +23,19 @@ export default new Router({
       }
     },
     {
+      path: '/functions',
+      name: 'functions',
+      component: () => import('@/views/PageNotFound')
+    },
+    {
+      path: '/apps',
+      name: 'apps',
+      component: () => import('@/views/PageNotFound')
+    },
+    {
       path: '/r/:alias/:repo',
       alias: '/service/:alias:repo',
       component: ServiceIndex,
-      meta: {
-        hasSearch: true
-      },
       props: function (route) {
         return {
           alias: route.path.includes('service') ? route.params.alias + route.params.repo : undefined,
@@ -59,13 +66,12 @@ export default new Router({
     // },
     {
       path: '/faq',
-      component: () => import('@/views/Faq'),
-      meta: {
-        hasSearch: true
-      }
+      name: 'faq',
+      component: () => import('@/views/Faq')
     },
     {
       path: '*',
+      name: 'not-found',
       component: () => import('@/views/PageNotFound')
     }
   ],

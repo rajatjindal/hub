@@ -103,7 +103,7 @@ export default {
       if (this.$route.hash.length < 2) {
         hash = `#${Object.keys(this.commands())[0]}`
         this.$nextTick(() => {
-          this.$router.replace({ name: this.$route.name, params: this.$route.params, hash })
+          this.$router.replace({ path: this.$route.path, hash })
         })
       }
       for (let name in this.commands()) {
@@ -120,7 +120,7 @@ export default {
         }
         if (Object.keys(this.commands()).indexOf(name) === (Object.keys(this.commands()).length - 1)) {
           hash = `#${Object.keys(this.commands())[0]}`
-          this.$router.replace({ name: this.$route.name, params: this.$route.params, hash })
+          this.$router.replace({ path: this.$route.path, hash })
         }
       }
     }

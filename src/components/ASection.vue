@@ -1,5 +1,5 @@
 <template>
-  <div :class="['container', 'a-section-container', {'a-section-absolute-header': absoluteHeader}, {'a-section-shadowed': shadowed}]">
+  <div :class="['a-section-container', {'a-section-absolute-header': absoluteHeader}, {'a-section-shadowed': shadowed}]">
     <div class="a-section">
       <div :class="['a-section-header', {'a-section-large-header': largeHeader}]">
         <div class="media">
@@ -80,7 +80,9 @@ export default {
 }
 .a-section {
   padding: 0;
-  padding-bottom: .75rem;
+  position: relative;
+  border-radius: .625rem;
+  // padding-bottom: .75rem;
   .a-section-header {
     height: 3.5rem;
     padding: 1rem;
