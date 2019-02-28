@@ -125,7 +125,7 @@ export default {
       .a-section-body-sidebar {
         border-top-left-radius: .625rem;
       }
-      .a-section-body-content {
+      .a-section-body-content-container {
         &:first-child {
           border-top-left-radius: .625rem;
         }
