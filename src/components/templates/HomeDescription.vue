@@ -1,10 +1,11 @@
 <template>
   <div :class="['home-description-template', 'columns', 'is-vcentered', {'is-reversed': idx % 2 === 0}]">
     <div :class="['column', 'is-6', {'is-offset-2': idx % 2 === 0}]">
-      <div class="image is-square">
+      <div class="image">
         <img
           :alt="name"
           :src="picture"
+          :srcset="`${picture2x} 2x, ${picture3x} 3x`"
         >
       </div>
     </div>
@@ -62,6 +63,16 @@ export default {
       type: String,
       required: false,
       default: undefined
+    },
+    picture2x: {
+      type: String,
+      required: false,
+      default: undefined
+    },
+    picture3x: {
+      type: String,
+      required: false,
+      default: undefined
     }
   }
 }
@@ -69,7 +80,10 @@ export default {
 
 <style lang="scss">
 .home-description-template {
-  margin: 5rem 0;
+  margin: 5rem 0 !important;
+  &:first-child {
+    margin-top: 0 !important;
+  }
 
   .pin {
     width: 3.75rem;

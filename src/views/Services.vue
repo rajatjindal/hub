@@ -5,10 +5,21 @@
         <div class="column">
           <a-section absolute-header>
             <template slot="header-left">
-              <span>
-                <i class="mdi mdi-bookmark-outline" />
-              </span>
-              <span class="is-size-8 has-text-gray-2 has-text-weight-semibold">TOPICS</span>
+              <div class="columns is-vcentered is-mobile is-variable is-1">
+                <div class="column">
+                  <i class="mdi mdi-bookmark-outline is-size-6" />
+                </div>
+                <div class="column">
+                  <span class="is-size-8 has-line-height-5 has-text-gray-2 has-text-weight-semibold">TOPICS</span>
+                </div>
+              </div>
+            </template>
+            <template
+              v-if="!isSearchLoading && (!category || category === 'All Services')"
+              slot="header-right">
+              <div v-if="searchTotalItems > 0">
+                <h5 class="is-size-6 tag has-text-gray-2 has-text-weight-bold">{{ searchTotalItems }} result{{ searchTotalItems > 1 ? 's' : '' }}</h5>
+              </div>
             </template>
             <template slot="sidebar">
               <services-topics-list
@@ -144,20 +155,13 @@
                 </div>
               </div>
             </section>
-            <section
-              v-else-if="(!category || category === 'All Services')"
-              class="section">
+            <section v-else-if="(!category || category === 'All Services')">
               <transition-group
                 v-if="!isSearchLoading"
                 tag="div"
                 name="fade">
                 <div
-                  v-if="searchTotalItems > 0"
-                  key="results">
-                  <h2 class="title is-size-4 has-text-gray-2">{{ searchTotalItems }} service results</h2>
-                </div>
-                <div
-                  v-else
+                  v-if="searchTotalItems === 0"
                   key="no-results"
                   class="no-results">
                   <div class="columns is-centered">
@@ -204,7 +208,7 @@
                   <div class="columns is-centered">
                     <div class="column is-two-thirds has-text-centered">
                       <a-icon icon="file-broken" />
-                      <h5 class="is-size-5 has-text-weight-semibold has-text-gray-2">We couldn't find any service containing the topic « {{ category }} »</h5>
+                      <h5 class="is-size-5 has-text-weight-semibold has-text-gray-2">We couldn't find any service in the category « {{ category }} »</h5>
                     </div>
                   </div>
                 </div>
@@ -364,7 +368,7 @@ export default {
   },
   watch: {
     '$route': function () {
-      this.isSearchLoading = true
+      // this.isSearchLoading = true
     }
   },
   methods: {

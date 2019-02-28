@@ -7,9 +7,10 @@
       <li
         key="topic-all-services"
         :class="{ 'active': active === '' }"
-        class="topic-item"
-        @click="active = ''">
-        All Services
+        class="topic-item">
+        <span @click="reset">
+          All Services
+        </span>
         <div class="tags">
           <topic-tag
             v-for="t in tags"
@@ -154,6 +155,9 @@ export default {
   watch: {
     active: function (value) {
       this.$emit('select', value)
+    },
+    category: function () {
+      this.active = this.category || ''
     }
   },
   mounted: function () {
@@ -162,9 +166,12 @@ export default {
     } else {
       this.$emit('select', '')
     }
-    // if (this.value && this.value.length <= 0) {
-    //   this.isLoading = false
-    // }
+  },
+  methods: {
+    reset: function () {
+      this.active = ''
+      this.$router.replace({ name: 'services', query: { search: this.$route.query.c ? this.$route.query.search : undefined } })
+    }
   }
 }
 </script>

@@ -1,7 +1,7 @@
 <template>
   <div class="home">
     <div class="has-background-light">
-      <div class="container">
+      <!-- <div class="container">
         <div class="columns is-centered">
           <div class="column is-10">
             <a-section
@@ -61,24 +61,30 @@
             </a-section>
           </div>
         </div>
+      </div> -->
+      <div class="container">
+        <div class="columns">
+          <div class="column is-full">
+            <a-section absolute-header>
+              <home-description-template
+                v-for="(step, idx) of steps"
+                :key="`step-${idx}`"
+                :idx="idx"
+                :name="step.name"
+                :content="step.content"
+                :link="step.link"
+                :picture="step.picture"
+                :picture2x="step.picture2x"
+                :picture3x="step.picture3x"
+              />
+              <a-boxed class="has-text-centered">
+                <p class="is-size-8 boxed-top-text">Every application has a story of how data moves</p>
+                <h3 class="is-size-3 has-text-dark">Storytell your next feature with Asyncy.</h3>
+              </a-boxed>
+            </a-section>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="container">
-      <home-description-template
-        v-for="(step, idx) of steps"
-        :key="`step-${idx}`"
-        :idx="idx"
-        :name="step.name"
-        :content="step.content"
-        :link="step.link"
-        :picture="step.picture"
-      />
-    </div>
-    <div class="container">
-      <a-boxed class="has-text-centered">
-        <p class="is-size-8 boxed-top-text">Every application has a story of how data moves</p>
-        <h3 class="is-size-3 has-text-dark">Storytell your next feature with Asyncy.</h3>
-      </a-boxed>
     </div>
     <div class="section has-background-dark">
       <div class="container is-constellation has-text-centered">
@@ -179,10 +185,18 @@ import ServiceSummary from '@/components/ServiceSummary'
 import ArticleSummary from '@/components/ArticleSummary'
 import ASection from '@/components/ASection'
 import HomeDescriptionTemplate from '@/components/templates/HomeDescription'
-import Picture1 from '@/assets/img/home/1.svg'
-import Picture2 from '@/assets/img/home/2.svg'
-import Picture3 from '@/assets/img/home/3.svg'
-import Picture4 from '@/assets/img/home/4.svg'
+import Picture1 from '@/assets/img/home/1.png'
+import Picture12x from '@/assets/img/home/1@2x.png'
+import Picture13x from '@/assets/img/home/1@3x.png'
+import Picture2 from '@/assets/img/home/2.png'
+import Picture22x from '@/assets/img/home/2@2x.png'
+import Picture23x from '@/assets/img/home/2@3x.png'
+import Picture3 from '@/assets/img/home/3.png'
+import Picture32x from '@/assets/img/home/3@2x.png'
+import Picture33x from '@/assets/img/home/3@3x.png'
+import Picture4 from '@/assets/img/home/4.png'
+import Picture42x from '@/assets/img/home/4@2x.png'
+import Picture43x from '@/assets/img/home/4@3x.png'
 
 export default {
   name: 'Index',
@@ -208,21 +222,29 @@ export default {
       name: 'Discover it.',
       content: 'Explore services written in any programming language. From microservices to functions, workflows and API\'s; it\'s all here.',
       link: { name: 'services' },
-      picture: Picture1
+      picture: Picture1,
+      picture2x: Picture12x,
+      picture3x: Picture13x
     }, {
       name: 'Create it.',
       content: 'Develop your own unique services and functions in any programming language. Share it, sell it, or keep it secret.',
       link: { href: '//ayncy.com/blog' },
-      picture: Picture2
+      picture: Picture2,
+      picture2x: Picture22x,
+      picture3x: Picture23x
     }, {
       name: 'Try it.',
       content: `Test services in a sandbox before putting it into production. AB test new microservices and workflows with ease.`,
-      picture: Picture3
+      picture: Picture3,
+      picture2x: Picture32x,
+      picture3x: Picture33x
     }, {
       name: 'Launch it.',
       content: 'Write your application that combines many services, harmoniously. We call this microservice cheoreography.',
       link: { href: '//ayncy.com/blog' },
-      picture: Picture4
+      picture: Picture4,
+      picture2x: Picture42x,
+      picture3x: Picture43x
     }]
   }),
   computed: {

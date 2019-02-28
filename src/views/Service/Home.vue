@@ -3,34 +3,6 @@
     v-scroll-spy="{ offset: 50 }"
     class="service-container"
   >
-    <section id="readme">
-      <h3 class="is-size-5 has-text-dark title has-text-uppercase">Description</h3>
-      <div
-        ref="readmeContainer"
-        :class="{ full: showMore, 'loading-shimmer': !serviceName() }"
-        class="readme-container card-bordered">
-        <div
-          v-if="!serviceName()"
-          class="readme-md">
-          <h5 class="is-size-5 has-text-centered has-text-gray-2">Loading content</h5>
-        </div>
-        <div
-          v-if="tags() && tags().length > 0 && tags()[0].readme === false"
-          class="readme-md">
-          <h5 class="is-size-5 has-text-centered has-text-gray-4">No Readme file found for this microservice</h5>
-        </div>
-        <vue-markdown
-          v-else-if="tags() && tags().length > 0 && tags()[0].readme"
-          class="readme-md">{{ tags()[0].readme }}</vue-markdown>
-        <div
-          v-if="serviceName() && !showMore"
-          class="readme-more">
-          <a-button
-            link
-            @click="showMore = true">Show more</a-button>
-        </div>
-      </div>
-    </section>
     <section id="actions">
       <div class="card-bordered">
         <div class="card-bordered-header">
@@ -122,25 +94,34 @@
         </div>
       </div>
     </section>
-    <!-- <div class="body-section">
-      <h3 class="heading-title title is-3 text-dark" id="similars">Similar apps</h3>
-      <div class="columns">
-        <div class="column is-one-third">
-          <a-card>
-            <h3>Twitter API</h3>
-            <a-button state="link"><font-awesome-icon :icon="['fab', 'github']" /> Github repo</a-button>
-            <a-button state="link"><a-logo icon /> Asyncy App</a-button>
-          </a-card>
+    <section id="readme">
+      <h3 class="is-size-5 has-text-dark title has-text-uppercase">Description</h3>
+      <div
+        ref="readmeContainer"
+        :class="{ full: showMore, 'loading-shimmer': !serviceName() }"
+        class="readme-container card-bordered">
+        <div
+          v-if="!serviceName()"
+          class="readme-md">
+          <h5 class="is-size-7 has-text-centered has-text-gray-2">Loading content</h5>
         </div>
-        <div class="column is-one-third">
-          <a-card>
-            <h3>Twitter Bot</h3>
-            <a-button state="link"><font-awesome-icon :icon="['fab', 'github']" /> Github repo</a-button>
-            <a-button state="link"><a-logo icon /> Asyncy App</a-button>
-          </a-card>
+        <div
+          v-if="tags() && tags().length > 0 && (tags()[0].readme === false || !tags()[0].readme)"
+          class="readme-md">
+          <h5 class="is-size-7 has-text-centered has-text-gray-2">No Readme file found for this microservice</h5>
+        </div>
+        <vue-markdown
+          v-else-if="tags() && tags().length > 0 && tags()[0].readme"
+          class="readme-md">{{ tags()[0].readme }}</vue-markdown>
+        <div
+          v-if="serviceName() && !showMore"
+          class="readme-more">
+          <a-button
+            link
+            @click="showMore = true">more</a-button>
         </div>
       </div>
-    </div> -->
+    </section>
     <section id="versions">
       <h3 class="is-size-5 has-text-dark title has-text-uppercase">Versions</h3>
       <div class="card-bordered">
@@ -267,6 +248,21 @@ export default {
   h2 { font-size: nth($sizes, 5); font-weight: 600; }
   h3 { font-size: nth($sizes, 6); font-weight: 600; }
   h4 { font-size: nth($sizes, 7); font-weight: 600; }
+
+  .number {
+    align-items: unset;
+    background-color: transparent;
+    border-radius: 0;
+    display: inherit;
+    font-size: inherit;
+    height: unset;
+    justify-content: unset;
+    margin-right: 0;
+    min-width: unset;
+    padding: unset;
+    text-align: unset;
+    vertical-align: unset;
+  }
 }
 
 .readme-container {
@@ -277,7 +273,7 @@ export default {
     max-height: unset;
   }
   .readme-more {
-    background: linear-gradient(180deg, rgba(255,255,255,0) 0%,rgba(255,255,255,0.5) 10%,rgba(255,255,255,1) 100%);
+    background: $white;
     position: absolute;
     left: 0;
     right: 0;
@@ -285,7 +281,8 @@ export default {
     display: flex;
     align-items: flex-end;
     justify-content: center;
-    height: 150px;
+    height: 50px;
+    border-top: 1px solid nth($grays, 4);
   }
 }
 

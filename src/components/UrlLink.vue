@@ -1,6 +1,6 @@
 <template>
   <a
-    v-if="(to || '').startsWith('http')"
+    v-if="typeof to === typeof ''"
     :href="to"><slot/></a>
   <router-link
     v-else
@@ -11,7 +11,7 @@
 export default {
   props: {
     to: {
-      type: String,
+      type: [String, Object],
       required: true
     }
   }

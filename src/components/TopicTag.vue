@@ -1,7 +1,8 @@
 <template>
   <url-link
-    :to="linkTo"
-    class="tag">
+    :to="{ name: 'services', query: { search: text, c: undefined }}"
+    class="tag"
+  >
     <slot/>
   </url-link>
 </template>
@@ -11,11 +12,6 @@ export default {
   data: () => ({
     text: ''
   }),
-  computed: {
-    linkTo: function () {
-      return `/tags/${this.text}`
-    }
-  },
   mounted: function () {
     this.text =
       this.$slots.default &&

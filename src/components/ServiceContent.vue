@@ -48,6 +48,7 @@
                 class="required">Required. </span>
               <span v-if="arg.default">(Default: <code class="arg">{{ arg.default }}</code>) </span>
               <span v-if="arg.help">{{ arg.help }}</span>
+              <span v-if="arg.type === 'enum'">values({{ arg.enum.join(', ') }})</span>
             </td>
           </tr>
         </tbody>

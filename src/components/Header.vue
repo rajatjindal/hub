@@ -84,7 +84,7 @@ export default {
         { name: 'Functions', route: { name: 'functions' }, active: this.$route.name === 'functions' },
         { name: 'Apps', route: { name: 'apps' }, active: this.$route.name === 'apps' },
         // { name: 'More', children: [{ name: 'contact' }] },
-        { name: 'Submit a service', button: { rounded: false }, icon: 'pin' }
+        { name: 'Submit a service', button: {}, icon: 'pin' }
       ]
     },
     current: function () {

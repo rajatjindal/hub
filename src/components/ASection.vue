@@ -1,10 +1,12 @@
 <template>
   <div :class="['a-section-container', {'a-section-absolute-header': absoluteHeader}, {'a-section-shadowed': shadowed}]">
     <div class="a-section">
-      <div :class="['a-section-header', {'a-section-large-header': largeHeader}]">
+      <div
+        v-if="hasHeader"
+        :class="['a-section-header', {'a-section-large-header': largeHeader}]">
         <div class="media">
           <div class="media-left"><slot name="header-left" /></div>
-          <div class="media-content has-spans"><slot name="header-centered" /></div>
+          <div class="media-content"><slot name="header-centered" /></div>
           <div class="media-right"><slot name="header-right" /></div>
         </div>
         <div
@@ -25,14 +27,16 @@
           </div>
         </div>
       </div>
-      <div class="a-section-body columns">
+      <div :class="['a-section-body', 'columns', {'absolute-header': !hasHeader && absoluteHeader}, {'no-header': !hasHeader}]">
         <div
           v-if="$slots.sidebar"
           class="a-section-body-sidebar column is-one-quarter">
           <slot name="sidebar" />
         </div>
-        <div :class="['a-section-body-content', 'column', {'a-section-body-padded': bodyPadded}]">
-          <slot />
+        <div :class="['a-section-body-content-container', 'column', {'a-section-body-padded': bodyPadded}]">
+          <div class="a-section-body-content">
+            <slot />
+          </div>
         </div>
       </div>
     </div>
@@ -67,6 +71,11 @@ export default {
       type: String,
       default: undefined
     }
+  },
+  computed: {
+    hasHeader: function () {
+      return this.$slots['header-left'] || this.$slots['header-centered'] || this.$slots['header-right']
+    }
   }
 }
 </script>
@@ -85,10 +94,17 @@ export default {
   // padding-bottom: .75rem;
   .a-section-header {
     height: 3.5rem;
-    padding: 1rem;
+    padding: .5rem .5rem .5rem 1.75rem;
+    display: flex;
+    flex: 1 1 100%;
+    align-items: center;
     background-color: $white;
     border-top-left-radius: .625rem;
     border-top-right-radius: .625rem;
+    .media {
+      align-items: center;
+      width: 100%;
+    }
     &:not(.a-section-large-header) {
       border-bottom: 1px solid $light;
     }
@@ -105,15 +121,35 @@ export default {
   }
 
   .a-section-body {
+    &.no-header {
+      .a-section-body-sidebar {
+        border-top-left-radius: .625rem;
+      }
+      .a-section-body-content {
+        &:first-child {
+          border-top-left-radius: .625rem;
+        }
+        border-top-right-radius: .625rem;
+      }
+      &.absolute-header {
+        margin-top: -5rem;
+      }
+    }
     margin: 0;
     padding: 0;
     .a-section-body-sidebar {
       border-bottom-left-radius: .625rem;
       background-color: lighten($light, 2.4%);
     }
-    .a-section-body-content {
+    .a-section-body-content-container {
       background-color: $white;
       padding: 2rem 3rem;
+      .a-section-body-content {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        height: 100%;
+      }
       border-bottom-right-radius: .625rem;
       &:first-child {
         border-bottom-left-radius: .625rem;
