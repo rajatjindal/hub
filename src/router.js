@@ -64,11 +64,11 @@ export default new Router({
     //     return { owner: route.params.owner }
     //   }
     // },
-    {
-      path: '/faq',
-      name: 'faq',
-      component: () => import('@/views/Faq')
-    },
+    // {
+    //   path: '/faq',
+    //   name: 'faq',
+    //   component: () => import('@/views/Faq')
+    // },
     {
       path: '*',
       name: 'not-found',
@@ -76,14 +76,12 @@ export default new Router({
     }
   ],
   scrollBehavior: function (to, from, savedPosition) {
-    return new Promise(resolve => {
-      setTimeout(() => {
-        if (to.hash) {
-          resolve({ selector: to.hash })
-        } else {
-          resolve()
-        }
-      }, 200)
-    })
+    if (to.hash) {
+      return ({ selector: to.hash })
+    } else if (to.name === from.name || savedPosition) {
+      return (savedPosition)
+    } else {
+      return ({ x: 0, y: 0 })
+    }
   }
 })

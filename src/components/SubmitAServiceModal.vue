@@ -13,12 +13,13 @@
           @click="hide"
         />
       </header>
-      <section class="modal-card-body">
-        <p>To submit a service, add this webhook to your Github repository:</p>
+      <section class="modal-card-body has-text-centered">
+        <p class="is-size-6 has-text-gray-2">The service submission feature is coming soon</p>
+        <!-- <p>To submit a service, add this webhook to your Github repository:</p>
         <pre class="language-bash"><code class="language-bash">https://sync.asyncy.com/service/sync</code></pre>
-        <p>To add a webhook, go to the settings page of your repository. From there, click Webhooks, then Add webhook.</p>
+        <p>To add a webhook, go to the settings page of your repository. From there, click Webhooks, then Add webhook.</p> -->
       </section>
-      <footer class="modal-card-foot has-text-right">
+      <!-- <footer class="modal-card-foot has-text-right">
         <a-button
           :to="{ name: 'faq' }"
           link
@@ -26,7 +27,7 @@
         >
           Read more
         </a-button>
-      </footer>
+      </footer> -->
     </div>
   </div>
 </template>

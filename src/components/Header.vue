@@ -21,7 +21,10 @@
         @logo="$router.push({ name: 'home' })"
       />
       <template v-if="current.name === 'home'">
-        <p class="is-size-6 has-text-centered has-text-light jumbo-p">Explore, share and create reusable software, together.</p>
+        <p class="is-size-6 has-text-centered has-text-light jumbo-p">
+          Connect microservices and functions in an intuitive serverless fashion.<br>
+          The story of your data creates and manages Kubernetes clusters.
+        </p>
       </template>
       <template v-else-if="current.name === 'loading'">
         <template slot="title">
@@ -49,11 +52,12 @@ export default {
   name: 'Header',
   data: () => ({
     search: '',
+    noredirect: false,
     jumbos: [{
       name: 'home',
       size: 'large',
       title: 'Asyncy Hub',
-      small: 'Unite Developers in One Storyline.'
+      small: 'The Microservice and Function Marketplace'
     }, {
       name: 'services',
       size: 'medium',
@@ -105,10 +109,15 @@ export default {
   watch: {
     '$route': function () {
       this.visible = true
+      this.noredirect = this.search !== this.$route.query.search
       this.search = this.$route.query.search || ''
     },
     'search': function () {
-      this.$emit('search', { search: this.search, submit: false })
+      console.log(this.noredirect)
+      if (!this.noredirect) {
+        this.$emit('search', { search: this.search, submit: this.search.trim().length === 0 })
+      }
+      this.noredirect = false
     }
   },
   mounted: function () {
@@ -123,8 +132,8 @@ export default {
 <style lang="scss">
 .jumbo {
   &.is-hub {
-    background-color: darken($primary, 40%) !important;
-    background: radial-gradient(ellipse at 50% 150%, darken($primary, 20%), darken($primary, 40%)) !important;
+    background: darken($primary, 40%) !important;
+    // background: radial-gradient(ellipse at 50% 150%, darken($primary, 20%), darken($primary, 40%)) !important;
   }
   &, & > * {
     transition: all 0.3s ease-in-out;

@@ -124,8 +124,8 @@
                 v-scroll-spy-link
                 v-show="$route.name === 'service'"
                 class="topics-list">
-                <li class="topic-item"><a href="#readme">Description</a></li>
                 <li class="topic-item"><a href="#actions">Actions</a></li>
+                <li class="topic-item"><a href="#readme">Description</a></li>
                 <!-- <li><a href="#similars">Similar apps</a></li> -->
                 <li class="topic-item"><a href="#versions">Versions</a></li>
                 <li class="topic-item"><a href="#pricing">Pricing</a></li>

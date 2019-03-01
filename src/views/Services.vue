@@ -15,10 +15,13 @@
               </div>
             </template>
             <template
-              v-if="!isSearchLoading && (!category || category === 'All Services')"
+              v-if="!isSearchLoading || !isSearchCategoryLoading"
               slot="header-right">
-              <div v-if="searchTotalItems > 0">
+              <div v-if="searchTotalItems > 0 && (!category || category === 'All Services')">
                 <h5 class="is-size-6 tag has-text-gray-2 has-text-weight-bold">{{ searchTotalItems }} result{{ searchTotalItems > 1 ? 's' : '' }}</h5>
+              </div>
+              <div v-else>
+                <h5 class="is-size-6 tag has-text-gray-2 has-text-weight-bold">{{ searchResultsByCategoryTotal }} result{{ searchResultsByCategoryTotal > 1 ? 's' : '' }}</h5>
               </div>
             </template>
             <template slot="sidebar">
@@ -193,9 +196,7 @@
                 </div>
               </div>
             </section>
-            <section
-              v-else
-              class="section">
+            <section v-else>
               <transition-group
                 tag="div"
                 name="fade">
@@ -203,10 +204,31 @@
                   <h2 class="title is-3">{{searchCatTotalItems}} service results</h2>
                 </div> -->
                 <div
+                  key="category-results"
+                  class="tile is-ancestor">
+                  <div class="tile is-parent is-vertical">
+                    <transition-group
+                      tag="div"
+                      name="fade">
+                      <div
+                        v-for="(r, index) in searchResultsByCategory"
+                        :key="r.alias || index"
+                        class="tile search-result">
+                        <service-summary
+                          :title="getTitle(r)"
+                          :is-alias="r.alias ? true : false"
+                          :description="r.description"
+                          :tags="r.topics"/>
+                      </div>
+                    </transition-group>
+                  </div>
+                </div>
+                <div
+                  v-if="searchResultsByCategoryTotal === 0"
                   key="no-results"
                   class="no-results">
                   <div class="columns is-centered">
-                    <div class="column is-two-thirds has-text-centered">
+                    <div class="column is-half has-text-centered">
                       <a-icon icon="file-broken" />
                       <h5 class="is-size-5 has-text-weight-semibold has-text-gray-2">We couldn't find any service in the category « {{ category }} »</h5>
                     </div>
@@ -234,9 +256,11 @@
                   <a-button
                     state="secondary"
                     size="small"
+                    url="//asyncy.com/blog/designing-smarter-microservices"
                     arrow
+                    @click.native="clickOnContribute(false)"
                   >
-                    Add your service
+                    Learn More
                   </a-button>
                 </div>
                 <div class="column is-half">
@@ -246,9 +270,11 @@
                   <a-button
                     state="secondary"
                     size="small"
+                    url="//asyncy.com/blog/designing-smarter-microservices"
                     arrow
+                    @click.native="clickOnContribute(true)"
                   >
-                    Add your service
+                    Learn More
                   </a-button>
                 </div>
               </div>
@@ -257,7 +283,7 @@
         </div>
       </div>
     </div>
-    <div class="section has-background-light">
+    <!-- <div class="section has-background-light">
       <div class="container">
         <div class="level">
           <div class="level-left">
@@ -294,7 +320,7 @@
           </div>
         </transition-group>
       </div>
-    </div>
+    </div> -->
     <a-join
       is-paddingless
       footer />
@@ -333,6 +359,25 @@ export default {
         recentServices: data.recentlyAddedServices.nodes
       })
     },
+    searchResultsByCategory: {
+      query: SearchQuery,
+      skip () { this.isSearchCategoryLoading = true; this.searchResultsByCategory = [{}, {}, {}]; return !this.category || this.category === 'All Services' },
+      variables: function () {
+        return {
+          searchTerm: this.category || ' '
+        }
+      },
+      update: function (data) {
+        this.isSearchCategoryLoading = false
+        if (data.searchServices) {
+          this.searchResultsByCategoryTotal = data.searchServices.totalCount
+          return data.searchServices.edges.map(e => e.node)
+        } else {
+          this.searchResultsByCategoryTotal = 0
+        }
+        return []
+      }
+    },
     searchResults: {
       query: SearchQuery,
       skip () { this.isSearchLoading = true; this.searchResults = [{}, {}, {}]; return !this.search },
@@ -358,8 +403,11 @@ export default {
       recentServices: [{}, {}, {}, {}, {}, {}]
     },
     searchResults: [{}, {}, {}],
+    searchResultsByCategory: [{}, {}, {}],
     searchTotalItems: 0,
-    isSearchLoading: true
+    searchResultsByCategoryTotal: 0,
+    isSearchLoading: true,
+    isSearchCategoryLoading: true
   }),
   computed: {
     topics: function () {
@@ -379,7 +427,10 @@ export default {
       return r.alias || `${r.owner.username}/${r.name}`
     },
     selectCategory: function (cat) {
-      this.$router.push({ name: 'services', query: { search: this.search !== '' ? this.search : undefined, c: cat !== '' ? cat : undefined } })
+      this.$router.push({ name: 'services', query: { search: cat === '' || !cat ? this.$route.query.search : undefined, c: cat || undefined } })
+    },
+    clickOnContribute: function (contribute) {
+      console.log('user clicked on ', contribute ? 'contribute' : 'create')
     }
   }
 }

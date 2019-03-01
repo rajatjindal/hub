@@ -76,9 +76,30 @@
                 :picture="step.picture"
                 :picture2x="step.picture2x"
                 :picture3x="step.picture3x"
-              />
+              >
+                <template slot="content">
+                  <template v-if="idx === 0">
+                    Explore services written in any programming<br>
+                    languages. From microservices to functions,<br>
+                    workflows and APIs; it’s all here.
+                  </template>
+                  <template v-else-if="idx === 1">
+                    Develop your own unique service and<br>
+                    function in any programming language.<br>
+                    <i>Share it, sell it, or keep it secret.</i>
+                  </template>
+                  <template v-else-if="idx === 2">
+                    Test services in a sandbox environment<br>
+                    before putting it into production.
+                  </template>
+                  <template v-else-if="idx === 3">
+                    Write your application combining many services, harmoniously.<br>
+                    We call this <b>microservice choreography.</b>
+                  </template>
+                </template>
+              </home-description-template>
               <a-boxed class="has-text-centered">
-                <p class="is-size-8 boxed-top-text">Every application has a story of how data moves</p>
+                <p class="is-size-8 boxed-top-text">Every application has a story of how data moves.</p>
                 <h3 class="is-size-3 has-text-dark">Storytell your next feature with Asyncy.</h3>
               </a-boxed>
             </a-section>
@@ -92,6 +113,7 @@
         <a-button
           class="home-submit-btn"
           state="light"
+          @click="$emit('open-modal')"
         >
           Submit a service
         </a-button>
@@ -109,7 +131,7 @@
         <div class="level-right">
           <div class="level-item">
             <a-button
-              :route="{ name: 'services' }"
+              :to="{ name: 'services' }"
               state="secondary"
               arrow
               size="small"
@@ -135,7 +157,7 @@
         </div>
       </transition-group>
     </div>
-    <div class="section has-background-light">
+    <!-- <div class="section has-background-light">
       <div class="container">
         <div class="level">
           <div class="level-left">
@@ -172,7 +194,7 @@
           </div>
         </transition-group>
       </div>
-    </div>
+    </div> -->
     <a-join
       is-paddingless
       footer />
@@ -220,28 +242,24 @@ export default {
     },
     steps: [{
       name: 'Discover it.',
-      content: 'Explore services written in any programming language. From microservices to functions, workflows and API\'s; it\'s all here.',
       link: { name: 'services' },
       picture: Picture1,
       picture2x: Picture12x,
       picture3x: Picture13x
     }, {
       name: 'Create it.',
-      content: 'Develop your own unique services and functions in any programming language. Share it, sell it, or keep it secret.',
-      link: { href: '//ayncy.com/blog' },
+      link: { href: '//asyncy.com/blog/designing-smarter-microservices' },
       picture: Picture2,
       picture2x: Picture22x,
       picture3x: Picture23x
     }, {
       name: 'Try it.',
-      content: `Test services in a sandbox before putting it into production. AB test new microservices and workflows with ease.`,
       picture: Picture3,
       picture2x: Picture32x,
       picture3x: Picture33x
     }, {
       name: 'Launch it.',
-      content: 'Write your application that combines many services, harmoniously. We call this microservice cheoreography.',
-      link: { href: '//ayncy.com/blog' },
+      link: { href: '//asyncy.com/blog/story-telling' },
       picture: Picture4,
       picture2x: Picture42x,
       picture3x: Picture43x

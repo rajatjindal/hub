@@ -9,7 +9,8 @@
         name="view-fade"
         mode="out-in">
         <router-view
-          ref="routerView" />
+          ref="routerView"
+          @open-modal="openSubmitAServiceModal" />
       </transition>
     </div>
     <a-footer dark />

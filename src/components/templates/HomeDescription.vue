@@ -16,14 +16,14 @@
       <h3 class="is-size-3 has-text-gray-2 hdt-title has-text-weight-semibold">
         {{ name }}
       </h3>
-      <p
-        class="is-size-6 content has-text-gray-3"
-        v-text="content"
-      />
+      <p class="is-size-6 content has-text-gray-3">
+        <slot name="content" />
+        <template v-if="!$slots.content">{{ content }}</template>
+      </p>
       <a-button
         v-if="link"
         :url="link.href"
-        :route="link.name ? link : undefined"
+        :to="link.name ? link : undefined"
         state="secondary"
         arrow
         class="hdt-button"
@@ -52,7 +52,8 @@ export default {
     },
     content: {
       type: String,
-      required: true
+      required: false,
+      default: ''
     },
     link: {
       type: Object,

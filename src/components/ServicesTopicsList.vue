@@ -7,15 +7,14 @@
       <li
         key="topic-all-services"
         :class="{ 'active': active === '' }"
-        class="topic-item">
-        <span @click="reset">
-          All Services
-        </span>
-        <div class="tags">
+        class="topic-item"
+        @click="reset">
+        All Services
+        <!-- <div class="tags">
           <topic-tag
             v-for="t in tags"
             :key="t">{{ t }}</topic-tag>
-        </div>
+        </div> -->
       </li>
       <li
         v-for="topic in topics"
@@ -65,9 +64,6 @@ export default {
   computed: {
     topics: function () {
       return [{
-        name: 'Popular',
-        icon: 'popular'
-      }, {
         name: 'Authentication',
         icon: 'auth'
       }, {
@@ -121,16 +117,17 @@ export default {
       }, {
         name: 'Worker',
         icon: 'worker'
-      }, {
-        name: 'Sorting',
-        icon: 'sorting'
-      }, {
-        name: 'Filtering',
-        icon: 'filtering'
-      }, {
-        name: 'Strings',
-        icon: 'strings'
       }]
+      // }, {
+      //   name: 'Sorting',
+      //   icon: 'sorting'
+      // }, {
+      //   name: 'Filtering',
+      //   icon: 'filtering'
+      // }, {
+      //   name: 'Strings',
+      //   icon: 'strings'
+      // }]
       // const inputTopics = this.value || []
       // const allTopics = inputTopics.reduce(
       //   (acc, topics) => acc.concat(topics),
@@ -163,14 +160,12 @@ export default {
   mounted: function () {
     if (this.topics.reduce((arr, v) => [...arr, v.name], []).includes(this.category)) {
       this.active = this.category
-    } else {
-      this.$emit('select', '')
     }
   },
   methods: {
     reset: function () {
       this.active = ''
-      this.$router.replace({ name: 'services', query: { search: this.$route.query.c ? this.$route.query.search : undefined } })
+      this.$router.replace({ name: 'services', query: {} })
     }
   }
 }
