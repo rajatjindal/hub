@@ -11,6 +11,7 @@ export default gql`query SearchServices($searchTerm: String!) {
         name
         alias
         description
+        category
         topics
         owner {
           username

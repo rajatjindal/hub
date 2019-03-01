@@ -52,6 +52,7 @@
             <template slot="header-centered">
               <h5 :class="['is-size-4', 'has-text-weight-bold', 'has-text-dark', {'loading-shimmer': !serviceName}]">{{ serviceName || '' }}</h5>
               <a
+                v-if="service.pullUrl"
                 :href="`//github.com/${service.pullUrl}`"
                 :class="['has-text-gray-3', 'has-text-weight-semibold', 'has-spans', {'loading-shimmer': !serviceName}]"
                 target="_blank"

@@ -6,7 +6,7 @@
     <section id="actions">
       <div class="card-bordered">
         <div class="card-bordered-header">
-          <h3 class="is-size-6 has-text-dark title has-text-uppercase">Actions</h3>
+          <h3 class="is-size-6 has-text-dark has-text-uppercase">Actions</h3>
         </div>
         <transition name="fade">
           <div
@@ -293,8 +293,17 @@ export default {
     padding: 1.2rem;
   }
   .card-bordered-header {
-    padding: 1rem 0;
+    padding: 1rem 1.2rem;
     border-bottom: 1px solid nth($grays, 4);
+  }
+  .card-bordered-content {
+    padding: 2rem;
+    h3 {
+      margin: 1rem 0;
+      &:first-child {
+        margin-top: 0;
+      }
+    }
   }
   .card-bordered-footer {
     border-top: 1px solid nth($grays, 4);
