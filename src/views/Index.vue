@@ -271,7 +271,7 @@ export default {
     }
   },
   methods: {
-    getTitle: function(r) {
+    getTitle: function (r) {
       if (!r.alias && (!r.owner || !r.owner.username)) {
         return ''
       }
