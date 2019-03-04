@@ -1,10 +1,10 @@
 import { shallowMount } from '@vue/test-utils'
-import SearchResults from '@/views/SearchResults'
+import Services from '@/views/Services'
 
-describe('SearchResults.vue', () => {
+describe('Services.vue', () => {
   it('get the search prop', () => {
     const query = 'twitter'
-    const wrapper = shallowMount(SearchResults, {
+    const wrapper = shallowMount(Services, {
       propsData: { search: query }
     })
     expect(wrapper.props().search).toMatch(query)
