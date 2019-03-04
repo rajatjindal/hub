@@ -1,9 +1,10 @@
 <template>
-<url-link :to="linkTo">
-  <span class="tag">
-    <slot></slot>
-  </span>
-</url-link>
+  <url-link
+    :to="{ name: 'services', query: { search: text, c: undefined }}"
+    class="tag"
+  >
+    <slot/>
+  </url-link>
 </template>
 
 <script>
@@ -11,12 +12,7 @@ export default {
   data: () => ({
     text: ''
   }),
-  computed: {
-    linkTo: function() {
-      return `/tags/${this.text}`
-    }
-  },
-  mounted: function() {
+  mounted: function () {
     this.text =
       this.$slots.default &&
       this.$slots.default.length > 0 &&
@@ -27,10 +23,12 @@ export default {
 
 <style scoped lang="scss">
 .tag {
-  font-size: 0.8em;
+  font-weight: 600;
+  color: nth($grays, 3);
   transition: all 0.3s;
 
   &:hover {
+    text-decoration: none;
     filter: brightness(0.95);
   }
 }

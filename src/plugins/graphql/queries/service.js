@@ -5,6 +5,7 @@ export default gql`query ServiceByAlias($where: Alias!) {
     uuid
     name
     alias
+    pullUrl
     description
     topics
     owner {
@@ -12,6 +13,7 @@ export default gql`query ServiceByAlias($where: Alias!) {
     }
     serviceTags {
       nodes {
+        readme
         tag
         state
         configuration

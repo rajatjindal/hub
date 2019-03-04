@@ -1,106 +1,146 @@
 <template>
-  <a-nav
-    :logo="logo"
-    :isBeta="true"
-    effect="light"
-    expand
-    type="secondary"
-    @title-click="$router.push({ name: 'hub' })">
-    <div
-      class="row"
-      slot="content-header"
-      slot-scope="{closeMenu}">
-      <div class="col-6 collapse-brand">
-        <router-link :to="{ name: 'hub' }">
-          <img src="img/brand/blue.png">
-        </router-link>
-      </div>
-      <div class="col-6 collapse-close">
-        <close-button @click="closeMenu" />
-      </div>
-    </div>
-    <div
-      class="row"
-      slot="content-header"
-      slot-scope="{closeMenu}">
-      <div class="col-6 collapse-brand">
-        <router-link :to="{ name: 'hub' }">Asyncy</router-link>
-      </div>
-      <div class="col-6 collapse-close">
-        <a-close-button target="nav-inner-primary" @click="closeMenu" />
-      </div>
-    </div>
-
-    <transition name="fade">
-      <template v-if="hasSearch">
-        <div class="column align-center is-hidden-mobile search-container">
-            <form
-              class="header-form"
-              @submit.prevent="onSearch">
-              <a-input
-                placeholder="Search"
-                v-model="search"
-                class="header-search-bar" />
-            </form>
-          </div>
-        <div class="column is-hidden-mobile"></div>
+  <div :class="['has-background-light', {'section': ['service', 'guide'].includes($route.name)}]">
+    <a-navbar
+      v-if="['service', 'guide'].includes($route.name)"
+      :items="menu"
+      @click="$emit('open-modal')"
+      @logo="$router.push({ name: 'home' })"
+    />
+    <a-jumbo
+      v-else
+      :size="current.size"
+      :into="current.into"
+      :small="current.small"
+      :title="current.title"
+      class="is-hub">
+      <a-navbar
+        slot="header"
+        :items="menu"
+        dark
+        @click="$emit('open-modal')"
+        @logo="$router.push({ name: 'home' })"
+      />
+      <template v-if="current.name === 'home'">
+        <p class="is-size-6 has-text-centered has-text-light jumbo-p">
+          Connect microservices and functions in an intuitive serverless fashion.<br>
+          The story of your data creates and manages Kubernetes clusters.
+        </p>
       </template>
-    </transition>
-
-    <ul class="navbar-nav ml-lg-auto align-items-center">
-      <li class="nav-item">
-        <router-link to="/" class="nav-link nav-link-icon">Explore</router-link>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Platform</a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link" href="#">Documentation</a>
-      </li>
-      <li class="nav-item">
-        <a-button
-          outline
-          type="primary"
-          @click.native="$emit('open-service-modal')">Submit a Service</a-button>
-      </li>
-    </ul>
-  </a-nav>
+      <template v-else-if="current.name === 'loading'">
+        <template slot="title">
+          <i class="mdi mdi-spin mdi-loading" />
+        </template>
+      </template>
+      <template v-else-if="current.name === 'services'">
+        <div class="columns is-centered">
+          <div class="column is-two-fifths">
+            <a-input
+              v-model="search"
+              :icon-right="['a-icon', {icon: 'search'}]"
+              placeholder="SEARCH ON HUB"
+              @keyup.enter.native="$emit('search', { search, submit: true })"
+            />
+          </div>
+        </div>
+      </template>
+    </a-jumbo>
+  </div>
 </template>
 
 <script>
-import logo from '@/assets/logo.svg'
-
 export default {
-  name: 'a-header',
-  computed: {
-    hasSearch: function () {
-      return this.$route.meta.hasSearch
-    }
-  },
+  name: 'Header',
   data: () => ({
     search: '',
-    logo
+    noredirect: false,
+    jumbos: [{
+      name: 'home',
+      size: 'large',
+      title: 'Asyncy Hub',
+      small: 'The Microservice and Function Marketplace'
+    }, {
+      name: 'services',
+      size: 'medium',
+      title: 'Asyncy Hub',
+      small: 'Service Discovery and Marketplace'
+    }, {
+      name: 'functions',
+      size: 'large',
+      title: 'Coming soon',
+      small: 'Functions'
+    }, {
+      name: 'apps',
+      size: 'large',
+      title: 'Coming soon',
+      small: 'Applications'
+    }, {
+      name: 'faq',
+      size: 'normal',
+      title: 'Service submission',
+      small: 'FAQ'
+    }],
+    visible: false
   }),
-  methods: {
-    onSearch: function () {
-      this.$router.push({ name: 'search', query: { q: this.search } })
-      this.search = ''
+  computed: {
+    menu: function () {
+      return [
+        { name: 'Services', route: { name: 'services' }, active: this.$route.name === 'services' },
+        { name: 'Functions', route: { name: 'functions' }, active: this.$route.name === 'functions' },
+        { name: 'Apps', route: { name: 'apps' }, active: this.$route.name === 'apps' },
+        // { name: 'More', children: [{ name: 'contact' }] },
+        { name: 'Submit a service', button: {}, icon: 'pin' }
+      ]
+    },
+    current: function () {
+      return (
+        !this.visible
+          ? { name: 'loading', size: 'fullheight' }
+          : this.jumbos.filter(j => j.name === this.$route.name)[0] ||
+            {
+              name: 'not-found',
+              size: 'fullheight',
+              title: '404',
+              small: 'Lost in space ?',
+              into: 'chevron'
+            }
+      )
+    }
+  },
+  watch: {
+    '$route': function () {
+      this.visible = true
+      this.noredirect = this.search !== this.$route.query.search
+      this.search = this.$route.query.search || ''
+    },
+    'search': function () {
+      console.log(this.noredirect)
+      if (!this.noredirect) {
+        this.$emit('search', { search: this.search, submit: this.search.trim().length === 0 })
+      }
+      this.noredirect = false
+    }
+  },
+  mounted: function () {
+    this.search = this.$route.query.search || ''
+    if (this.$route.name) {
+      this.visible = true
     }
   }
 }
 </script>
 
-<style lang="scss" scoped>
-.search-container {
-  padding: 0;
-  margin-left: 50px;
-
-  .header-search-bar {
-    width: 250px;
-    @media screen and (max-width: 990px) {
-      width: 100%;
-    }
+<style lang="scss">
+.jumbo {
+  &.is-hub {
+    background: darken($primary, 40%) !important;
+    // background: radial-gradient(ellipse at 50% 150%, darken($primary, 20%), darken($primary, 40%)) !important;
+  }
+  &, & > * {
+    transition: all 0.3s ease-in-out;
   }
 
+  .jumbo-p {
+    margin-top: -2rem;
+  }
 }
 </style>

@@ -1,97 +1,227 @@
 <template>
-  <div class="index">
-    <div class="hero">
-       <hero-background
-        :left-image="headerLeft"
-        :right-image="headerRight"
-        :scale="6"
-        :left-x="-200"
-        :left-y="-70"
-        :right-x="-200"
-        :right-y="-70"
-      />
-      <h1 class="display-1">Asyncy Hub</h1>
-      <p class="subtitle">Service discovery and marketplace for Asyncy</p>
-      <div class="search-bar-container">
-        <div class="field">
-          <div class="control">
-            <search-bar />
+  <div class="home">
+    <div class="has-background-light">
+      <!-- <div class="container">
+        <div class="columns is-centered">
+          <div class="column is-10">
+            <a-section
+              absolute-header
+              large-header
+              body-padded>
+              <template slot="header-left">
+                <div class="logo-badge">
+                  <a-logo icon />
+                </div>
+              </template>
+              <template slot="header-centered">
+                <table>
+                  <tr>
+                    <td class="has-text-right">
+                      <span class="is-size-8 has-text-gray-2">From:</span>
+                    </td>
+                    <td>
+                      <span class="is-size-8 has-text-gray-2 has-text-weight-bold">The Asyncy Crew {{ ':wave:' | emoji }}</span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="has-text-right">
+                      <span class="is-size-8 has-text-gray-2">To:</span>
+                    </td>
+                    <td>
+                      <span class="is-size-8 has-text-gray-2 has-text-weight-bold">You ! {{ ':rocket:' | emoji }}</span>
+                    </td>
+                  </tr>
+                </table>
+              </template>
+              <p class="has-text-dark">Dear Fellow Developer,<br><br>
+                Welcome to the <b>developer marketplace</b>. All the services you discover here run in the <br>
+                <b>Microservice Cloud</b> (an open-source platform built atop Kubernetes).<br>
+                With <b>Storyscript, a service-oriented programming language</b> that strings services together, <br>
+                you can focus on what matters most: your <b>business logic</b>. We call this the “the story of data”.<br><br>
+                We have many use cases
+                <a
+                  href="//docs.asyncy.com/#use-cases"
+                  title=""
+                  class="has-text-info has-text-weight-bold">
+                  here
+                </a>
+                and documentation on Storyscript
+                <a
+                  href="//storyscript.org"
+                  title="Storyscript"
+                  class="has-text-info has-text-weight-bold">
+                  here
+                </a>
+                .<br><br>
+                We hope you find our product inspiring, as we built it with passion for you, the developer.<br><br>
+                With Love,<br>
+                The Asyncy Crew<br><br>
+              </p>
+              <a-logo icon />
+            </a-section>
+          </div>
+        </div>
+      </div> -->
+      <div class="container">
+        <div class="columns">
+          <div class="column is-full">
+            <a-section absolute-header>
+              <home-description-template
+                v-for="(step, idx) of steps"
+                :key="`step-${idx}`"
+                :idx="idx"
+                :name="step.name"
+                :content="step.content"
+                :link="step.link"
+                :picture="step.picture"
+                :picture2x="step.picture2x"
+                :picture3x="step.picture3x"
+              >
+                <template slot="content">
+                  <template v-if="idx === 0">
+                    Explore services written in any programming<br>
+                    languages. From microservices to functions,<br>
+                    workflows and APIs; it’s all here.
+                  </template>
+                  <template v-else-if="idx === 1">
+                    Develop your own unique service and<br>
+                    function in any programming language.<br>
+                    <i>Share it, sell it, or keep it secret.</i>
+                  </template>
+                  <template v-else-if="idx === 2">
+                    Test services in a sandbox environment<br>
+                    before putting it into production.
+                  </template>
+                  <template v-else-if="idx === 3">
+                    Write your application combining many services, harmoniously.<br>
+                    We call this <b>microservice choreography.</b>
+                  </template>
+                </template>
+              </home-description-template>
+              <a-boxed class="has-text-centered">
+                <p class="is-size-8 boxed-top-text">Every application has a story of how data moves.</p>
+                <h3 class="is-size-3 has-text-dark">Storytell your next feature with Asyncy.</h3>
+              </a-boxed>
+            </a-section>
           </div>
         </div>
       </div>
-      <p class="help-message">Try topic:social, topic:machine-learning or stars:>100</p>
     </div>
-
-    <two-column-sidebar>
-      <topics-list v-model="topics" slot="sidebar" />
-      <div slot="body">
-        <section class="section">
-          <h2 class="section-header">Featured services</h2>
-          <div class="featured-services section-body">
-            <div class="tile is-ancestor">
-              <div class="tile is-parent">
-                <router-link :to="`/service/slack`">
-                  <div class="featured tile is-child slack-service"><img :src="slackLogo" alt="Slack"/></div>
-                </router-link>
-              </div>
-
-              <div class="tile is-parent">
-                <router-link :to="`/service/twitter`">
-                  <div class="featured tile is-child twitter-service"><img :src="twitterLogo" width="50" alt="Twitter"/></div>
-                </router-link>
-              </div>
-
-              <div class="tile is-parent">
-                <router-link :to="`/service/twilio`">
-                  <div class="featured tile is-child twilio-service"><img :src="twilioLogo" alt="Twilio"/></div>
-                </router-link>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        <section class="section">
-          <h2 class="section-header">Recently added</h2>
-          <div class="section-body">
-            <div class="tile is-ancestor">
-              <transition-group name="fade" tag="div" class="tile is-parent is-vertical">
-                <div v-for="(r, index) in data.recentServices.slice(0, 3)" class="tile is-child" :key="r.alias || index">
-                  <service-summary :title="getTitle(r)" :is-alias="r.alias ? true : false" :description="r.description" :tags="r.topics"></service-summary>
-                </div>
-              </transition-group>
-              <transition-group name="fade" tag="div" class="tile is-parent is-vertical">
-                <div v-for="(r, index) in data.recentServices.slice(3, 6)" class="tile is-child" :key="r.alias || index">
-                  <service-summary :title="getTitle(r)" :is-alias="r.alias ? true : false" :description="r.description" :tags="r.topics"></service-summary>
-                </div>
-              </transition-group>
-            </div>
-          </div>
-        </section>
-
-        <section class="section getting-started">
-          <h2 class="call-to-action">List your service on Asyncy Hub</h2>
-          <a-button type="neutral" @click.native="$emit('open-submit-service-modal')">Submit a service</a-button>
-        </section>
+    <div class="section has-background-dark">
+      <div class="container is-constellation has-text-centered">
+        <h4 class="is-size-4 has-text-weight-bold has-text-white has-text-uppercase">List your service on Asyncy Hub</h4>
+        <a-button
+          class="home-submit-btn"
+          state="light"
+          @click="$emit('open-modal')"
+        >
+          Submit a service
+        </a-button>
       </div>
-    </two-column-sidebar>
+    </div>
+    <div class="container">
+      <div class="level">
+        <div class="level-left">
+          <div class="level-item">
+            <h2 class="is-size-4 has-text-gray-2 title">
+              Find a service
+            </h2>
+          </div>
+        </div>
+        <div class="level-right">
+          <div class="level-item">
+            <a-button
+              :to="{ name: 'services' }"
+              state="secondary"
+              arrow
+              size="small"
+            >
+              View More
+            </a-button>
+          </div>
+        </div>
+      </div>
+      <transition-group
+        name="fade"
+        tag="div"
+        class="columns is-multiline services-container">
+        <div
+          v-for="(r, index) in data.recentServices.slice(0, 6)"
+          :key="r.alias || index"
+          class="column is-one-third">
+          <service-summary
+            :title="getTitle(r)"
+            :is-alias="r.alias ? true : false"
+            :description="r.description"
+            :tags="r.topics" />
+        </div>
+      </transition-group>
+    </div>
+    <!-- <div class="section has-background-light">
+      <div class="container">
+        <div class="level">
+          <div class="level-left">
+            <div class="level-item">
+              <h2 class="is-size-4 has-text-gray-2 title">
+                Community
+              </h2>
+            </div>
+          </div>
+          <div class="level-right">
+            <div class="level-item">
+              <a-button
+                url="//asyncy.com/blog"
+                state="secondary"
+                arrow
+                size="small"
+              >
+                View More
+              </a-button>
+            </div>
+          </div>
+        </div>
+        <transition-group
+          name="fade"
+          tag="div"
+          class="columns articles-container">
+          <div
+            v-for="(r, index) in data.recentServices.slice(0, 3)"
+            :key="r.alias || index"
+            class="column is-one-third">
+            <article-summary
+              :title="getTitle(r)"
+              :description="r.description" />
+          </div>
+        </transition-group>
+      </div>
+    </div> -->
+    <a-join
+      is-paddingless
+      footer />
   </div>
 </template>
 
 <script>
 import { IndexQuery } from '@/plugins/graphql'
 import ServiceSummary from '@/components/ServiceSummary'
-import SearchBar from '@/components/SearchBar'
-import HeroBackground from 'asyncy-ui-components/dist/HeroBackground'
-
-import slackLogo from '@/assets/slack_logo_text.svg'
-import twitterLogo from '@/assets/twitter_logo.svg'
-import twilioLogo from '@/assets/twilio_logo_text.svg'
-
-import headerLeft from 'asyncy-ui-components/assets/images/home_header_left.svg'
-import headerRight from 'asyncy-ui-components/assets/images/home_header_right.svg'
+import ArticleSummary from '@/components/ArticleSummary'
+import ASection from '@/components/ASection'
+import HomeDescriptionTemplate from '@/components/templates/HomeDescription'
+import Picture1 from '@/assets/img/home/1.png'
+import Picture12x from '@/assets/img/home/1@2x.png'
+import Picture13x from '@/assets/img/home/1@3x.png'
+import Picture2 from '@/assets/img/home/2.png'
+import Picture22x from '@/assets/img/home/2@2x.png'
+import Picture23x from '@/assets/img/home/2@3x.png'
+import Picture3 from '@/assets/img/home/3.png'
+import Picture32x from '@/assets/img/home/3@2x.png'
+import Picture33x from '@/assets/img/home/3@3x.png'
+import Picture4 from '@/assets/img/home/4.png'
+import Picture42x from '@/assets/img/home/4@2x.png'
+import Picture43x from '@/assets/img/home/4@3x.png'
 
 export default {
-  name: 'index',
+  name: 'Index',
   apollo: {
     data: {
       query: IndexQuery,
@@ -100,135 +230,100 @@ export default {
       })
     }
   },
+  components: {
+    ServiceSummary,
+    ArticleSummary,
+    HomeDescriptionTemplate,
+    ASection
+  },
   data: () => ({
-    headerLeft,
-    headerRight,
-    twitterLogo,
-    slackLogo,
-    twilioLogo,
     data: {
       recentServices: [{}, {}, {}, {}, {}, {}]
-    }
+    },
+    steps: [{
+      name: 'Discover it.',
+      link: { name: 'services' },
+      picture: Picture1,
+      picture2x: Picture12x,
+      picture3x: Picture13x
+    }, {
+      name: 'Create it.',
+      link: { href: '//asyncy.com/blog/designing-smarter-microservices' },
+      picture: Picture2,
+      picture2x: Picture22x,
+      picture3x: Picture23x
+    }, {
+      name: 'Try it.',
+      picture: Picture3,
+      picture2x: Picture32x,
+      picture3x: Picture33x
+    }, {
+      name: 'Launch it.',
+      link: { href: '//asyncy.com/blog/story-telling' },
+      picture: Picture4,
+      picture2x: Picture42x,
+      picture3x: Picture43x
+    }]
   }),
   computed: {
-    topics: function() {
+    topics: function () {
       return this.data.recentServices.map(s => s.topics)
     }
   },
   methods: {
-    getTitle: function(r) {
+    getTitle: function (r) {
       if (!r.alias && (!r.owner || !r.owner.username)) {
         return ''
       }
       return r.alias || `${r.owner.username}/${r.name}`
     }
-  },
-  components: {
-    HeroBackground,
-    ServiceSummary,
-    SearchBar
   }
 }
 </script>
 
-<style scoped lang="scss">
-.hero-header {
-  font-size: 2.8em;
+<style lang="scss">
+.boxed-top-text {
+  color: nth($grays, 1);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 3px;
+  margin-bottoM: .5rem;
 }
 
-.subtitle {
-  display: block;
-  font-size: 1.15em;
-  margin-top: 1.5em;
-  margin-bottom: 1.5em;
-}
-
-.help-message {
-  font-size: 0.9em;
-  color: #aaa;
-}
-
-ul {
-  list-style: none;
-  padding-left: 0;
-  line-height: 2em;
-}
-
-.section {
-  margin-bottom: 2em;
-  padding-bottom: 2em;
-  border-bottom: 1px solid #ccc;
-
-  .section-header {
-    margin-bottom: 1.4em;
+.logo-badge {
+  width: 3rem;
+  height: 3rem;
+  border-radius: 1.5rem;
+  border: 1px solid nth($grays, 4);
+  background-color: $light;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  svg {
+    width: 1.75rem;
+    height: 1.75rem;
   }
 }
 
-.hero {
-  position: relative;
-  overflow: hidden;
-  padding: 4em 5em;
-  background: #eeeeee;
-  z-index: 1;
-
-  .search-bar-container {
-    max-width: 580px;
-    margin: 0 auto;
-  }
-}
-
-.columns {
-  max-width: 1100px;
-  margin: 0 auto;
-  margin-top: 1em;
-  text-align: left;
-}
-
-.call-to-action {
-  font-size: 1.9em;
-  line-height: 1.4em;
-  margin-bottom: 0.8em;
-}
-
-.featured-services {
-  .featured {
-    height: 150px;
-    border-radius: 5px;
-    padding: 25px;
-    font-size: 0.9;
-    font-weight: 600;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: all 0.2s;
-
-    &:hover {
-      transform: scale(1.05, 1.05);
-    }
+.home {
+  .container + .container,
+  .container + .section,
+  .section + .container {
+    margin-top: 9.25rem;
   }
 
-  .slack-service {
-    background-image: url("../assets/slack_bg.svg");
-    background-color: #78d4b6;
+  .section {
+    padding: 5rem 0;
   }
 
-  .twitter-service {
-    background-image: url("../assets/twitter_bg.svg");
-    background-color: #1da1f2;
+  .services-container,
+  .articles-container {
+    padding-top: 3.5rem;
   }
 
-  .twilio-service {
-    background-image: url("../assets/twilio_bg.svg");
-    background-color: #f22f44;
+  .home-submit-btn {
+    margin-top: 2rem;
+    color: $primary !important;
   }
-
-  a {
-    width: 100%;
-  }
-}
-
-.getting-started {
-  text-align: center;
 }
 </style>

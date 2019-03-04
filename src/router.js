@@ -1,12 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/views/Index'
-// import Organization from '@/views/Organization'
-// import SearchResults from '@/views/SearchResults'
-// import Service from '@/views/Service'
-// import Tags from '@/views/Tags'
-// import Faq from '@/views/Faq'
-// import PageNotFound from '@/views/PageNotFound'
+import ServiceIndex from '@/views/Service/Index'
 
 Vue.use(Router)
 
@@ -16,75 +11,77 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'hub',
+      name: 'home',
       component: Index
     },
     {
-      path: '/search',
-      name: 'search',
-      component: () => import('@/views/SearchResults'),
+      path: '/services',
+      name: 'services',
+      component: () => import('@/views/Services'),
       props: function (route) {
-        return { search: route.query.q }
+        return { search: route.query.search, category: route.query.c }
       }
     },
     {
-      path: '/service/:alias',
-      name: 'Service',
-      component: () => import('@/views/Service'),
-      meta: {
-        hasSearch: true
-      },
-      props: function (route) {
-        return { alias: route.params.alias }
-      }
+      path: '/functions',
+      name: 'functions',
+      component: () => import('@/views/PageNotFound')
     },
     {
-      path: '/tags/:topic',
-      name: 'Tags',
-      component: () => import('@/views/Tags'),
-      meta: {
-        hasSearch: true
-      },
-      props: function (route) {
-        return { topic: route.params.topic }
-      }
+      path: '/apps',
+      name: 'apps',
+      component: () => import('@/views/PageNotFound')
     },
     {
-      path: '/r/:owner',
-      component: () => import('@/views/Organization'),
-      meta: {
-        hasSearch: true
-      },
-      props: function (route) {
-        return { owner: route.params.owner }
-      }
-    },
-    {
-      path: '/r/:owner/:repo',
-      component: () => import('@/views/Service'),
-      meta: {
-        hasSearch: true
-      },
+      path: '/r/:alias/:repo',
+      alias: '/service/:alias:repo',
+      component: ServiceIndex,
       props: function (route) {
         return {
-          owner: route.params.owner,
-          repo: route.params.repo
+          alias: route.path.includes('service') ? route.params.alias + route.params.repo : undefined,
+          owner: !route.path.includes('service') ? route.params.alias : undefined,
+          repo: !route.path.includes('service') ? route.params.repo : undefined
         }
-      }
+      },
+      children: [{
+        path: '',
+        name: 'service',
+        component: () => import('@/views/Service/Home')
+      }, {
+        path: 'guide',
+        name: 'guide',
+        component: () => import('@/views/Service/Guide')
+      }]
     },
-    {
-      path: '/faq',
-      component: () => import('@/views/Faq'),
-      meta: {
-        hasSearch: true
-      }
-    },
+    // {
+    //   path: '/r/:owner',
+    //   component: () => import('@/views/Organization'),
+    //   name: 'organization',
+    //   meta: {
+    //     hasSearch: true
+    //   },
+    //   props: function (route) {
+    //     return { owner: route.params.owner }
+    //   }
+    // },
+    // {
+    //   path: '/faq',
+    //   name: 'faq',
+    //   component: () => import('@/views/Faq')
+    // },
     {
       path: '*',
+      name: 'not-found',
       component: () => import('@/views/PageNotFound')
     }
   ],
-  scrollBehavior: function () {
-    return { x: 0, y: 0 }
+  scrollBehavior: function (to, from, savedPosition) {
+    if (to.hash) {
+      return ({ selector: to.hash })
+    } else if (to.name === from.name || savedPosition) {
+      return (savedPosition)
+    } else {
+      return ({ x: 0, y: 0 })
+    }
   }
 })

@@ -1,7 +1,12 @@
 import 'prismjs'
 import 'prismjs/components/prism-coffeescript'
-import 'prismjs/themes/prism-tomorrow.css'
+import 'prismjs/plugins/line-numbers/prism-line-numbers'
+import 'prismjs/themes/prism-okaidia.css'
+import 'prismjs/plugins/line-numbers/prism-line-numbers.css'
 import Vue from 'vue'
-import Prism from 'vue-prism-component'
+import VPrism from 'vue-prism-component'
 
-Vue.component('prism', Prism)
+/* global Prism */
+Prism.languages.storyscript = Prism.languages.coffeescript
+
+Vue.component('prism', VPrism)

@@ -1,0 +1,75 @@
+@import "~@asyncy/vue/dist/asyncy-vue.css";
+
+@import "~@asyncy/vue/src/scss/variables/index";
+@import "~bulma/sass/utilities/mixins";
+@import "~@/assets/loading-shimmer";
+
+#asyncy {
+  min-height: 100vh;
+  height: auto;
+}
+
+html {
+  overflow-y: auto;
+}
+
+.container {
+  @include touch {
+    padding: 1rem;
+  }
+}
+
+.topics-list {
+  padding-left: 1rem;
+  position: relative;
+  .topic-item {
+    font-size: nth($sizes, 7);
+    color: nth($grays, 2);
+    a {
+      color: nth($grays, 2);
+    }
+    font-weight: 600;
+    padding: .25rem;
+    margin-top: .75rem;
+    cursor: pointer;
+    &.sub {
+      padding-left: 1rem;
+    }
+
+    .tags {
+      margin-top: .5rem;
+    }
+    &.active {
+      position: relative;
+      color: $primary;
+      a {
+        color: $dark;
+      }
+      &:before {
+        content: '';
+        display: block;
+        width : .25rem;
+        height: 2rem;
+        position: absolute;
+        top: 0;
+        left: -1.75rem;
+        bottom: 0;
+        border-radius: .25rem;
+        background-color: $primary;
+      }
+    }
+    .delete {
+      float: right;
+    }
+  }
+}
+
+.articles-container {
+  margin: 7.5rem 0 !important;
+}
+
+.container {
+  .level {
+    padding: .75rem;
+  }
+}
